@@ -26,6 +26,9 @@ W, H, FPS = 1080, 1920, 30
 VERSE_CARD_SEC = 2.0   # 구절 카드를 읽을 시간. 쇼츠 피드의 썸네일 역할도 한다.
 GAP_SEC = 0.4          # 문장 사이 간격
 
+# upload.py의 REQUIRED와 같은 대본 스키마를 검사한다 (build.py는 렌더링에
+# "bg"가 더 필요하다). 두 파일은 서로 import하지 않으므로(모듈 경계) 상수를
+# 공유하지 않는다 — 필드를 바꾸면 이 파일과 upload.py:25 둘 다 고친다.
 REQUIRED = ("topic", "ref", "verse_ko", "verse_en", "narration", "bg")
 
 
@@ -52,7 +55,13 @@ def _run(cmd: list[str], cwd: Path | None = None) -> str:
     담지 않는다 (반환코드만 보인다). 실패하면 stderr를 그대로 예외 메시지에
     담아 던져서 설계 문서 §10의 "FFmpeg 실패: stderr 그대로 노출"을 지킨다.
     """
-    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    # encoding/errors 명시: 안 주면 Windows cp949 콘솔에서 ffmpeg stderr의
+    # UTF-8 바이트를 못 읽어 UnicodeDecodeError가 나면서 정작 보여줘야 할
+    # 실패 원인(§10)이 가려진다.
+    result = subprocess.run(
+        cmd, cwd=cwd, capture_output=True, text=True,
+        encoding="utf-8", errors="replace",
+    )
     if result.returncode != 0:
         raise RuntimeError(f"{' '.join(cmd)}\n{result.stderr}")
     return result.stdout
@@ -72,6 +81,39 @@ def ass_time(sec: float) -> str:
     h, rem = divmod(max(sec, 0), 3600)
     m, s = divmod(rem, 60)
     return f"{int(h)}:{int(m):02d}:{s:05.2f}"
+
+
+def _ass_escape(text: str) -> str:
+    """ASS Dialogue 줄에 원문을 넣기 전 이스케이프한다.
+
+    verse_ko/verse_en(성경 본문)은 31,102절 전수 확인 결과 `{` `}` `\\` 개행이
+    전혀 없어 안전하지만, narration은 자유 텍스트라 중괄호가 섞이면 ASS
+    태그로 오인되고 개행이 섞이면 줄이 깨진다. 방어적으로 항상 이스케이프한다.
+    """
+    return (
+        text.replace("\\", "\\\\")
+        .replace("{", "\\{")
+        .replace("}", "\\}")
+        .replace("\r\n", "\\N")
+        .replace("\n", "\\N")
+    )
+
+
+def segment_timings(
+    pieces: list[tuple[Path, float, str]], gap: float = GAP_SEC
+) -> tuple[list[tuple[float, float, str]], float]:
+    """pieces(mp3, 실제 재생 길이, 자막 텍스트)를 GAP_SEC 간격으로 순서대로
+    이어 붙였을 때 각 구간의 시작·끝 시각과 총 길이를 계산한다.
+
+    자막이 실제 오디오 위에 정확히 겹치는지를 결정하는 유일한 계산이라
+    순수 함수로 분리해 (ffmpeg 없이) 테스트한다.
+    """
+    segments: list[tuple[float, float, str]] = []
+    t = 0.0
+    for _mp3, dur, text in pieces:
+        segments.append((t, t + dur, text))
+        t += dur + gap
+    return segments, t
 
 
 def write_ass(segments: list[tuple[float, float, str]], path: Path):
@@ -110,21 +152,20 @@ def build(script_path: Path) -> Path:
              "-t", str(VERSE_CARD_SEC), "-q:a", "9", str(silence)],
         )
 
-        pieces = [(silence, VERSE_CARD_SEC, f"{data['verse_ko']}\\N\\N— {data['ref']}")]
+        pieces = [(
+            silence, VERSE_CARD_SEC,
+            f"{_ass_escape(data['verse_ko'])}\\N\\N— {_ass_escape(data['ref'])}",
+        )]
         jobs = [(data["verse_en"], VOICE_EN), (data["verse_ko"], VOICE_KO)]
         jobs += [(s, VOICE_KO) for s in data["narration"]]
 
         for i, (text, voice) in enumerate(jobs, 1):
             mp3 = work / f"{i:03d}.mp3"
-            dur = synth(text, voice, mp3)
-            pieces.append((mp3, dur, text))
+            dur = synth(text, voice, mp3)  # TTS는 원문 그대로 읽는다 (이스케이프 전)
+            pieces.append((mp3, dur, _ass_escape(text)))
 
         # 2. 자막 타이밍은 실제 음성 길이로 정한다
-        segments, t = [], 0.0
-        for _mp3, dur, text in pieces:
-            segments.append((t, t + dur, text))
-            t += dur + GAP_SEC
-        total = t
+        segments, total = segment_timings(pieces)
 
         write_ass(segments, work / "sub.ass")
 

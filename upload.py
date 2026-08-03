@@ -22,6 +22,10 @@ TOKEN = ROOT / "token.json"
 
 CATEGORY_ID = "22"  # People & Blogs
 
+# build.py의 REQUIRED와 같은 대본 스키마를 검사한다 (build.py는 렌더링에
+# "bg"가 더 필요해 이 목록에 "bg"가 하나 더 있다). 두 파일은 서로 import하지
+# 않으므로(모듈 경계) 상수를 공유하지 않는다 — 필드를 바꾸면 이 파일과
+# build.py:29 둘 다 고친다.
 REQUIRED = ("ref", "topic", "verse_ko", "verse_en", "narration")
 
 
@@ -60,6 +64,8 @@ def metadata(mp4: Path) -> tuple[str, str, list[str]]:
     missing = [k for k in REQUIRED if k not in d]
     if missing:
         raise ValueError(f"{script.name}: 필드 누락 {missing}")
+    if not isinstance(d["narration"], list) or not d["narration"]:
+        raise ValueError(f"{script.name}: narration은 비어 있지 않은 문장 배열이어야 한다")
     title = f"{d['ref']} | {d['topic']} #shorts"
     description = (
         f"{d['verse_ko']}\n— {d['ref']} (킹제임스 흠정역)\n\n"
