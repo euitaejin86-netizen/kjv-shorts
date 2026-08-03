@@ -120,3 +120,31 @@ def test_no_chapter_heading_leaked_into_verses():
         if re.search(r"제\s*\d+\s*[장편]", text)
     ]
     assert leaked == [], f"장 제목이 본문에 섞였다: {leaked[:10]}"
+
+
+def test_verse_size_exceptions_are_recognized_as_verse_starts(doc):
+    # VERSE_SIZE_EXCEPTIONS의 세 줄(출애굽기 6:3, 이사야서 26:5, 미가서 1:2)은
+    # 각각 9.96/9.96/11.22 크기로 찍혀 있어 일반 크기 필터(12.1)로는 걸리지
+    # 않는다. 예외 처리가 없으면 이 절 번호는 해당 페이지의 절 시작 목록에서
+    # 통째로 사라진다(9.96은 드롭, 11.22는 이어짐으로 오분류). classify_lines가
+    # 이 세 절 번호를 정확히 절 시작으로 인식하는지 직접 확인한다 — 31,102라는
+    # 집계 수치만으로는 이 세 줄이 깨지면 진단이 되지 않는다.
+    assert 3 in [l.verse_no for l in classify_lines(doc[96]) if l.verse_no is not None]
+    assert 5 in [l.verse_no for l in classify_lines(doc[881]) if l.verse_no is not None]
+    assert 2 in [l.verse_no for l in classify_lines(doc[1135]) if l.verse_no is not None]
+
+
+def test_pins_malachi_4_6_and_revelation_22_21():
+    # 말라기 4장 6절(구약 마지막 절)과 요한계시록 22장 21절(신약 마지막 절)은
+    # 각각 성경 본문이 끝나는 두 지점(권 이음매, 문서 끝)이다. 부록·해설이
+    # 섞여 들어가면 정확히 이 두 절이 늘어나므로 정확한 문자열로 고정해
+    # 회귀를 잡는다.
+    bible = build_bible()
+    assert bible["말라기"]["4"]["6"] == (
+        "그가 아버지들의 마음을 자식들 에게 돌아오게 하고 자식들의 마음을 "
+        "그들의 아버지들에게 돌아오게 하여 내가 와서 저주로 그 땅을 치지 "
+        "아니하 게 하리라."
+    )
+    assert bible["요한계시록"]["22"]["21"] == (
+        "우리 주 예수 그리스도의 은혜가 너희 모두와 함께 있기를 원하노라. 아멘."
+    )

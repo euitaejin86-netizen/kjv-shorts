@@ -144,34 +144,50 @@ def load_expected_structure() -> list[dict[int, int]]:
     ]
 
 
+def load_expected_text() -> list[dict[int, dict[int, str]]]:
+    """영어 KJV 원문 텍스트 표 {장번호: {절번호: 본문}}. 길이 비율로 본문 오염
+    (예: 절 사이에 낀 해설·주석)을 검출하는 데 쓴다. 절 수 검증만으로는
+    본문 안에 섞여 들어간 수천 자짜리 다른 글을 잡아낼 수 없다."""
+    data = json.loads(EN_JSON.read_text(encoding="utf-8"))
+    return [
+        {c["chapter"]: {v["verse"]: v["text"] for v in c["verses"]} for c in book["chapters"]}
+        for book in data["books"]
+    ]
+
+
 def build_bible() -> dict[str, dict[str, dict[str, str]]]:
     """PDF 전체를 파싱해 권-장-절 구조를 만들고 영어 KJV와 대조한다."""
     doc = fitz.open(BIBLE_PDF)
     names = BOOKS_KO
     expected = load_expected_structure()
+    expected_text = load_expected_text()
 
     bible: dict[str, dict[str, dict[str, str]]] = {n: {} for n in names}
     bi = ci = 0                      # 현재 권 인덱스, 현재 장 인덱스(0-based)
     prev_verse = 0
     buf: list[str] = []              # 현재 절의 줄 조각
     cur: tuple[str, str, str] | None = None   # (권, 장, 절)
-
-    # 성경 본문은 요한계시록 22:21에서 끝나고 그 뒤로 부록·연대표·MEMO 페이지가
-    # 이어진다. 절 번호가 1로 리셋되는 지점을 찾는 아래 로직만으로는 부록에서
-    # 리셋이 일어나지 않는 한 반복이 멈추지 않아 부록 텍스트가 마지막 절
-    # (계시록 22:21)의 이어지는 줄로 조용히 흘러든다. 마지막 권의 마지막
-    # 장·절에 도달하면 그 페이지까지만 마저 읽고 이후 페이지는 보지 않는다.
-    last_chapter_no = max(expected[-1])
-    last_verse_no = expected[-1][last_chapter_no]
+    book_done = False                # 현재 권의 마지막 절까지 다 받았는가
 
     def flush():
         if cur is not None:
             book, chap, verse = cur
             bible[book].setdefault(chap, {})[verse] = " ".join(buf).strip()
 
-    reached_end = False
     for page in doc:
-        for line in classify_lines(page):
+        lines = classify_lines(page)
+
+        # 권 경계: 한 권의 마지막 절을 다 받은 뒤 절 시작이 하나도 없는
+        # 페이지는 성경 본문이 아니라 삽입된 해설·부록이다(예: 말라기와
+        # 마태복음 사이의 신구약 중간기 해설, 계시록 뒤 부록·연대표·MEMO).
+        # 그런 페이지는 통째로 건너뛴다. 다음 권 1절이든 뭐든 절 시작이
+        # 하나라도 있는 페이지는 정상 처리하므로, 마지막 절이 다음 쪽으로
+        # 정상적으로 이어지는 경우는 그대로 붙는다. 이 규칙 하나로 66권
+        # 사이 모든 이음매와 계시록 뒤 부록을 함께 막는다.
+        if book_done and not any(l.verse_no is not None for l in lines):
+            continue
+
+        for line in lines:
             if line.verse_no is None:
                 buf.append(line.text)
                 continue
@@ -184,9 +200,9 @@ def build_bible() -> dict[str, dict[str, dict[str, str]]]:
                 if ci + 1 >= len(expected[bi]):
                     bi += 1
                     ci = 0
-                    if bi >= 66:
+                    if bi >= len(names):
                         flush()
-                        _validate(bible, names, expected)
+                        _validate(bible, names, expected, expected_text)
                         return bible
                 else:
                     ci += 1
@@ -194,19 +210,20 @@ def build_bible() -> dict[str, dict[str, dict[str, str]]]:
             cur = (names[bi], str(ci + 1), str(n))
             buf = [line.text]
             prev_verse = n
-
-            if bi == 65 and ci + 1 == last_chapter_no and n == last_verse_no:
-                reached_end = True  # 66권 전부 완결. 이 페이지만 마저 읽고 멈춘다.
-
-        if reached_end:
-            break
+            last_chap = max(expected[bi])
+            book_done = ci + 1 == last_chap and n == expected[bi][last_chap]
 
     flush()
-    _validate(bible, names, expected)
+    _validate(bible, names, expected, expected_text)
     return bible
 
 
-def _validate(bible, names, expected):
+MAX_LEN_RATIO = 3.0  # 한글 절 길이 / 영어 절 길이. 실측 분포: 중앙값 0.525,
+# p99 0.815, 정상 범위 안 최악의 예외가 1.56. 오염된 말라기 4:6은 26.28이었다.
+# 3.0은 양쪽 모두에 넉넉한 여유를 둔 값이라 오탐도, 이런 오염을 놓칠 일도 없다.
+
+
+def _validate(bible, names, expected, expected_text):
     """영어 KJV 구조와 한 절도 어긋나지 않는지 확인한다.
 
     잘못 파싱된 구절은 조용히 통과하면 그대로 영상이 되어 공개된다.
@@ -214,6 +231,7 @@ def _validate(bible, names, expected):
     """
     for i, name in enumerate(names):
         got, want = bible[name], expected[i]
+        en_text = expected_text[i]
         if len(got) != len(want):
             raise ValueError(f"{name}: 장 수 {len(got)}, 기대 {len(want)}")
         for chap, want_n in want.items():
@@ -226,6 +244,14 @@ def _validate(bible, names, expected):
                 text = verses.get(str(v))
                 if not text or not text.strip():
                     raise ValueError(f"{name} {chap}:{v} 본문이 비어 있다")
+                en = en_text[chap][v]
+                ratio = len(text) / len(en) if en else 0
+                if ratio > MAX_LEN_RATIO:
+                    raise ValueError(
+                        f"{name} {chap}:{v} 길이 비율 {ratio:.2f}"
+                        f"(본문 {len(text)}자 / 영어 {len(en)}자)가 임계값 "
+                        f"{MAX_LEN_RATIO}를 넘었다 — 본문 오염 의심"
+                    )
 
 
 def main():
