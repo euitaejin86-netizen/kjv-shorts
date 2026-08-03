@@ -8,6 +8,7 @@ import json
 import sys
 from pathlib import Path
 
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -21,13 +22,23 @@ TOKEN = ROOT / "token.json"
 
 CATEGORY_ID = "22"  # People & Blogs
 
+REQUIRED = ("ref", "topic", "verse_ko", "verse_en", "narration")
+
 
 def credentials() -> Credentials:
     creds = None
     if TOKEN.exists():
-        creds = Credentials.from_authorized_user_file(str(TOKEN), SCOPES)
+        try:
+            creds = Credentials.from_authorized_user_file(str(TOKEN), SCOPES)
+        except ValueError as e:
+            print(f"{TOKEN} 손상됨 ({e}); 다시 로그인합니다.", file=sys.stderr)
+            creds = None
     if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
+        try:
+            creds.refresh(Request())
+        except RefreshError as e:
+            print(f"토큰 갱신 실패 ({e}); 다시 로그인합니다.", file=sys.stderr)
+            creds = None
     if not creds or not creds.valid:
         if not CLIENT_SECRET.exists():
             raise FileNotFoundError(
@@ -46,6 +57,9 @@ def metadata(mp4: Path) -> tuple[str, str, list[str]]:
     if not script.exists():
         raise FileNotFoundError(f"대본 없음: {script}")
     d = json.loads(script.read_text(encoding="utf-8"))
+    missing = [k for k in REQUIRED if k not in d]
+    if missing:
+        raise ValueError(f"{script.name}: 필드 누락 {missing}")
     title = f"{d['ref']} | {d['topic']} #shorts"
     description = (
         f"{d['verse_ko']}\n— {d['ref']} (킹제임스 흠정역)\n\n"
@@ -83,16 +97,24 @@ def upload(mp4: Path, publish_at: dt.datetime):
 
 def main():
     if len(sys.argv) < 2:
-        print("usage: python upload.py out/<name>.mp4 [YYYY-MM-DDTHH:MM]", file=sys.stderr)
+        print(
+            "usage: python upload.py out/<name>.mp4 [YYYY-MM-DDTHH:MM]\n"
+            "  생략 시 지금부터 24시간 뒤(로컬 시간대)로 예약된다.",
+            file=sys.stderr,
+        )
         raise SystemExit(2)
     mp4 = Path(sys.argv[1])
     if not mp4.exists():
         raise FileNotFoundError(mp4)
-    when = (
-        dt.datetime.fromisoformat(sys.argv[2])
-        if len(sys.argv) > 2
-        else dt.datetime.now() + dt.timedelta(days=1)
-    )
+    if len(sys.argv) > 2:
+        try:
+            when = dt.datetime.fromisoformat(sys.argv[2])
+        except ValueError:
+            raise ValueError(
+                f"시간 형식 오류: {sys.argv[2]!r}. 예: 2026-08-05T09:00"
+            ) from None
+    else:
+        when = dt.datetime.now() + dt.timedelta(days=1)
     upload(mp4, when.astimezone())
 
 
