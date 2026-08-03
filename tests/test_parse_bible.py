@@ -141,10 +141,48 @@ def test_pins_malachi_4_6_and_revelation_22_21():
     # 회귀를 잡는다.
     bible = build_bible()
     assert bible["말라기"]["4"]["6"] == (
-        "그가 아버지들의 마음을 자식들 에게 돌아오게 하고 자식들의 마음을 "
+        "그가 아버지들의 마음을 자식들에게 돌아오게 하고 자식들의 마음을 "
         "그들의 아버지들에게 돌아오게 하여 내가 와서 저주로 그 땅을 치지 "
-        "아니하 게 하리라."
+        "아니하게 하리라."
     )
     assert bible["요한계시록"]["22"]["21"] == (
         "우리 주 예수 그리스도의 은혜가 너희 모두와 함께 있기를 원하노라. 아멘."
     )
+
+
+def test_no_spurious_space_before_particle():
+    # PDF는 줄 끝 trailing space로 단어 경계를 인코딩한다("...땅을 " 다음
+    # 줄 "창조하시니라."). classify_lines가 strip()으로 이를 지우고
+    # build_bible이 모든 줄 경계에 " ".join으로 공백을 강제하면, 단어
+    # 중간에서 줄이 끊긴 자리마다 조사 앞에 있어선 안 될 공백이 낀다
+    # (예: "멸망 하지", "게난 을", "자식들 에게"). 31,102절 전체를 훑어
+    # "한글 뒤 공백 뒤 조사"가 하나도 없는지 확인한다.
+    #
+    # 조사 후보 중 을/를/는/에/에게/으로/과 일곱 개만 검사한다. 나머지
+    # (이·은·의·도·와·가·에서·만)는 실제로 돌려서 전수 확인한 결과 전부
+    # 조사가 아니라 독립된 한글 단어와 겹쳐 오탐이었다:
+    #   이 — 지시대명사 "이"("이 일", "이 땅" = this matter/land), 1854건
+    #     전부 뒤에 명사·관형어가 옴(동사가 온 적 없음 — 조사라면 서술어가
+    #     와야 하므로 오분류가 아님이 확인됨)
+    #   은 — 명사 "은"(silver, "은 천 개" = a thousand pieces of silver), 71건
+    #   의 — 명사 "의"(righteousness, "주의 의" = the LORD's righteousness), 23건
+    #   도 — 명사 "도"(degree, "십 도" = ten degrees, 2 Kings 20 해시계), 8건
+    #   와 — 동사 "오다"의 활용형("와 있는데" = having come), 4건
+    #   가 — 동사 "가다"의 활용형("물러나 가" = withdrew and went), 1건
+    #   에서 — 고유명사 "에서"(Esau의 한글 표기, "에서 자손" = sons of Esau), 7건
+    #   만 — 숫자 단위 "만"(10,000) 또는 "가득 찬"(full, "만 일 년" = a full
+    #     year), 83건
+    # 위 여덟 조사는 이 성경 본문에서 독립 단어로도 매우 흔히 쓰여, 문자
+    # 패턴만으로는 조사 결합과 구분할 수 없다. 을/를/는/에/에게/으로/과는
+    # 이 본문에 그런 독립 단어 용례가 전혀 없어(0건 확인) 오탐 없이 그대로
+    # 0을 기대할 수 있다.
+    bible = build_bible()
+    bad = re.compile(r"[가-힣] (을|를|는|에|에게|으로|과)\b")
+    hits = [
+        f"{book} {ch}:{v}: {text!r}"
+        for book, chapters in bible.items()
+        for ch, verses in chapters.items()
+        for v, text in verses.items()
+        if bad.search(text)
+    ]
+    assert hits == [], f"조사 앞에 스퓨리어스 공백이 남아 있다: {hits[:10]}"

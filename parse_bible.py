@@ -95,15 +95,22 @@ class Line(NamedTuple):
 
 
 def classify_lines(page: fitz.Page) -> list[Line]:
-    """페이지에서 본문 줄만 남기고 절 시작 여부를 표시한다."""
+    """페이지에서 본문 줄만 남기고 절 시작 여부를 표시한다.
+
+    줄 끝 공백은 그대로 남긴다. PDF는 단어가 줄 끝에서 끝나면 trailing
+    space를 찍고, 단어 중간에서 줄이 끊기면 공백을 찍지 않는다 — 이 공백이
+    한글 조사 앞뒤 띄어쓰기의 유일한 근거다. 여기서 strip()으로 지워버리면
+    build_bible이 모든 줄 경계에 공백을 넣을 수밖에 없어 "멸망 하지",
+    "게난 을"처럼 단어 중간에 공백이 끼어든다. 왼쪽 공백만 지운다.
+    """
     raw = []
     for block in page.get_text("dict")["blocks"]:
         if block.get("type") != 0:  # 이미지 블록 제외
             continue
         for ln in block["lines"]:
-            text = "".join(s["text"] for s in ln["spans"]).strip()
+            text = "".join(s["text"] for s in ln["spans"]).lstrip()
             x0 = ln["bbox"][0]
-            if not text or ln["bbox"][1] < HEADER_Y:
+            if not text.strip() or ln["bbox"][1] < HEADER_Y:
                 continue
             if GAP_LEFT <= x0 < GAP_RIGHT:
                 continue  # 좌단·우단 사이 여백: 권 제목 등 장식 줄이 찍히는 자리
@@ -129,9 +136,18 @@ def classify_lines(page: fitz.Page) -> list[Line]:
         for _x0, _y0, text, is_verse in column:
             m = VERSE_NO.match(text) if is_verse else None
             if m:
-                out.append(Line(VERSE_NO.sub("", text).strip(), int(m.group(1))))
+                # VERSE_NO가 앞의 "9 ¶ " 형태를 통째로 삼키므로 남는 줄 끝
+                # 공백은 그대로 둔다. 앞쪽 잔여 공백만 방어적으로 지운다.
+                out.append(Line(VERSE_NO.sub("", text).lstrip(), int(m.group(1))))
             else:
-                out.append(Line(text.replace("¶", "").strip(), None))
+                # 이어지는 줄 중간에 낀 ¶(문단 표시)는 공백 하나로 정규화한다.
+                # 그냥 지우면 "...끝¶다음..." 같은 줄에서 단어가 붙어버린다.
+                # 여기서는 lstrip()을 다시 하지 않는다 — 실제 성경 이어짐 줄은
+                # PDF에서 앞 공백 없이 시작하지만(수집 시점에 이미 한 번
+                # lstrip했다), ¶가 줄 맨 앞에 오는 드문 경우(예: 서신 끝의
+                # "¶ 로마 사람들에게...") 치환이 만든 공백을 다시 지우면 앞
+                # 절과 공백 없이 붙어버린다.
+                out.append(Line(re.sub(r"\s*¶\s*", " ", text), None))
     return out
 
 
@@ -172,7 +188,10 @@ def build_bible() -> dict[str, dict[str, dict[str, str]]]:
     def flush():
         if cur is not None:
             book, chap, verse = cur
-            bible[book].setdefault(chap, {})[verse] = " ".join(buf).strip()
+            # PDF 줄 끝 공백이 이미 단어 경계를 인코딩하고 있으므로("...땅을 "
+            # 다음 줄 "창조하시니라." 처럼) 여기서 공백을 새로 넣지 않는다.
+            # classify_lines가 보존한 trailing space만으로 이어 붙인다.
+            bible[book].setdefault(chap, {})[verse] = "".join(buf).strip()
 
     for page in doc:
         lines = classify_lines(page)
