@@ -159,6 +159,22 @@ PDF 페이지 하나를 받아 "절 시작 줄"과 "이어지는 줄"만 남기�
     `verse_no`가 정수면 그 절이 시작하는 줄, `None`이면 앞 절에서 이어지는 줄.
   - `BIBLE_PDF: Path` 상수
 
+**측정 결과 (본문 영역 y≥30, 18–1610쪽 전수 집계).** 이 표가 구현의 근거다.
+
+| 글자 크기 | 줄 수 | 정체 | 처리 |
+|---|---|---|---|
+| **12.1** | 31,099 | 절 시작 (KJV 총 절 수 31,102) | 유지 |
+| 11.8 / 11.2 / 11.6 | 95,551 | 절 이어지는 줄 | 유지 |
+| 12.5 | 1,203 | 장 제목 `제 1 장`, 시편 `제 18 편` | **버림** |
+| 10.4 | 4,294 | 편집자 소제목 | **버림** |
+| 10.3 | 164 | 시편 표제 (KJV는 절 번호를 매기지 않음) | **버림** |
+| 10.2 / 10.1 | 450 | 권 소개 블록 | **버림** |
+| 18.2 등 12.2 이상 | 78 | 장식 글리프·부록 제목 | **버림** |
+
+절 시작은 **글자 크기 12.1** 하나로 판별한다. 들여쓰기나 문자열 휴리스틱보다 정확하다.
+크기 12.1인 줄이 31,099개로 실제 절 수보다 3개 적은데, 이 3개는 다른 크기로
+조판된 예외다 (예: 881쪽의 크기 10.0 절 시작). Task 3의 검증이 정확히 잡아낸다.
+
 - [ ] **Step 1: 실패하는 테스트 작성**
 
 `tests/test_parse_bible.py`:
@@ -177,36 +193,55 @@ def doc():
 
 def test_drops_page_number_and_running_header(doc):
     # 페이지 30은 상단에 "13"(페이지 번호)과 "창세기 12"(러닝 헤더)를 갖는다.
-    lines = classify_lines(doc[30])
-    texts = [l.text for l in lines]
+    texts = [l.text for l in classify_lines(doc[30])]
     assert "13" not in texts
     assert "창세기 12" not in texts
 
 
 def test_marks_verse_starts(doc):
     # 페이지 30 좌단은 창세기 11:8로 시작한다.
-    lines = classify_lines(doc[30])
-    starts = [l.verse_no for l in lines if l.verse_no is not None]
+    starts = [l.verse_no for l in classify_lines(doc[30]) if l.verse_no is not None]
     assert starts[:4] == [8, 9, 10, 11]
 
 
 def test_continuation_lines_have_no_verse_no(doc):
-    lines = classify_lines(doc[30])
     # 첫 줄은 앞 페이지에서 넘어온 이어지는 줄이다.
-    assert lines[0].verse_no is None
+    assert classify_lines(doc[30])[0].verse_no is None
+
+
+def test_drops_chapter_heading(doc):
+    # 20쪽에는 크기 12.5의 "제 2 장" 장 제목이 있다. 본문에 섞이면
+    # 앞 절 끝에 붙어 조용히 오염된다. 절 수는 그대로라 검증도 통과한다.
+    texts = [l.text for l in classify_lines(doc[20])]
+    assert not any("제" in t and "장" in t and len(t) < 10 for t in texts)
+
+
+def test_drops_psalm_chapter_heading_and_superscription(doc):
+    # 시편은 "제 18 편"(크기 12.5)을 쓰고, 그 아래 표제(크기 10.3)가 온다.
+    # KJV는 표제에 절 번호를 매기지 않으므로 표제도 버려야 절 수가 맞는다.
+    texts = [l.text for l in classify_lines(doc[719])]
+    assert not any("제 18 편" == t for t in texts)
+    assert not any("악장에게 준" in t for t in texts)
 
 
 def test_drops_editor_section_headings(doc):
-    # 페이지 1550(요한의 둘째 서신)에는 "진리 안에서 걸으라" 소제목이 있다.
+    # 1550쪽(요한의 둘째 서신)에는 "진리 안에서 걸으라" 소제목이 있다.
     texts = [l.text for l in classify_lines(doc[1550])]
-    assert not any("진리 안에서 걸으라" == t for t in texts)
+    assert "진리 안에서 걸으라" not in texts
 
 
-def test_drops_book_intro_block(doc):
-    # 권 시작 페이지의 소개 블록("기록자:", "핵심 절:" 등)이 남으면 안 된다.
-    texts = " ".join(l.text for l in classify_lines(doc[1550]))
+def test_drops_book_title_and_intro_block(doc):
+    # 권 시작 페이지의 제목 줄과 소개 블록이 남으면 앞 절에 붙는다.
+    texts = " ".join(l.text for l in classify_lines(doc[18]))
     assert "기록자:" not in texts
-    assert "핵심 절:" not in texts
+    assert "모세의 첫째 책" not in texts
+
+
+def test_genesis_1_1_is_clean(doc):
+    # 18쪽 좌단 첫 절이 창세기 1:1이다.
+    lines = classify_lines(doc[18])
+    first = next(l for l in lines if l.verse_no == 1)
+    assert first.text.startswith("처음에 하나님께서")
 
 
 def test_two_column_reading_order(doc):
@@ -227,14 +262,19 @@ Expected: FAIL — `ModuleNotFoundError: No module named 'parse_bible'`
 ```python
 """킹제임스 흠정역 PDF를 권-장-절 구조의 JSON으로 변환한다.
 
-조판 구조 (실측):
-  절 시작 줄   크기 12.1, 좌단 x=46 / 우단 x=226  (본문보다 9pt 들여쓰기)
-  이어지는 줄  크기 11.8 내외, 좌단 x=37 / 우단 x=217
-  소제목       크기 10.4, 가운데 정렬
-  페이지 헤더  크기 10.9, y≈19
-  권 소개      크기 10.2~10.4, 권 시작 페이지에만
+조판 구조는 글자 크기로 판별한다 (본문 영역 전수 집계 결과):
+  12.1              절 시작        31,099줄 (KJV 총 절 수 31,102)
+  11.2 / 11.6 / 11.8 절 이어짐     95,551줄
+  12.5              장 제목        1,203줄  "제 1 장", 시편 "제 18 편"
+  10.4              편집자 소제목  4,294줄
+  10.3              시편 표제      164줄   KJV는 절 번호를 매기지 않음
+  10.1 / 10.2       권 소개 블록   450줄
+  12.2 이상         장식·부록 제목  버림
 
-러닝 헤더의 장 번호는 실제 본문과 한 장씩 어긋나므로 신뢰하지 않는다.
+장 제목과 소제목을 버리지 않으면 앞 절 본문 끝에 조용히 붙는다. 절 수는
+그대로라 검증도 통과하고, 그대로 영상이 되어 공개된다.
+
+러닝 헤더의 장 번호는 실제 본문과 한 장씩 어긋나므로 쓰지 않는다.
 장 구분은 절 번호가 1로 리셋되는 지점으로 판단한다.
 """
 import re
@@ -246,10 +286,11 @@ import fitz
 SOURCE_DIR = Path(r"C:\Users\uieta\KEEPBIBLE\킹제임스 자료모음")
 BIBLE_PDF = SOURCE_DIR / "(KJV 성경 흠정역(한글)) 큰글자 성경 신구약 부록 2025 최적화.pdf"
 
-HEADER_Y = 30.0        # 이보다 위는 페이지 번호·러닝 헤더
-BODY_SIZE_MIN = 11.0   # 이보다 작은 글씨는 소제목이거나 권 소개 블록
-COLUMN_SPLIT = 150.0   # 이보다 오른쪽은 우단
-INDENT = 4.0           # 단 왼쪽 끝에서 이만큼 이상 들여썼으면 절 시작
+HEADER_Y = 30.0          # 이보다 위는 페이지 번호·러닝 헤더
+VERSE_SIZE = 12.1        # 절 시작 줄의 글자 크기
+BODY_SIZE_MIN = 11.0     # 절 이어지는 줄의 최소 크기
+SIZE_TOL = 0.15          # 크기 비교 허용 오차
+COLUMN_SPLIT = 150.0     # 이보다 오른쪽은 우단
 
 VERSE_NO = re.compile(r"^(\d+)\s*¶?\s*")
 
@@ -267,32 +308,25 @@ def classify_lines(page: fitz.Page) -> list[Line]:
             continue
         for ln in block["lines"]:
             text = "".join(s["text"] for s in ln["spans"]).strip()
-            if not text:
+            if not text or ln["bbox"][1] < HEADER_Y:
                 continue
-            x0, y0 = ln["bbox"][0], ln["bbox"][1]
             size = ln["spans"][0]["size"]
-            if y0 < HEADER_Y:          # 페이지 번호·러닝 헤더
-                continue
-            if size < BODY_SIZE_MIN:   # 소제목·권 소개 블록
-                continue
-            raw.append((x0, y0, text))
-
-    if not raw:
-        return []
+            is_verse = abs(size - VERSE_SIZE) <= SIZE_TOL
+            is_body = BODY_SIZE_MIN <= size < VERSE_SIZE - SIZE_TOL
+            if not (is_verse or is_body):
+                continue  # 장 제목(12.5), 소제목(10.4), 표제(10.3), 소개(10.2), 장식
+            raw.append((ln["bbox"][0], ln["bbox"][1], text, is_verse))
 
     # 2단 조판: 좌단을 y순으로 모두 읽은 뒤 우단으로 넘어간다.
-    left = sorted((r for r in raw if r[0] < COLUMN_SPLIT), key=lambda r: r[1])
-    right = sorted((r for r in raw if r[0] >= COLUMN_SPLIT), key=lambda r: r[1])
-
     out: list[Line] = []
-    for column in (left, right):
-        if not column:
-            continue
-        margin = min(r[0] for r in column)  # 그 단의 왼쪽 끝
-        for x0, _y0, text in column:
-            m = VERSE_NO.match(text)
-            if m and x0 - margin >= INDENT:
-                out.append(Line(VERSE_NO.sub("", text), int(m.group(1))))
+    for column in (
+        sorted((r for r in raw if r[0] < COLUMN_SPLIT), key=lambda r: r[1]),
+        sorted((r for r in raw if r[0] >= COLUMN_SPLIT), key=lambda r: r[1]),
+    ):
+        for _x0, _y0, text, is_verse in column:
+            m = VERSE_NO.match(text) if is_verse else None
+            if m:
+                out.append(Line(VERSE_NO.sub("", text).strip(), int(m.group(1))))
             else:
                 out.append(Line(text.replace("¶", "").strip(), None))
     return out
@@ -330,28 +364,31 @@ Task 2의 줄 목록을 문서 전체에 걸쳐 이어 붙여 `bible/kjv_ko.json
 - Consumes: `classify_lines(page) -> list[Line]`, `BIBLE_PDF` (Task 2), `bible/kjv_en.json` (Task 1)
 - Produces: `bible/kjv_ko.json` — 구조는
   `{"권이름": {"장번호(str)": {"절번호(str)": "본문"}}}`.
-  권 이름은 러닝 헤더에서 얻은 한글 짧은 이름(예: `"히브리서"`).
+  권 이름은 `BOOKS_KO` 상수의 한글 이름(예: `"히브리서"`).
   `build.py`가 이 구조를 그대로 읽는다.
+
+**권 이름은 상수로 둔다.** 러닝 헤더에서 뽑으려던 원래 방안은 폐기한다. 실측 결과
+요한이서와 요한삼서는 분량이 짧아 시작 페이지 하나로 끝나는데, 권 시작 페이지에는
+러닝 헤더가 없다. 즉 이 두 권은 문서 어디에도 러닝 헤더가 없어 64개만 얻어진다.
+66줄짜리 상수가 헤더를 긁는 휴리스틱보다 짧고 확실하다.
 
 - [ ] **Step 1: 실패하는 테스트 작성**
 
 `tests/test_parse_bible.py` 끝에 추가:
 
 ```python
-import json
-from pathlib import Path
+import re
 
-from parse_bible import book_short_names, build_bible, load_expected_structure
+from parse_bible import BOOKS_KO, build_bible, load_expected_structure
 
 
-def test_book_short_names_finds_all_66():
-    names = book_short_names(fitz.open(BIBLE_PDF))
-    assert len(names) == 66
-    assert names[0] == "창세기"
-    assert names[-1] == "요한계시록"
-    # 단일 장 책은 러닝 헤더에 장 번호가 없다. 누락되기 쉬운 지점이다.
-    for n in ("오바댜", "빌레몬서"):
-        assert n in names
+def test_books_ko_is_the_canon():
+    assert len(BOOKS_KO) == 66
+    assert BOOKS_KO[0] == "창세기"
+    assert BOOKS_KO[38] == "말라기"   # 구약 마지막
+    assert BOOKS_KO[39] == "마태복음"  # 신약 첫 권
+    assert BOOKS_KO[-1] == "요한계시록"
+    assert len(set(BOOKS_KO)) == 66   # 중복 없음
 
 
 def test_expected_structure_matches_known_kjv_totals():
@@ -366,16 +403,29 @@ def test_build_bible_matches_english_structure():
     assert len(bible) == 66
     total = sum(len(v) for ch in bible.values() for v in ch.values())
     assert total == 31102
-    assert bible["창세기"]["1"]["1"].startswith("처음에")
+    assert bible["창세기"]["1"]["1"].startswith("처음에 하나님께서")
     assert "믿음은" in bible["히브리서"]["11"]["1"]
-    # 어느 절도 비어 있지 않다
     assert all(v.strip() for ch in bible.values() for vs in ch.values() for v in vs.values())
+
+
+def test_no_chapter_heading_leaked_into_verses():
+    # 장 제목이 앞 절 끝에 붙는 오염은 절 수 검증을 통과해 버린다.
+    # 각 권 마지막 장 마지막 절을 훑어 "제 N 장"/"제 N 편" 잔재를 잡는다.
+    bible = build_bible()
+    leaked = [
+        f"{book} {ch}:{v}"
+        for book, chapters in bible.items()
+        for ch, verses in chapters.items()
+        for v, text in verses.items()
+        if re.search(r"제\s*\d+\s*[장편]", text)
+    ]
+    assert leaked == [], f"장 제목이 본문에 섞였다: {leaked[:10]}"
 ```
 
 - [ ] **Step 2: 테스트를 돌려 실패를 확인**
 
 Run: `python -m pytest tests/test_parse_bible.py -v`
-Expected: FAIL — `ImportError: cannot import name 'book_short_names' from 'parse_bible'`
+Expected: FAIL — `ImportError: cannot import name 'BOOKS_KO' from 'parse_bible'`
 
 - [ ] **Step 3: 구현 추가**
 
@@ -387,35 +437,25 @@ import json
 OUT_JSON = Path(__file__).parent / "bible" / "kjv_ko.json"
 EN_JSON = Path(__file__).parent / "bible" / "kjv_en.json"
 
-# 러닝 헤더는 "창세기 12"처럼 장 번호가 붙거나, 단일 장 책은 "오바댜"처럼 이름만 온다.
-HEADER_LINE = re.compile(r"^(\D+?)\s*\d*$")
-
-
-def book_short_names(doc: fitz.Document) -> list[str]:
-    """러닝 헤더에서 권의 한글 짧은 이름을 등장 순서대로 뽑는다.
-
-    러닝 헤더는 장 번호가 한 장씩 어긋나 있어 장 판단에는 못 쓰지만,
-    권 이름을 얻는 용도로는 신뢰할 수 있다.
-    """
-    names: list[str] = []
-    for page in doc:
-        for block in page.get_text("dict")["blocks"]:
-            if block.get("type") != 0:
-                continue
-            for ln in block["lines"]:
-                if ln["bbox"][1] >= HEADER_Y:
-                    continue
-                text = "".join(s["text"] for s in ln["spans"]).strip()
-                m = HEADER_LINE.match(text)
-                if not m:
-                    continue
-                name = m.group(1).strip()
-                if not name or name in names:
-                    continue
-                names.append(name)
-        if len(names) == 66:
-            break
-    return names
+# 정경 순서대로 나열한 흠정역 권 이름. kjv_en.json의 권 순서와 1:1로 대응한다.
+# 러닝 헤더에서 뽑지 않는 이유: 요한이서·요한삼서는 시작 페이지 하나로 끝나는데
+# 권 시작 페이지에는 러닝 헤더가 없어 문서 어디에도 두 권의 헤더가 존재하지 않는다.
+BOOKS_KO = [
+    "창세기", "출애굽기", "레위기", "민수기", "신명기",
+    "여호수아기", "사사기", "룻기", "사무엘기상", "사무엘기하",
+    "열왕기상", "열왕기하", "역대기상", "역대기하", "에스라",
+    "느헤미야기", "에스더기", "욥기", "시편", "잠언",
+    "전도서", "솔로몬의 아가", "이사야서", "예레미야서", "예레미야 애가",
+    "에스겔서", "다니엘서", "호세아", "요엘", "아모스",
+    "오바댜", "요나", "미가", "나훔", "하박국",
+    "스바냐", "학개", "스가랴", "말라기",
+    "마태복음", "마가복음", "누가복음", "요한복음", "사도행전",
+    "로마서", "고린도전서", "고린도후서", "갈라디아서", "에베소서",
+    "빌립보서", "골로새서", "데살로니가전서", "데살로니가후서", "디모데전서",
+    "디모데후서", "디도서", "빌레몬서", "히브리서", "야고보서",
+    "베드로전서", "베드로후서", "요한일서", "요한이서", "요한삼서",
+    "유다서", "요한계시록",
+]
 
 
 def load_expected_structure() -> list[dict[int, int]]:
@@ -430,10 +470,8 @@ def load_expected_structure() -> list[dict[int, int]]:
 def build_bible() -> dict[str, dict[str, dict[str, str]]]:
     """PDF 전체를 파싱해 권-장-절 구조를 만들고 영어 KJV와 대조한다."""
     doc = fitz.open(BIBLE_PDF)
-    names = book_short_names(doc)
+    names = BOOKS_KO
     expected = load_expected_structure()
-    if len(names) != 66:
-        raise ValueError(f"권 이름을 {len(names)}개만 찾았다. 66개여야 한다: {names}")
 
     bible: dict[str, dict[str, dict[str, str]]] = {n: {} for n in names}
     bi = ci = 0                      # 현재 권 인덱스, 현재 장 인덱스(0-based)
@@ -513,13 +551,25 @@ if __name__ == "__main__":
 - [ ] **Step 4: 테스트를 돌려 통과를 확인**
 
 Run: `python -m pytest tests/test_parse_bible.py -v`
-Expected: 9개 테스트 모두 PASS
+Expected: 13개 테스트 모두 PASS (Task 2의 9개 + 이번 4개)
+
+`build_bible()`은 전체 1648쪽을 훑으므로 한 번에 30초 안팎 걸린다.
 
 실패는 대부분 다음 셋 중 하나다. 검증이 어긋난 첫 지점을 알려주므로 그 권·장을 직접 열어 확인한다.
 
-1. 권 이름을 66개 못 찾음 → `HEADER_LINE` 정규식이나 `HEADER_Y` 조정
-2. 특정 권의 절 수 불일치 → 그 권 시작 페이지에서 소제목·소개 블록이 본문으로 새어 들어왔는지 확인
+1. 특정 권의 절 수 불일치 → 그 권에서 크기 12.1이 아닌 절 시작이 있는지 확인.
+   집계상 크기 12.1 줄이 31,099개로 실제보다 3개 적으므로 예외가 존재한다
+   (예: 881쪽의 크기 10.0 절 시작). 그 줄을 찾아 `classify_lines`가 절 시작으로
+   받아들이도록 조건을 넓힌다.
+2. 장 제목 누출 (`test_no_chapter_heading_leaked_into_verses` 실패)
+   → `classify_lines`의 크기 필터가 12.5를 통과시키고 있다.
 3. 장 경계 오판 → 절 번호 리셋 로직 확인. 시편처럼 장이 많은 권에서 드러나기 쉽다.
+
+확인용 명령 — 특정 페이지의 크기·좌표를 그대로 찍어 본다:
+
+```bash
+python -c "import fitz; from parse_bible import BIBLE_PDF; d=fitz.open(BIBLE_PDF); [print(f\"{l['spans'][0]['size']:.1f} x={l['bbox'][0]:.0f} {''.join(s['text'] for s in l['spans'])[:40]}\") for b in d[881].get_text('dict')['blocks'] if b.get('type')==0 for l in b['lines']]"
+```
 
 - [ ] **Step 5: 실제로 실행해 JSON 생성**
 
@@ -1167,9 +1217,9 @@ git commit -m "docs: add weekly workflow README"
 | §5.3 대본 JSON 스키마 | Task 5 `REQUIRED`, `load_script` |
 | §5.4 topics.json | Task 5 Step 2 |
 | §6 주간 흐름 | Task 7 README |
-| §7.1–7.2 조판 구조 | Task 2 `classify_lines` |
-| §7.3 단일 장 책·헤더 불규칙 | Task 3 `HEADER_LINE`이 장 번호 없는 헤더 허용, 테스트로 오바댜·빌레몬서 확인 |
-| §7.4 순서로 권 대응 | Task 3 `book_short_names` + `expected[bi]` 인덱스 대응 |
+| §7.1–7.2 조판 구조 | Task 2 `classify_lines` (글자 크기 기준, 측정 표 근거) |
+| §7.3 단일 장 책·헤더 불규칙 | Task 3 `BOOKS_KO` 상수 — 러닝 헤더에 의존하지 않아 문제가 소멸 |
+| §7.4 순서로 권 대응 | Task 3 `BOOKS_KO[i]` ↔ `expected[i]` 인덱스 대응 |
 | §7.5 본문 범위 | Task 3 `if bi >= 66: return` |
 | §7.6 영어 KJV 검증 | Task 1 `fetch_kjv_en.py` assert, Task 3 `_validate` |
 | §8.1 TTS | Task 5 `synth`, `VOICE_KO`/`VOICE_EN` |
