@@ -75,3 +75,48 @@ def test_drops_numbered_list_items_not_verse_starts(doc):
     # 절 번호로 잡히면 안 된다.
     starts = [l.verse_no for l in classify_lines(doc[1578]) if l.verse_no is not None]
     assert starts == []
+
+
+import re
+
+from parse_bible import BOOKS_KO, build_bible, load_expected_structure
+
+
+def test_books_ko_is_the_canon():
+    assert len(BOOKS_KO) == 66
+    assert BOOKS_KO[0] == "창세기"
+    assert BOOKS_KO[38] == "말라기"   # 구약 마지막
+    assert BOOKS_KO[39] == "마태복음"  # 신약 첫 권
+    assert BOOKS_KO[-1] == "요한계시록"
+    assert len(set(BOOKS_KO)) == 66   # 중복 없음
+
+
+def test_expected_structure_matches_known_kjv_totals():
+    expected = load_expected_structure()
+    assert len(expected) == 66
+    assert sum(sum(ch.values()) for ch in expected) == 31102
+    assert sum(expected[0].values()) == 1533  # 창세기
+
+
+def test_build_bible_matches_english_structure():
+    bible = build_bible()  # 구조가 어긋나면 예외를 던진다
+    assert len(bible) == 66
+    total = sum(len(v) for ch in bible.values() for v in ch.values())
+    assert total == 31102
+    assert bible["창세기"]["1"]["1"].startswith("처음에 하나님께서")
+    assert "믿음은" in bible["히브리서"]["11"]["1"]
+    assert all(v.strip() for ch in bible.values() for vs in ch.values() for v in vs.values())
+
+
+def test_no_chapter_heading_leaked_into_verses():
+    # 장 제목이 앞 절 끝에 붙는 오염은 절 수 검증을 통과해 버린다.
+    # 각 권 마지막 장 마지막 절을 훑어 "제 N 장"/"제 N 편" 잔재를 잡는다.
+    bible = build_bible()
+    leaked = [
+        f"{book} {ch}:{v}"
+        for book, chapters in bible.items()
+        for ch, verses in chapters.items()
+        for v, text in verses.items()
+        if re.search(r"제\s*\d+\s*[장편]", text)
+    ]
+    assert leaked == [], f"장 제목이 본문에 섞였다: {leaked[:10]}"

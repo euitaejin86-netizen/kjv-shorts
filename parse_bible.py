@@ -31,6 +31,7 @@ VERSE_NO 정규식의 (?!\.): 부록 목차(1578쪽)의 "1. 킹제임스 성경�
 세대들은" 등). 이 부정 전방탐색은 숫자 뒤에 마침표가 오는 목록 항목을 절
 시작에서 제외한다.
 """
+import json
 import re
 from pathlib import Path
 from typing import NamedTuple
@@ -39,6 +40,29 @@ import fitz
 
 SOURCE_DIR = Path(r"C:\Users\uieta\KEEPBIBLE\킹제임스 자료모음")
 BIBLE_PDF = SOURCE_DIR / "(KJV 성경 흠정역(한글)) 큰글자 성경 신구약 부록 2025 최적화.pdf"
+
+OUT_JSON = Path(__file__).parent / "bible" / "kjv_ko.json"
+EN_JSON = Path(__file__).parent / "bible" / "kjv_en.json"
+
+# 정경 순서대로 나열한 흠정역 권 이름. kjv_en.json의 권 순서와 1:1로 대응한다.
+# 러닝 헤더에서 뽑지 않는 이유: 요한이서·요한삼서는 시작 페이지 하나로 끝나는데
+# 권 시작 페이지에는 러닝 헤더가 없어 문서 어디에도 두 권의 헤더가 존재하지 않는다.
+BOOKS_KO = [
+    "창세기", "출애굽기", "레위기", "민수기", "신명기",
+    "여호수아기", "사사기", "룻기", "사무엘기상", "사무엘기하",
+    "열왕기상", "열왕기하", "역대기상", "역대기하", "에스라",
+    "느헤미야기", "에스더기", "욥기", "시편", "잠언",
+    "전도서", "솔로몬의 아가", "이사야서", "예레미야서", "예레미야 애가",
+    "에스겔서", "다니엘서", "호세아", "요엘", "아모스",
+    "오바댜", "요나", "미가", "나훔", "하박국",
+    "스바냐", "학개", "스가랴", "말라기",
+    "마태복음", "마가복음", "누가복음", "요한복음", "사도행전",
+    "로마서", "고린도전서", "고린도후서", "갈라디아서", "에베소서",
+    "빌립보서", "골로새서", "데살로니가전서", "데살로니가후서", "디모데전서",
+    "디모데후서", "디도서", "빌레몬서", "히브리서", "야고보서",
+    "베드로전서", "베드로후서", "요한일서", "요한이서", "요한삼서",
+    "유다서", "요한계시록",
+]
 
 HEADER_Y = 30.0          # 이보다 위는 페이지 번호·러닝 헤더
 VERSE_SIZE = 12.1        # 절 시작 줄의 글자 크기
@@ -49,6 +73,20 @@ GAP_LEFT = 100.0         # 좌단·우단 사이 여백 시작 x
 GAP_RIGHT = 200.0        # 좌단·우단 사이 여백 끝 x (권 제목이 이 여백에 찍힌다)
 
 VERSE_NO = re.compile(r"^(\d+)(?!\.)\s*¶?\s*")
+
+# 실측으로 확인된, 크기 필터를 벗어나는 절 시작 예외 3건 (페이지 번호는 0-based
+# fitz 인덱스, 즉 page.number). 크기 12.1 절 시작을 전수 집계하면 31,099줄로
+# 실제 31,102절보다 3개 적은데, 그 차이가 이 세 줄이다. 크기 범위 자체를
+# 넓히면 서문·각주처럼 숫자로 시작하는 무관한 문단까지 절 시작으로 오인하므로
+# (실측 결과 30건 이상 오탐), 위치가 확인된 이 세 줄만 예외로 둔다.
+#   96쪽 출애굽기 6:3   — 9.96 (정상은 12.1)
+#   881쪽 이사야서 26:5 — 9.96
+#   1135쪽 미가서 1:2   — 11.22 (정상 이어짐 크기 대역과 겹쳐 이어짐으로 오분류됨)
+VERSE_SIZE_EXCEPTIONS = {
+    (96, "3 내가 아브라함과 이삭과 야곱에"),
+    (881, "5 ¶ 그분께서 높은 곳에 거하는"),
+    (1135, "2 너희 모든 백성들아"),
+}
 
 
 class Line(NamedTuple):
@@ -72,6 +110,12 @@ def classify_lines(page: fitz.Page) -> list[Line]:
             size = ln["spans"][0]["size"]
             is_verse = abs(size - VERSE_SIZE) <= SIZE_TOL
             is_body = BODY_SIZE_MIN <= size < VERSE_SIZE - SIZE_TOL
+            if not is_verse and any(
+                text.startswith(prefix)
+                for pg, prefix in VERSE_SIZE_EXCEPTIONS
+                if pg == page.number
+            ):
+                is_verse = True
             if not (is_verse or is_body):
                 continue  # 장 제목(12.5), 소제목(10.4), 표제(10.3), 소개(10.2), 장식
             raw.append((x0, ln["bbox"][1], text, is_verse))
@@ -89,3 +133,108 @@ def classify_lines(page: fitz.Page) -> list[Line]:
             else:
                 out.append(Line(text.replace("¶", "").strip(), None))
     return out
+
+
+def load_expected_structure() -> list[dict[int, int]]:
+    """영어 KJV에서 권별 {장번호: 절수} 표를 만든다. 한글 파싱의 정답지다."""
+    data = json.loads(EN_JSON.read_text(encoding="utf-8"))
+    return [
+        {c["chapter"]: len(c["verses"]) for c in book["chapters"]}
+        for book in data["books"]
+    ]
+
+
+def build_bible() -> dict[str, dict[str, dict[str, str]]]:
+    """PDF 전체를 파싱해 권-장-절 구조를 만들고 영어 KJV와 대조한다."""
+    doc = fitz.open(BIBLE_PDF)
+    names = BOOKS_KO
+    expected = load_expected_structure()
+
+    bible: dict[str, dict[str, dict[str, str]]] = {n: {} for n in names}
+    bi = ci = 0                      # 현재 권 인덱스, 현재 장 인덱스(0-based)
+    prev_verse = 0
+    buf: list[str] = []              # 현재 절의 줄 조각
+    cur: tuple[str, str, str] | None = None   # (권, 장, 절)
+
+    # 성경 본문은 요한계시록 22:21에서 끝나고 그 뒤로 부록·연대표·MEMO 페이지가
+    # 이어진다. 절 번호가 1로 리셋되는 지점을 찾는 아래 로직만으로는 부록에서
+    # 리셋이 일어나지 않는 한 반복이 멈추지 않아 부록 텍스트가 마지막 절
+    # (계시록 22:21)의 이어지는 줄로 조용히 흘러든다. 마지막 권의 마지막
+    # 장·절에 도달하면 그 페이지까지만 마저 읽고 이후 페이지는 보지 않는다.
+    last_chapter_no = max(expected[-1])
+    last_verse_no = expected[-1][last_chapter_no]
+
+    def flush():
+        if cur is not None:
+            book, chap, verse = cur
+            bible[book].setdefault(chap, {})[verse] = " ".join(buf).strip()
+
+    reached_end = False
+    for page in doc:
+        for line in classify_lines(page):
+            if line.verse_no is None:
+                buf.append(line.text)
+                continue
+
+            flush()
+            n = line.verse_no
+
+            if n == 1 and prev_verse != 0:
+                # 절이 1로 리셋됐다. 현재 권의 장을 다 채웠으면 다음 권, 아니면 다음 장.
+                if ci + 1 >= len(expected[bi]):
+                    bi += 1
+                    ci = 0
+                    if bi >= 66:
+                        flush()
+                        _validate(bible, names, expected)
+                        return bible
+                else:
+                    ci += 1
+
+            cur = (names[bi], str(ci + 1), str(n))
+            buf = [line.text]
+            prev_verse = n
+
+            if bi == 65 and ci + 1 == last_chapter_no and n == last_verse_no:
+                reached_end = True  # 66권 전부 완결. 이 페이지만 마저 읽고 멈춘다.
+
+        if reached_end:
+            break
+
+    flush()
+    _validate(bible, names, expected)
+    return bible
+
+
+def _validate(bible, names, expected):
+    """영어 KJV 구조와 한 절도 어긋나지 않는지 확인한다.
+
+    잘못 파싱된 구절은 조용히 통과하면 그대로 영상이 되어 공개된다.
+    이 검증은 생략할 수 없다.
+    """
+    for i, name in enumerate(names):
+        got, want = bible[name], expected[i]
+        if len(got) != len(want):
+            raise ValueError(f"{name}: 장 수 {len(got)}, 기대 {len(want)}")
+        for chap, want_n in want.items():
+            verses = got.get(str(chap))
+            if verses is None:
+                raise ValueError(f"{name} {chap}장이 없다")
+            if len(verses) != want_n:
+                raise ValueError(f"{name} {chap}장: 절 수 {len(verses)}, 기대 {want_n}")
+            for v in range(1, want_n + 1):
+                text = verses.get(str(v))
+                if not text or not text.strip():
+                    raise ValueError(f"{name} {chap}:{v} 본문이 비어 있다")
+
+
+def main():
+    bible = build_bible()
+    OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    OUT_JSON.write_text(json.dumps(bible, ensure_ascii=False), encoding="utf-8")
+    total = sum(len(v) for ch in bible.values() for v in ch.values())
+    print(f"wrote {OUT_JSON} ({len(bible)} books, {total} verses)")
+
+
+if __name__ == "__main__":
+    main()
