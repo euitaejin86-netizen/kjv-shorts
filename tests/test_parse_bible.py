@@ -66,3 +66,12 @@ def test_two_column_reading_order(doc):
     # 좌단을 모두 읽은 뒤 우단으로 넘어가야 절 번호가 단조 증가한다.
     starts = [l.verse_no for l in classify_lines(doc[1550]) if l.verse_no is not None]
     assert starts == sorted(starts)
+
+
+def test_drops_numbered_list_items_not_verse_starts(doc):
+    # 1578쪽은 부록 목차로 "1. 킹제임스 성경과 틴데일" 같은 번호 목록이
+    # 절 시작과 같은 크기(12.18)로 찍혀 있다. 숫자 뒤에 마침표가 오는
+    # 목록 항목은 절 시작("1 text", "1 ¶ text")과 형태가 다르므로
+    # 절 번호로 잡히면 안 된다.
+    starts = [l.verse_no for l in classify_lines(doc[1578]) if l.verse_no is not None]
+    assert starts == []
