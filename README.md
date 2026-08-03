@@ -77,6 +77,34 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
    }
    ```
 
+   ### 한글-영어 권 대응
+
+   `bible/kjv_ko.json`과 `bible/kjv_en.json`은 형태가 다르다.
+
+   - `kjv_ko.json`: `{한글 권 이름: {장(str): {절(str): 본문}}}`
+   - `kjv_en.json`: `{"books": [{"name", "chapters": [{"chapter": int, "verses": [{"verse": int, "text"}]}]}]}`
+
+   이름이 일치하지 않는다 (영어는 "I Samuel", "Song of Solomon" 같은 로마숫자·별칭
+   표기를 쓴다). 두 파일을 잇는 유일한 연결고리는 **정경 순서 인덱스**다:
+   `parse_bible.py`의 `BOOKS_KO[n]`이 `kjv_en.json["books"][n]`과 같은 권이다.
+   구절 하나를 양쪽에서 맞춰 인용하는 것이 이 파이프라인에서 가장 자주 반복되는
+   작업이고, 여기서 잘못 짝지으면 서로 다른 구절이 나란히 실린 채 그대로
+   영상이 되어 공개된다.
+
+   예시 (히브리서 11:1 -> Hebrews 11:1):
+
+   ```python
+   import json
+   ko = json.loads(open("bible/kjv_ko.json", encoding="utf-8").read())
+   en = json.loads(open("bible/kjv_en.json", encoding="utf-8").read())
+
+   n = BOOKS_KO.index("히브리서")          # n == 57
+   verse_ko = ko["히브리서"]["11"]["1"]
+   book_en = en["books"][n]                # en["books"][57]["name"] == "Hebrews"
+   chapter = next(c for c in book_en["chapters"] if c["chapter"] == 11)
+   verse_en = next(v for v in chapter["verses"] if v["verse"] == 1)["text"]
+   ```
+
 2. 영상을 만든다:
 
    ```bash
