@@ -1,0 +1,8 @@
+out/
+corpus/
+bible/
+*.mp3
+*.ass
+__pycache__/
+token.json
+client_secret*.json
