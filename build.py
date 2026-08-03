@@ -45,15 +45,27 @@ async def _tts(text: str, voice: str, out: Path):
     await edge_tts.Communicate(text=text, voice=voice).save(str(out))
 
 
+def _run(cmd: list[str], cwd: Path | None = None) -> str:
+    """ffmpeg/ffprobe 실행 래퍼.
+
+    subprocess.run(check=True)의 CalledProcessError는 기본 str()에 stderr를
+    담지 않는다 (반환코드만 보인다). 실패하면 stderr를 그대로 예외 메시지에
+    담아 던져서 설계 문서 §10의 "FFmpeg 실패: stderr 그대로 노출"을 지킨다.
+    """
+    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    if result.returncode != 0:
+        raise RuntimeError(f"{' '.join(cmd)}\n{result.stderr}")
+    return result.stdout
+
+
 def synth(text: str, voice: str, out: Path) -> float:
     """문장 하나를 음성으로 만들고 실제 재생 길이를 초 단위로 돌려준다."""
     asyncio.run(_tts(text, voice, out))
-    probe = subprocess.run(
+    stdout = _run(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration",
          "-of", "default=nw=1:nk=1", str(out)],
-        capture_output=True, text=True, check=True,
     )
-    return float(probe.stdout.strip())
+    return float(stdout.strip())
 
 
 def ass_time(sec: float) -> str:
@@ -93,10 +105,9 @@ def build(script_path: Path) -> Path:
     try:
         # 1. 무음 카드 + 각 문장 음성 생성
         silence = work / "000_silence.mp3"
-        subprocess.run(
+        _run(
             ["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
              "-t", str(VERSE_CARD_SEC), "-q:a", "9", str(silence)],
-            check=True, capture_output=True,
         )
 
         pieces = [(silence, VERSE_CARD_SEC, f"{data['verse_ko']}\\N\\N— {data['ref']}")]
@@ -119,20 +130,19 @@ def build(script_path: Path) -> Path:
 
         # 3. 음성을 순서대로 이어 붙인다 (사이에 GAP_SEC 무음)
         gap = work / "gap.mp3"
-        subprocess.run(
+        _run(
             ["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
              "-t", str(GAP_SEC), "-q:a", "9", str(gap)],
-            check=True, capture_output=True,
         )
         listing = []
         for mp3, _dur, _text in pieces:
             listing.append(f"file '{mp3.name}'")
             listing.append(f"file '{gap.name}'")
         (work / "concat.txt").write_text("\n".join(listing) + "\n", encoding="utf-8")
-        subprocess.run(
+        _run(
             ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", "concat.txt",
              "-c", "copy", "audio.mp3"],
-            cwd=work, check=True, capture_output=True,
+            cwd=work,
         )
 
         # 4. Ken Burns 배경 + 자막 + 음성 -> MP4
@@ -140,27 +150,42 @@ def build(script_path: Path) -> Path:
         #    작업 디렉터리를 work로 두고 파일명만 넘긴다.
         shutil.copy(ROOT / data["bg"], work / "bg.jpg")
         vf = (
+            # 실제 해상도의 2배로 키운 뒤 크롭: zoompan이 확대해도 원본 경계가
+            # 드러나지 않도록 여유 픽셀을 확보한다 (대신 리샘플링으로 약간 부드러워진다).
             f"scale={W*2}:{H*2}:force_original_aspect_ratio=increase,"
             f"crop={W*2}:{H*2},"
+            # Ken Burns: 프레임마다 0.00035씩 확대 (fps=30 기준 초당 약 1%), 1.18배에서 멈춰
+            # 확대해도 크롭 여유분 밖(원본 경계)이 보이지 않게 한다.
             f"zoompan=z='min(1+0.00035*on,1.18)'"
             f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
             f":d=1:s={W}x{H}:fps={FPS},"
             f"subtitles=sub.ass"
         )
+        # 최종 출력은 out_mp4에 바로 쓰지 않고 work 안에서 먼저 만든다.
+        # 인코딩이 도중에 실패해도 (mp4 먹서는 파일을 초기화 시점에 미리 만들기 때문에)
+        # out/ 아래의 기존 결과물이 부분 인코딩된 파일로 덮어써지지 않는다.
+        tmp_mp4 = work / "out.mp4"
         subprocess.run(
+            # image2 디먹서는 -framerate를 안 주면 기본 25fps로 정지 이미지를 읽는다.
+            # 아래 zoompan의 fps=30과 어긋나면 (d=1이라 프레임 복제를 안 하므로)
+            # 출력 길이가 25/30배로 조용히 줄어든다 (오디오는 안 줄어서 뒷부분이 잘림).
+            # 반드시 FPS와 같은 값을 준다.
             ["ffmpeg", "-y", "-framerate", str(FPS), "-loop", "1", "-t", f"{total:.2f}", "-i", "bg.jpg",
              "-i", "audio.mp3", "-vf", vf,
              "-c:v", "libx264", "-preset", "medium", "-pix_fmt", "yuv420p",
-             "-c:a", "aac", "-b:a", "128k", "-shortest", str(out_mp4)],
+             "-c:a", "aac", "-b:a", "128k", "-shortest", str(tmp_mp4)],
             cwd=work, check=True,
         )
-        return out_mp4
-    finally:
-        # 성공했을 때만 치운다. 실패하면 원인 추적을 위해 남긴다.
-        if out_mp4.exists():
-            shutil.rmtree(work, ignore_errors=True)
-        else:
-            print(f"작업 파일을 남겨 둠: {work}", file=sys.stderr)
+        shutil.move(str(tmp_mp4), str(out_mp4))
+    except Exception:
+        # 이번 실행이 실패했을 때만 작업 파일을 남긴다. out_mp4.exists()는 이전 실행의
+        # 성공 결과물일 수도 있어 "이번 실행 성공 여부"의 근거가 될 수 없으므로 쓰지 않는다
+        # (finally에서 .exists()로 판단하면, 이전 성공 결과가 남아있는 상태에서 재실행이
+        # 실패해도 성공으로 오판해 이번 실행의 작업 폴더를 지워버린다).
+        print(f"작업 파일을 남겨 둠: {work}", file=sys.stderr)
+        raise
+    shutil.rmtree(work, ignore_errors=True)
+    return out_mp4
 
 
 def main():
