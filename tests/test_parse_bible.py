@@ -77,6 +77,7 @@ def test_drops_numbered_list_items_not_verse_starts(doc):
     assert starts == []
 
 
+import hashlib
 import re
 
 from parse_bible import BOOKS_KO, build_bible, load_expected_structure
@@ -110,7 +111,7 @@ def test_build_bible_matches_english_structure():
 
 def test_no_chapter_heading_leaked_into_verses():
     # 장 제목이 앞 절 끝에 붙는 오염은 절 수 검증을 통과해 버린다.
-    # 각 권 마지막 장 마지막 절을 훑어 "제 N 장"/"제 N 편" 잔재를 잡는다.
+    # 66권 전체 31,102절을 훑어 "제 N 장"/"제 N 편" 잔재를 잡는다.
     bible = build_bible()
     leaked = [
         f"{book} {ch}:{v}"
@@ -148,6 +149,37 @@ def test_pins_malachi_4_6_and_revelation_22_21():
     assert bible["요한계시록"]["22"]["21"] == (
         "우리 주 예수 그리스도의 은혜가 너희 모두와 함께 있기를 원하노라. 아멘."
     )
+
+
+# 전체 코퍼스 체크섬. 절 4개(위 두 테스트)만으로는 31,102절 중 나머지가
+# 자릿수 필터·gap 대역·병합 로직이 바뀌어도 조용히 망가지는 것을 잡지 못한다
+# (40%로 잘린 절, 인접 절 맞바꿈, 이어지는 줄이 옆 절로 넘어감, 같은 길이의
+# 본문 치환 — 이 네 가지 뮤테이션 모두 오늘의 _validate를 통과한다).
+#
+# 연결 순서: BOOKS_KO 권 순서 -> 각 권 안에서 장 번호 오름차순(정수 비교) ->
+# 각 장 안에서 절 번호 오름차순(정수 비교). 구분자 없이 절 본문 문자열을
+# 그대로 이어 붙인다. 이 순서를 벗어나면 체크섬이 다른 값이 나오므로,
+# 순서 자체가 체크섬의 일부다.
+#
+# 이 값이 바뀌면(의도된 변경이라면): 바뀐 절 몇 개를 실제로 눈으로 확인해
+# 정상적인 변경인지 확인한 뒤, 아래 두 상수를 새로 계산해 의도적으로 갱신한다.
+# "테스트가 실패하니 그냥 새 값으로 바꾼다"는 이 테스트의 존재 목적을 없앤다.
+EXPECTED_TOTAL_CHARS = 2_109_446
+EXPECTED_SHA256 = "303a32c18ddf5036e880e87e478e082483b0aff4ead12bf7efb2081b7c1baf74"
+
+
+def test_whole_corpus_checksum():
+    bible = build_bible()
+    parts = []
+    for book in BOOKS_KO:
+        chapters = bible[book]
+        for ch in sorted(chapters, key=int):
+            verses = chapters[ch]
+            for v in sorted(verses, key=int):
+                parts.append(verses[v])
+    concat = "".join(parts)
+    assert len(concat) == EXPECTED_TOTAL_CHARS
+    assert hashlib.sha256(concat.encode("utf-8")).hexdigest() == EXPECTED_SHA256
 
 
 def test_no_spurious_space_before_particle():

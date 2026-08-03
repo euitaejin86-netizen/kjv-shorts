@@ -68,7 +68,13 @@ HEADER_Y = 30.0          # 이보다 위는 페이지 번호·러닝 헤더
 VERSE_SIZE = 12.1        # 절 시작 줄의 글자 크기
 BODY_SIZE_MIN = 11.0     # 절 이어지는 줄의 최소 크기
 SIZE_TOL = 0.15          # 크기 비교 허용 오차
-COLUMN_SPLIT = 150.0     # 이보다 오른쪽은 우단
+COLUMN_SPLIT = 150.0     # 이보다 오른쪽은 우단. 이 값은 GAP_LEFT~GAP_RIGHT
+                          # ([100, 200)) 여백 대역 안에 있다: 그 대역의 줄은
+                          # classify_lines가 위에서 이미 continue로 버리므로,
+                          # 실제로는 100 <= x0 < 200인 줄이 여기 도달하는 일이
+                          # 없다. 즉 이 상수는 도달 불가능하며 "튜닝"해도
+                          # 효과가 없다 — 값을 만지려면 먼저 GAP 필터부터
+                          # 이해해야 한다.
 GAP_LEFT = 100.0         # 좌단·우단 사이 여백 시작 x
 GAP_RIGHT = 200.0        # 좌단·우단 사이 여백 끝 x (권 제목이 이 여백에 찍힌다)
 
@@ -225,6 +231,16 @@ def build_bible() -> dict[str, dict[str, dict[str, str]]]:
                         return bible
                 else:
                     ci += 1
+
+            if n != 1 and n != prev_verse + 1:
+                # 절 번호가 이전 절의 다음 번호가 아니다: 같은 번호 재사용(중복)
+                # 또는 역순이다. 이 검사가 없으면 스퓨리어스 절 시작이 같은 장
+                # 안의 기존 절 번호를 그대로 덮어써도(dict 대입) 길이 검증과
+                # range(1, want_n+1) 키 검증을 모두 통과한다 — 부록 목차 버그와
+                # 같은 부류의 무결성 구멍이다.
+                raise ValueError(
+                    f"{names[bi]} {ci+1}장: 절 번호 {prev_verse} -> {n} (중복·역순)"
+                )
 
             cur = (names[bi], str(ci + 1), str(n))
             buf = [line.text]
