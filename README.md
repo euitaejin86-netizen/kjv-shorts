@@ -51,6 +51,10 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
    `bg/README.md` 참고. 넣지 않아도 예시 대본(`scripts/example.json`)은 테스트용
    `bg/plain.jpg`로 바로 돌려볼 수 있다.
 
+   배경음악을 쓰려면 `bgm/`에 mp3를 넣는다. 저작권·Content ID 안전한 출처는
+   `bgm/README.md` 참고. 안 넣어도 된다 — 대본에 `bgm` 필드가 없으면 그냥
+   배경음악 없이 렌더링된다.
+
 5. 유튜브 업로드는 최초 실행 전에 한 번 Google Cloud Console 설정이 필요하다:
    `docs/youtube-setup.md` 참고.
 
@@ -78,7 +82,7 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
    `topics.json`의 `topics`는 제안용 후보 목록이고 `next`는 어디까지 다뤘는지
    기억하는 표시일 뿐이다. 둘 다 자동으로 주제를 고르는 근거가 아니다.
 
-   대본 JSON 스키마 (`build.py`가 이 6개 키를 검사한다):
+   대본 JSON 스키마 (`build.py`가 `bgm`을 뺀 6개 키는 반드시 검사한다):
 
    ```json
    {
@@ -87,9 +91,15 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
      "verse_ko": "한편 믿음은 바라는 것들의 실체요 보이지 않는 것들의 증거니",
      "verse_en": "Now faith is the substance of things hoped for, the evidence of things not seen.",
      "narration": ["문장 1.", "문장 2.", "문장 3."],
-     "bg": "bg/plain.jpg"
+     "bg": "bg/plain.jpg",
+     "bgm": "bgm/calm.mp3"
    }
    ```
+
+   `bgm`은 선택 필드다. 넣으면 자동으로 영상 길이만큼 반복 재생되고, 내레이션이
+   나오는 동안은 자동으로 소리가 낮아진다(더킹) — 곡을 미리 자르거나 볼륨을
+   맞출 필요가 없다. 자막에도 페이드 인/아웃이 자동으로 붙는다. 둘 다 코드
+   상수(`build.py`의 `BGM_VOLUME`, `SUB_FADE_MS`)라 손보고 싶으면 그 값만 바꾸면 된다.
 
    ### 한글-영어 권 대응
 
@@ -145,8 +155,8 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
 ## 주의
 
 - `킹제임스 자료모음` 폴더는 읽기 전용이다. 원본 PDF를 수정하지 않는다.
-- `bible/`, `corpus/`, `out/`, `bg/` 안의 이미지는 커밋하지 않는다 (저작권·용량,
-  `.gitignore`에 이미 반영되어 있다).
+- `bible/`, `corpus/`, `out/`, `bg/` 안의 이미지, `bgm/` 안의 음원은 커밋하지 않는다
+  (저작권·용량, `.gitignore`에 이미 반영되어 있다).
 - `client_secret.json`, `token.json`도 커밋하지 않는다 (`.gitignore`에 반영됨).
 - `parse_bible.py`의 검증이 실패하면 JSON을 쓰지 않고 멈춘다. 무시하고 진행하지 않는다.
   잘못 파싱된 구절은 그대로 영상이 되어 공개된다.
