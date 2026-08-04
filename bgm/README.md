@@ -22,3 +22,16 @@ mp3 파일을 여기에 넣는다.
 필터링해서 받는다.
 
 매 실행마다 새로 내려받지 않는다. 몇 곡 받아두고 주제 분위기에 맞춰 고른다.
+
+## 보유 곡 (라이선스·출처 기록)
+
+CC BY-SA처럼 저작자 표시가 필요한 곡을 쓰면, 업로드 시 영상 설명란에 아래 크레딧을
+반드시 넣는다 (`upload.py`가 `scripts/*.json`에서 설명을 자동 생성하므로, 크레딧이
+필요한 곡을 쓴 주에는 그 대본의 `narration` 끝이나 별도 필드로 직접 챙겨 넣는다).
+
+- **`amazing-grace-organ.mp3`** — Amazing Grace, 오르간 독주.
+  출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Amazing_Grace-organ.ogg)
+  (업로더 UninvitedCompany, 2005년). 라이선스: **CC BY-SA 2.5** — 영상 설명에
+  "Amazing Grace (organ) by UninvitedCompany, CC BY-SA 2.5,
+  commons.wikimedia.org/wiki/File:Amazing_Grace-organ.ogg" 한 줄 필요.
+  원본은 33초라 자동으로 반복 재생된다.

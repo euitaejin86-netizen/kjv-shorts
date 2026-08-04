@@ -72,6 +72,10 @@ def metadata(mp4: Path) -> tuple[str, str, list[str]]:
         f"{d['verse_en']}\n— KJV\n\n"
         + "\n".join(d["narration"])
     )
+    # "credit"은 선택 필드다. CC BY-SA 등 저작자 표시가 필요한 배경음악을 쓴 대본에
+    # 붙여 두면, 사람이 업로드 시 크레딧 넣는 걸 깜빡해도 여기서 자동으로 실린다.
+    if d.get("credit"):
+        description += f"\n\n{d['credit']}"
     return title, description, ["킹제임스", "흠정역", "성경", d["topic"]]
 
 
