@@ -11,6 +11,7 @@
 """
 import asyncio
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -104,6 +105,23 @@ def ass_time(sec: float) -> str:
     return f"{int(h)}:{int(m):02d}:{s:05.2f}"
 
 
+_REF_RE = re.compile(r"^(.+?)\s+(\d+):(\d+)$")
+
+
+def ref_display(ref: str) -> str:
+    """"창세기 3:24" 같은 콜론 표기 ref를 "창세기 3장 24절" 형식으로 바꾼다.
+
+    ref 필드 자체(콜론 표기)는 upload.py 제목 등 다른 곳에서도 그대로 쓰이므로
+    건드리지 않고, 화면에 보여줄 때만 이 함수를 거친다. 형식이 예상과 다르면
+    (책 이름에 공백이 여러 번 들어가는 등) 원문을 그대로 돌려준다.
+    """
+    m = _REF_RE.match(ref)
+    if not m:
+        return ref
+    book, chap, verse = m.groups()
+    return f"{book} {chap}장 {verse}절"
+
+
 def _ass_escape(text: str) -> str:
     """ASS Dialogue 줄에 원문을 넣기 전 이스케이프한다.
 
@@ -187,9 +205,10 @@ def build(script_path: Path) -> Path:
              "-t", str(VERSE_CARD_SEC), "-q:a", "9", str(silence)],
         )
 
+        ref_tag = _ass_escape(ref_display(data["ref"]))
         pieces = [(
             silence, VERSE_CARD_SEC,
-            f"{_ass_escape(data['verse_ko'])}\\N\\N— {_ass_escape(data['ref'])}",
+            f"{_ass_escape(data['verse_ko'])}\\N\\N— {ref_tag}",
         )]
         jobs = [(data["verse_en"], VOICE_EN), (data["verse_ko"], VOICE_KO)]
         jobs += [(s, VOICE_KO) for s in data["narration"]]
@@ -197,7 +216,12 @@ def build(script_path: Path) -> Path:
         for i, (text, voice) in enumerate(jobs, 1):
             mp3 = work / f"{i:03d}.mp3"
             dur = synth(text, voice, mp3)  # TTS는 원문 그대로 읽는다 (이스케이프 전)
-            pieces.append((mp3, dur, _ass_escape(text)))
+            # 영어/한글 구절 낭독(첫 두 조각)에만 주소를 붙인다. 해설(narration)은
+            # 이미 필요하면 문장 안에서 직접 구절을 언급하므로 매번 덧붙이지 않는다.
+            subtitle = _ass_escape(text)
+            if i <= 2:
+                subtitle = f"{subtitle}\\N({ref_tag})"
+            pieces.append((mp3, dur, subtitle))
 
         # 2. 자막 타이밍은 실제 음성 길이로 정한다
         segments, total = segment_timings(pieces)

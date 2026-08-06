@@ -17,6 +17,7 @@ from build import (
     ass_time,
     bg_list,
     bg_segment_durations,
+    ref_display,
     segment_timings,
     write_ass,
 )
@@ -110,3 +111,16 @@ def test_bg_segment_durations_single_image_gets_full_duration():
 def test_bg_segment_durations_rejects_zero_images():
     with pytest.raises(ValueError):
         bg_segment_durations(50.0, 0)
+
+
+def test_ref_display_converts_colon_to_hangul_counters():
+    assert ref_display("창세기 3:24") == "창세기 3장 24절"
+
+
+def test_ref_display_handles_multi_word_book_names():
+    assert ref_display("데살로니가전서 4:17") == "데살로니가전서 4장 17절"
+
+
+def test_ref_display_returns_original_on_unexpected_format():
+    # 형식이 예상과 다르면(콜론이 없는 등) 원문을 그대로 돌려주고 조용히 실패하지 않는다.
+    assert ref_display("서문") == "서문"
