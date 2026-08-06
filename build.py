@@ -5,6 +5,9 @@
   2. 영어 구절 낭독
   3. 한글 구절 낭독
   4. 묵상 해설 (문장 단위)
+
+배경(`bg`)은 이미지 한 장(문자열, 기존 대본과 하위 호환)이거나 여러 장(리스트)일
+수 있다. 여러 장이면 영상 길이를 장 수만큼 균등하게 나눠 순서대로 전환한다.
 """
 import asyncio
 import json
@@ -35,6 +38,15 @@ REQUIRED = ("topic", "ref", "verse_ko", "verse_en", "narration", "bg")
 # "bgm"은 선택 필드다: 없으면 기존처럼 배경음악 없이 렌더링한다 (하위 호환).
 
 
+def bg_list(data: dict) -> list[str]:
+    """대본의 "bg" 필드를 항상 리스트로 정규화한다.
+
+    문자열 한 개(기존 대본과 하위 호환)와 문자열 리스트(장면 전환용) 둘 다 받는다.
+    """
+    bg = data["bg"]
+    return [bg] if isinstance(bg, str) else list(bg)
+
+
 def load_script(path: Path) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
     missing = [k for k in REQUIRED if k not in data]
@@ -42,8 +54,12 @@ def load_script(path: Path) -> dict:
         raise ValueError(f"{path.name}: 필드 누락 {missing}")
     if not isinstance(data["narration"], list) or not data["narration"]:
         raise ValueError(f"{path.name}: narration은 비어 있지 않은 문장 배열이어야 한다")
-    if not (ROOT / data["bg"]).exists():
-        raise FileNotFoundError(f"{path.name}: 배경 이미지 없음 {data['bg']}")
+    bgs = bg_list(data)
+    if not bgs:
+        raise ValueError(f"{path.name}: bg는 최소 한 장 이상이어야 한다")
+    missing_bg = [b for b in bgs if not (ROOT / b).exists()]
+    if missing_bg:
+        raise FileNotFoundError(f"{path.name}: 배경 이미지 없음 {missing_bg}")
     if data.get("bgm") and not (ROOT / data["bgm"]).exists():
         raise FileNotFoundError(f"{path.name}: 배경음악 없음 {data['bgm']}")
     return data
@@ -121,6 +137,19 @@ def segment_timings(
     return segments, t
 
 
+def bg_segment_durations(total: float, n: int) -> list[float]:
+    """total 초를 배경 이미지 n장에 최대한 고르게 나눈다.
+
+    마지막 조각이 나머지를 흡수해 합이 total과 정확히 같도록 한다 (반올림
+    오차로 마지막 배경이 일찍 잘리거나 영상 끝에 검은 프레임이 남는 것을 막는다).
+    ffmpeg 호출 없이 테스트할 수 있게 순수 함수로 분리한다.
+    """
+    if n <= 0:
+        raise ValueError("n은 1 이상이어야 한다")
+    base = total / n
+    return [base] * (n - 1) + [total - base * (n - 1)]
+
+
 def write_ass(segments: list[tuple[float, float, str]], path: Path):
     """자막 파일을 만든다. drawtext는 한글 자동 줄바꿈이 안 되므로 ASS를 쓴다."""
     head = f"""[Script Info]
@@ -192,30 +221,47 @@ def build(script_path: Path) -> Path:
             cwd=work,
         )
 
-        # 4. Ken Burns 배경 + 자막 + 음성(+배경음악) -> MP4
+        # 4. Ken Burns 배경(1장 이상) + 자막 + 음성(+배경음악) -> MP4
         #    subtitles 필터는 Windows 절대경로의 콜론 이스케이프가 까다로우므로
         #    작업 디렉터리를 work로 두고 파일명만 넘긴다.
-        shutil.copy(ROOT / data["bg"], work / "bg.jpg")
+        bgs = bg_list(data)
+        n_bg = len(bgs)
+        seg_durs = bg_segment_durations(total, n_bg)
+
+        cmd = ["ffmpeg", "-y"]
+        video_parts = []
+        for i, (bg, seg_dur) in enumerate(zip(bgs, seg_durs)):
+            src = ROOT / bg
+            dst = work / f"bg{i}{src.suffix}"
+            shutil.copy(src, dst)
+            cmd += [
+                # image2 디먹서는 -framerate를 안 주면 기본 25fps로 정지 이미지를 읽는다.
+                # 아래 zoompan의 fps=30과 어긋나면 (d=1이라 프레임 복제를 안 하므로)
+                # 이 조각의 길이가 25/30배로 조용히 줄어든다. 반드시 FPS와 같은 값을 준다.
+                "-framerate", str(FPS), "-loop", "1", "-t", f"{seg_dur:.2f}", "-i", dst.name,
+            ]
+            video_parts.append(
+                # 실제 해상도의 2배로 키운 뒤 크롭: zoompan이 확대해도 원본 경계가
+                # 드러나지 않도록 여유 픽셀을 확보한다 (대신 리샘플링으로 약간 부드러워진다).
+                f"[{i}:v]scale={W*2}:{H*2}:force_original_aspect_ratio=increase,"
+                f"crop={W*2}:{H*2},"
+                # Ken Burns: 프레임마다 0.00035씩 확대 (fps=30 기준 초당 약 1%), 1.18배에서
+                # 멈춰 확대해도 크롭 여유분 밖(원본 경계)이 보이지 않게 한다. zoompan은 배경마다
+                # 독립적으로 걸리므로 장면이 바뀔 때마다 줌이 1배로 리셋된다 (의도된 동작).
+                f"zoompan=z='min(1+0.00035*on,1.18)'"
+                f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+                f":d=1:s={W}x{H}:fps={FPS}[v{i}]"
+            )
+        concat_in = "".join(f"[v{i}]" for i in range(n_bg))
+        # 배경이 1장이면 concat=n=1은 사실상 통과일 뿐이라 해가 없다 — 장 수와
+        # 무관하게 코드 경로 하나로 통일해 분기를 줄인다.
         video_chain = (
-            # 실제 해상도의 2배로 키운 뒤 크롭: zoompan이 확대해도 원본 경계가
-            # 드러나지 않도록 여유 픽셀을 확보한다 (대신 리샘플링으로 약간 부드러워진다).
-            f"[0:v]scale={W*2}:{H*2}:force_original_aspect_ratio=increase,"
-            f"crop={W*2}:{H*2},"
-            # Ken Burns: 프레임마다 0.00035씩 확대 (fps=30 기준 초당 약 1%), 1.18배에서 멈춰
-            # 확대해도 크롭 여유분 밖(원본 경계)이 보이지 않게 한다.
-            f"zoompan=z='min(1+0.00035*on,1.18)'"
-            f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-            f":d=1:s={W}x{H}:fps={FPS},"
-            f"subtitles=sub.ass[vout]"
+            ";".join(video_parts)
+            + f";{concat_in}concat=n={n_bg}:v=1:a=0[vraw];[vraw]subtitles=sub.ass[vout]"
         )
 
-        cmd = ["ffmpeg", "-y",
-               # image2 디먹서는 -framerate를 안 주면 기본 25fps로 정지 이미지를 읽는다.
-               # 아래 zoompan의 fps=30과 어긋나면 (d=1이라 프레임 복제를 안 하므로)
-               # 출력 길이가 25/30배로 조용히 줄어든다 (오디오는 안 줄어서 뒷부분이 잘림).
-               # 반드시 FPS와 같은 값을 준다.
-               "-framerate", str(FPS), "-loop", "1", "-t", f"{total:.2f}", "-i", "bg.jpg",
-               "-i", "audio.mp3"]
+        cmd += ["-i", "audio.mp3"]
+        narration_idx = n_bg
 
         bgm = data.get("bgm")
         if bgm:
@@ -223,22 +269,23 @@ def build(script_path: Path) -> Path:
             # -stream_loop -1: 배경음악이 total보다 짧아도 반복해서 채운다.
             # 뒤의 -shortest가 정확한 길이로 잘라준다.
             cmd += ["-stream_loop", "-1", "-i", "bgm.mp3"]
+            bgm_idx = n_bg + 1
             audio_chain = (
-                f"[2:a]volume={BGM_VOLUME}[bgm];"
-                # 내레이션(1:a)이 나오는 동안 배경음악을 사이드체인 컴프레션으로
-                # 추가로 낮춘다(더킹). threshold/ratio는 TTS 음성 레벨 기준의
-                # 경험적 기본값이다 — 다른 음원으로 바꾸면 귀로 다시 맞춘다.
-                f"[bgm][1:a]sidechaincompress=threshold=0.03:ratio=15:attack=5:release=400[bgm_duck];"
+                f"[{bgm_idx}:a]volume={BGM_VOLUME}[bgm];"
+                # 내레이션이 나오는 동안 배경음악을 사이드체인 컴프레션으로 추가로
+                # 낮춘다(더킹). threshold/ratio는 TTS 음성 레벨 기준의 경험적
+                # 기본값이다 — 다른 음원으로 바꾸면 귀로 다시 맞춘다.
+                f"[bgm][{narration_idx}:a]sidechaincompress=threshold=0.03:ratio=15:attack=5:release=400[bgm_duck];"
                 # amix는 기본(normalize=1)으로 클리핑 방지를 위해 각 입력을
                 # 자동으로 줄인다 — 그러면 bgm이 있을 때만 내레이션 음성 자체가
                 # 조용해져 bgm 유무에 따라 목소리 크기가 달라진다. normalize=0으로
                 # 꺼서 내레이션은 원래 볼륨 그대로 두고 이미 더킹된 bgm만 얹는다.
-                f"[1:a][bgm_duck]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[aout]"
+                f"[{narration_idx}:a][bgm_duck]amix=inputs=2:duration=first:dropout_transition=0:normalize=0[aout]"
             )
             filter_complex = video_chain + ";" + audio_chain
             cmd += ["-filter_complex", filter_complex, "-map", "[vout]", "-map", "[aout]"]
         else:
-            cmd += ["-filter_complex", video_chain, "-map", "[vout]", "-map", "1:a"]
+            cmd += ["-filter_complex", video_chain, "-map", "[vout]", "-map", f"{narration_idx}:a"]
 
         # 최종 출력은 out_mp4에 바로 쓰지 않고 work 안에서 먼저 만든다.
         # 인코딩이 도중에 실패해도 (mp4 먹서는 파일을 초기화 시점에 미리 만들기 때문에)

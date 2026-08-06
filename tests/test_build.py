@@ -11,7 +11,15 @@ from pathlib import Path
 
 import pytest
 
-from build import GAP_SEC, SUB_FADE_MS, ass_time, segment_timings, write_ass
+from build import (
+    GAP_SEC,
+    SUB_FADE_MS,
+    ass_time,
+    bg_list,
+    bg_segment_durations,
+    segment_timings,
+    write_ass,
+)
 
 
 def test_ass_time_formats_zero():
@@ -70,3 +78,35 @@ def test_write_ass_fades_every_line(tmp_path):
     # 지점부터 적용되므로, 텍스트 뒤에 붙으면 아무 효과가 없다).
     assert f",{fade_tag}one" in dialogue_lines[0]
     assert f",{fade_tag}two" in dialogue_lines[1]
+
+
+def test_bg_list_normalizes_single_string():
+    assert bg_list({"bg": "bg/plain.jpg"}) == ["bg/plain.jpg"]
+
+
+def test_bg_list_passes_through_list():
+    assert bg_list({"bg": ["bg/a.jpg", "bg/b.jpg"]}) == ["bg/a.jpg", "bg/b.jpg"]
+
+
+def test_bg_segment_durations_splits_evenly():
+    # 정확히 나눠떨어지는 경우: 세 조각이 완전히 동일해야 한다
+    assert bg_segment_durations(9.0, 3) == pytest.approx([3.0, 3.0, 3.0])
+
+
+def test_bg_segment_durations_last_segment_absorbs_remainder():
+    # 82.83 / 3 은 딱 떨어지지 않는다. 반올림 오차가 마지막 조각에 몰려야
+    # 앞쪽 조각들이 흔들리지 않고, 합계가 total과 정확히 같아야 영상 끝에
+    # 검은 프레임이나 조기 컷이 생기지 않는다.
+    durations = bg_segment_durations(82.83, 3)
+    assert len(durations) == 3
+    assert durations[0] == durations[1]
+    assert sum(durations) == pytest.approx(82.83)
+
+
+def test_bg_segment_durations_single_image_gets_full_duration():
+    assert bg_segment_durations(50.0, 1) == pytest.approx([50.0])
+
+
+def test_bg_segment_durations_rejects_zero_images():
+    with pytest.raises(ValueError):
+        bg_segment_durations(50.0, 0)
