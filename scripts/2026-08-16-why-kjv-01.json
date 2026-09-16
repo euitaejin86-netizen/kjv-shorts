@@ -1,0 +1,22 @@
+{
+  "topic": "왜 KJV인가 #1 - 성경 보존",
+  "ref": "시편 12:6",
+  "hook": "내가 읽는 성경, 정말 온전한 말씀일까?",
+  "verse_ko": "주의 말씀들은 순수한 말씀들이니 흙 도가니에서 정제하여 일곱 번 순수하게 만든 은 같도다.",
+  "verse_en": "The words of the Lord are pure words: as silver tried in a furnace of earth, purified seven times. (Psalm 12:6)",
+  "narration": [
+    "성경이 역본마다 이렇게 다르다면, 우리는 어떤 말씀을 믿고 있는 걸까요?",
+    "시편 12편 6절, 주의 말씀들은 도가니에서 일곱 번 정제한 순은 같습니다. 그리고 7절, 주께서 그것들을 영원히 보존하시리이다.",
+    "하나님은 자기 말씀을 보존하시겠다고 직접 약속하셨습니다.",
+    "그런데 역본마다 말씀이 다릅니다. 여긴 있고 저긴 없습니다. 같은 말씀도 계속 바뀌는 것이지요.",
+    "하늘과 땅은 없어지겠으나 내 말들은 결코 없어지지 아니합니다. 킹제임스 성경은 바로 이 보존된 말씀을 그대로 담고자 했습니다."
+  ],
+  "highlight": ["영원히 보존하시리이다", "결코 없어지지 아니합니다", "주께서 그것들을 영원히"],
+  "bg": [
+    "bg/video/candle_dark.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/amazing-grace-organ.mp3",
+  "credit": "Video clips: Pexels (free license); id 19997487, 5199738, 38735389. Music: Amazing Grace (organ) by UninvitedCompany, CC BY-SA 2.5."
+}

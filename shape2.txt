@@ -1,0 +1,1 @@
+ko_book keys sample: ['1', '2', '3']

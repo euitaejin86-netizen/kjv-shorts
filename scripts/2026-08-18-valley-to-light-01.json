@@ -1,0 +1,28 @@
+{
+  "topic": "한 절이 당신을 바꾼다 #1",
+  "template": "자극형",
+  "ref": "이사야 41:10",
+  "hook": "이 한 절이 당신을 바꾼다",
+  "hook_hl": ["당신을 바꾼다"],
+  "hook_bg": "bg/hook_valley_to_light.png",
+  "verses": [
+    {
+      "ref": "이사야 41:10",
+      "verse_ko": "두려워하지 말라 내가 너와 함께 함이라. 놀라지 말라 나는 네 하나님이라. 내가 너를 강하게 하리라, 참으로 내가 너를 도우리라.",
+      "verse_en": "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee.",
+      "highlight": ["두려워하지 말라", "내가 너와 함께", "네 하나님이라", "강하게 하리라"],
+      "narration": [
+        "이 말씀은 조건을 먼저 따지지 않습니다. 두려워하지 말라고 명령하기 전에, 하나님이 먼저 함께하신다고 약속하십니다.",
+        "왜 놀라지 않아도 되는지, 그 이유가 세 가지로 나옵니다. 함께 하시고, 우리 하나님이시고, 반드시 강하게 하시리라.",
+        "그 약속이 오늘 당신의 골짜기를 지나는 능력입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/sun_clouds.mp4",
+    "bg/video/candle_serene.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library).",
+  "outro": "두려워하지 말라, 내가 너와 함께\n· 바꾸는 말씀 시리즈 ·"
+}

@@ -1,0 +1,45 @@
+{
+  "topic": "왜 KJV인가 - 보존된 말씀의 약속",
+  "ref": "시편 12:6-7 · 마태복음 5:18 · 마태복음 24:35",
+  "hook": "내가 지금 읽는 성경, 정말 온전한 말씀일까?",
+  "outro": "보존된 말씀을 손에 들고\n· 왜 KJV인가 · 계속됩니다",
+  "verses": [
+    {
+      "ref": "시편 12:6-7",
+      "verse_ko": "주의 말씀들은 순수한 말씀들이니 흙 도가니에서 정제하여 일곱 번 순수하게 만든 은 같도다. 오 주여, 주께서 그것들을 지키시며 주께서 그것들을 이 세대로부터 영원히 보존하시리이다.",
+      "verse_en": "The words of the LORD are pure words: as silver tried in a furnace of earth, purified seven times. Thou shalt keep them, O LORD, thou shalt preserve them from this generation for ever.",
+      "narration": [
+        "하나님은 사람이 아니라, 말씀 그 자체를 보존하시겠다고 약속하셨습니다.",
+        "그런데 오늘날 여러 역본은 바로 이 구절에서 그것들을 그들로 바꾸어 놓았습니다."
+      ],
+      "highlight": ["그것들을 보존하시리이다", "영원히"]
+    },
+    {
+      "ref": "마태복음 5:18",
+      "verse_ko": "진실로 내가 너희에게 이르노니 하늘과 땅이 없어지기 전에는 율법에서 일점일획도 결코 없어지지 아니하고 마침내 다 성취되리라.",
+      "verse_en": "For verily I say unto you, Till heaven and earth pass, one jot or one tittle shall in no wise pass from the law, till all be fulfilled.",
+      "narration": [
+        "주님이 정하신 보존의 단위는 문장이 아니라, 글자 한 획이었습니다.",
+        "그런데 지금은 각주로 내려간 절, 통째로 빠진 절을 어렵지 않게 찾습니다."
+      ],
+      "highlight": ["일점일획도", "결코 없어지지 아니하고"]
+    },
+    {
+      "ref": "마태복음 24:35",
+      "verse_ko": "하늘과 땅은 없어지겠으나 내 말들은 없어지지 아니하리라.",
+      "verse_en": "Heaven and earth shall pass away, but my words shall not pass away.",
+      "narration": [
+        "주님은 내 말들이라고 복수로 말씀하셨습니다. 읽을 본문이 끊기지 않고 남아 있었다는 뜻입니다.",
+        "수백 년간 성도가 손에 들고 읽어 온 그 본문, 그것이 킹제임스 성경입니다."
+      ],
+      "highlight": ["내 말들이", "손에 들고 읽어 온 그 본문"]
+    }
+  ],
+  "bg": [
+    "bg/video/candle_dark.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library)."
+}

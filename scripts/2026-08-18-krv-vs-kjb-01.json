@@ -1,0 +1,37 @@
+{
+  "topic": "개역개정 vs 흠정역 #1 · 왕국인가 나라인가",
+  "template": "자극형",
+  "ref": "사도행전 1:6",
+  "hook": "한 단어가 교리를 바꾼다: '나라'가 아니라 '왕국'?",
+  "hook_voice": "한 단어가 교리를 바꿉니다. 성경이 말하는 것은 나라가 아니라, 왕국입니다.",
+  "hook_hl": ["한 단어가 교리를 바꾼다"],
+  "hook_bg": "bg/hook_nation_vs_kingdom.png",
+  "style": {
+    "styles": {
+      "hook": { "align": "bottom", "size": 82, "body": "white", "highlight": "gold", "margin_v": 560, "wrap": 10, "outline": 8, "shadow": 3 }
+    }
+  },
+  "verses": [
+    {
+      "ref": "사도행전 1:6",
+      "verse_ko": "주여 이때에 왕국이 이스라엘에게 다시 회복시키려 하시나이까?",
+      "verse_en": "Lord, wilt thou at this time restore again the kingdom to Israel?",
+      "highlight": ["왕국", "이스라엘에게"],
+      "narration": [
+        "개역개정은 이 구절을 '주께서 이스라엘 나라를 회복하심이 이때이니이까?'라고 옮겼습니다.",
+        "그런데 킹제임스 흠정역은 '주여, 이 때에 왕국을 이스라엘에게 다시 회복시키려 하시나이까?'라고 번역합니다.",
+        "한쪽은 '나라'로, 다른 쪽은 '왕국'으로 옮겼습니다. 이것은 비슷해 보이는 말 하나의 차이가 아닙니다.",
+        "원문의 '에두스'는 정치적인 한 국가가 아니라, 주의 왕국, 임금 되신 다윗의 후손이 통치하실 그 왕국을 가리킵니다.",
+        "'나라'로 옮기면 교회가 이스라엘을 대체했다는 오류, 즉 이스라엘 대체신학으로 빠지기 쉽습니다.",
+        "한 단어의 오역이 우리 신앙의 방향을 어디로 인도하는지, 이제 한번 가려보실 때가 됐습니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/shepherd_field.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "· 개역 vs 흠정역 ·\n왜 한 번역인가"
+}

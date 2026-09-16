@@ -1,0 +1,59 @@
+{
+  "id": "자극형",
+  "description": "벤치마크 공식: 상단 강조 자막 + 하단 보조 + 상하 레터박스. 인지부조화 훅과 함께 스크롤을 멈추게 하는 목적.",
+  "letters": {
+    "top": 110,
+    "bottom": 110
+  },
+  "colors": {
+    "white": "&H00FFFFFF&",
+    "gold": "&H00D7FF&",
+    "silver": "&H00D0D0D0&"
+  },
+  "styles": {
+    "hook": {
+      "align": "bottom",
+      "size": 96,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 460,
+      "wrap": 8,
+      "outline": 6,
+      "shadow": 2
+    },
+    "verse": {
+      "align": "top",
+      "size": 92,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 360,
+      "wrap": 10,
+      "outline": 6,
+      "shadow": 2
+    },
+    "narration": {
+      "align": "bottom",
+      "size": 80,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 200,
+      "wrap": 15,
+      "outline": 5,
+      "shadow": 2
+    },
+    "outro": {
+      "align": "center",
+      "size": 88,
+      "body": "gold",
+      "highlight": "white",
+      "margin_v": 0,
+      "wrap": 13,
+      "outline": 6,
+      "shadow": 2
+    }
+  },
+  "duration_target_s": [
+    43,
+    90
+  ]
+}

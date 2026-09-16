@@ -1,0 +1,31 @@
+{
+  "topic": "개역 vs 흠정역 #9 · 창세기 2:7 — 사람이 ‘생령’인가 ‘산 영혼’인가",
+  "template": "자극형",
+  "ref": "창세기 2:7",
+  "hook": "사람은 무엇으로 살아가는가? '혼'의 의미가 달라집니다.",
+  "hook_voice": "창세기 2장 7절, 한 단어의 차이가 우리 인간 이해를 바꿉니다. 함께 보시죠.",
+  "hook_hl": ["사람은", "살아 있는 혼"],
+  "hook_bg": "bg/hook_museum_vs_hand.png",
+  "verses": [
+    {
+      "ref": "창세기 2:7",
+      "verse_ko": "주 하나님께서 땅의 흙으로 사람을 지으시고 생명의 숨을 그의 콧구멍에 불어넣으시니 사람이 살아 있는 혼이 되니라.",
+      "verse_en": "And the Lord God formed man of the dust of the ground, and breathed into his nostrils the breath of life; and man became a living soul.",
+      "highlight": ["생명의 숨", "살아 있는 혼"],
+      "narration": [
+        "창세기 원문은 사람이 '살아 있는 혼(living soul)'이 되었다고 말합니다.",
+        "어떤 번역은 '산 영혼' 혹은 '생령'으로 옮기기도 합니다.",
+        "한 단어의 선택이 인간의 본성과 죽음·영혼 이해에 영향을 줍니다.",
+        "개역과 흠정역의 표현 차이를 비교해 보며 본문의 뉘앙스를 정확히 살펴봅니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/olive_grove.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "본문의 단어 하나가 교리를 형성합니다. 더 정확한 본문을 알고 싶다면 구독해 주세요",
+  "outro_voice": "본문의 단어 하나가 교리를 형성합니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

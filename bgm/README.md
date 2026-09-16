@@ -25,13 +25,31 @@ mp3 파일을 여기에 넣는다.
 
 ## 보유 곡 (라이선스·출처 기록)
 
-CC BY-SA처럼 저작자 표시가 필요한 곡을 쓰면, 업로드 시 영상 설명란에 아래 크레딧을
-반드시 넣는다 (`upload.py`가 `scripts/*.json`에서 설명을 자동 생성하므로, 크레딧이
-필요한 곡을 쓴 주에는 그 대본의 `narration` 끝이나 별도 필드로 직접 챙겨 넣는다).
+**사용 원칙:** 유튜브 쇼츠 배경음악이 목적이므로 **수익화(Content ID) 리스크가 없는 곡**만 쓴다.
+**이 폴더의 8곡은 전부 YouTube 오디오 라이브러리에서 받았다.** 오디오 라이브러리 곡은
+크레딧 불필요 + Content ID 클레임 불가이므로, 수익화에 안전하다. (그래도 관례상 각 대본의
+`credit` 필드에 곡명·작곡가를 남겨두면 나중에 소급 추적이 쉽다.) 오디오 라이브러리 밖의
+CC BY 곡을 나중에 쓸 땐 크레딧을 영상 설명란에 반드시 넣는다.
 
-- **`amazing-grace-organ.mp3`** — Amazing Grace, 오르간 독주.
-  출처: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Amazing_Grace-organ.ogg)
-  (업로더 UninvitedCompany, 2005년). 라이선스: **CC BY-SA 2.5** — 영상 설명에
-  "Amazing Grace (organ) by UninvitedCompany, CC BY-SA 2.5,
-  commons.wikimedia.org/wiki/File:Amazing_Grace-organ.ogg" 한 줄 필요.
-  원본은 33초라 자동으로 반복 재생된다.
+### ✅ 기본 사용 곡 (solemn worship 계열)
+- **`Prelude No. 12 - Chris Zabriskie.mp3` ← 현재 기본 BGM** — Prelude No. 12 (Chris Zabriskie).
+  잔잔한 피아노 솔로, 명상·묵상 분위기, 나레이션을 방해하지 않는다. 61초.
+  JSON `bgm` 값: `"bgm/Prelude No. 12 - Chris Zabriskie.mp3"`
+  출처: YouTube 오디오 라이브러리. 크레딧 불필요.
+  (대본 `credit`엔 "Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library)" 표기함.)
+
+### 🎯 예비 곡
+- **`Lone Harvest - Kevin MacLeod.mp3`** — Lone Harvest (Kevin MacLeod). 차분한 포크/현악, 묵상에
+  적합. 출처: YouTube 오디오 라이브러리. 크레딧 불필요. 60초.
+
+### ⚠️ 비추천 (예배 쇼츠엔 부적합 또는 라이선스 불확실)
+- **`An Upsetting Theme - The Descent - Kevin MacLeod.mp3`** — 호러/불안 분위기. 부적합.
+- **`Comfortable Mystery 3 - Film Noire - Kevin MacLeod.mp3`** — 탐정/누아르 풍. 부적합.
+- **`Troubled Bridges - Audionautix.mp3`** — 기타+신스 리듬, 나레이션 방해. 보통.
+- **`Auld Lang Syne - The U.S. Army Band.mp3`** — 새해·이별 연상. 보통.
+- **`Taps Bugle Call - The U.S. Army Band.mp3`** — 군 장례·취침 신호 연상. 라이선스는 안전(Public Domain)하나 맥락 부적합.
+- **`Rapid_Unscheduled_Disassembly_The_Grey_Room_Density_&_Time.mp3`** — 전자음악 + 라이선스 불확실(Content ID 리스크). 부적합.
+
+### 🚫 보류 (수익에 리스크)
+- **`amazing-grace-organ.mp3`** — CC BY-SA 2.5. Content ID 클레임 위험. 더 이상 기본으로
+  쓰지 않는다. 과거 대본엔 남아 있지만 새 영상에선 미사용 권장.

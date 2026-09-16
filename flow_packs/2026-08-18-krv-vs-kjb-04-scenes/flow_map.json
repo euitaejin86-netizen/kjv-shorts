@@ -1,0 +1,77 @@
+{
+  "base": "2026-08-18-krv-vs-kjb-04-scenes",
+  "save_dir": "C:/Users/uieta/KEEPBIBLE/kjv-shorts/bg/flow/2026-08-18-krv-vs-kjb-04-scenes",
+  "clip_count": 10,
+  "clips": [
+    {
+      "index": 0,
+      "file": "scene_00.mp4",
+      "role": "hook",
+      "narration": "아버지되신 하나님이 진짜 자기 아들에게 이렇게 말씀하셨습니다. '오 하나님이여, 주의 왕좌는 영원무궁하오며.' 잠깐, 하나님이 아들을 가리켜 하나님이라고 부르신다고요?",
+      "prompt": "dramatic cinematic background for a bold Bible verse hook, ancient scroll and radiant light. Camera: slow push-in toward the subject. Lighting: epic god rays breaking through clouds, awe-inspiring. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 1,
+      "file": "scene_01.mp4",
+      "role": "scene",
+      "narration": "킹제임스 흠정역은 이 구절에서 아버지 하나님이 아들에게 직접 말씀하시며 그를 가리켜 '오 하나님이여'라고 부르십니다.",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 2,
+      "file": "scene_02.mp4",
+      "role": "scene",
+      "narration": "그런데 개역개정은 같은 이 구절을 '아들에 관해서는'으로 옮겨,",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 3,
+      "file": "scene_03.mp4",
+      "role": "scene",
+      "narration": "마치 아들에 대해 바깥에서 언급하는 것처럼 보이게 합니다.",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 4,
+      "file": "scene_04.mp4",
+      "role": "scene",
+      "narration": "이 한 단어 차이는 결코 사소하지 않습니다.",
+      "prompt": "single flame nearly obscured by darkness. Camera: slow push-in toward the subject. Lighting: low-key dramatic lighting with deep shadows. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 5,
+      "file": "scene_05.mp4",
+      "role": "scene",
+      "narration": "흠정역에서는 아버지가 아들을 향해 직접 '하나님이여'라고 부르시는 것이 온전히 드러납니다.",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 6,
+      "file": "scene_06.mp4",
+      "role": "scene",
+      "narration": "곧 히브리서 1장은 아버지 하나님이 직접 자기 아들을 하나님이라고 확인하시는 장면입니다.",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 7,
+      "file": "scene_07.mp4",
+      "role": "scene",
+      "narration": "이것이 그리스도의 신성입니다.",
+      "prompt": "divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 8,
+      "file": "scene_08.mp4",
+      "role": "scene",
+      "narration": "같은 구절을 '언급'으로 흐리면, 성경이 선포한 아들의 신성이 무디어집니다.",
+      "prompt": "open King James Bible under warm cinematic light. Camera: slow push-in toward the subject. Lighting: warm candlelight, intimate and focused. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    },
+    {
+      "index": 9,
+      "file": "scene_09.mp4",
+      "role": "scene",
+      "narration": "번역이 결국 교리를 가르는 것입니다.",
+      "prompt": "open King James Bible under warm cinematic light. Camera: slow push-in toward the subject. Lighting: warm candlelight, intimate and focused. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks."
+    }
+  ]
+}

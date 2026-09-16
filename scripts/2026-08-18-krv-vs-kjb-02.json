@@ -1,0 +1,32 @@
+{
+  "topic": "개역 vs 흠정역 #2 · 왜 개역에는 '없음'이 붙은 구절이 있는가",
+  "template": "자극형",
+  "ref": "요한일서 5:7",
+  "hook": "당신의 성경에 '없음'이라고 찍힌 구절. 원래 아예 없었을까?",
+  "hook_voice": "성경 한가운데 '없음'이라고 표기된 구절이 있습니다. 원래 성경에 없던 것일까요?",
+  "hook_hl": ["원래 아예 없었을까"],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "요한일서 5:7",
+      "verse_ko": "하늘에 증언하는 세 분이 계시니 곧 아버지와 말씀과 성령님이시라. 또 이 세 분은 하나이시니라.",
+      "verse_en": "For there are three that bear record in heaven, the Father, the Word, and the Holy Ghost: and these three are one.",
+      "highlight": ["아버지와 말씀과 성령님", "세 분"],
+      "narration": [
+        "이 구절은 신약 성경에서 삼위일체를 직접 가르치는 가장 중요한 구절 중 하나입니다.",
+        "그런데 개역개정을 비롯한 한글 성경들은 이 구절을 '없음'이라 표기하고, 절 자체를 삭제해 버렸습니다.",
+        "핵심적인 이유는 번역한 사람이 택한 본문에 이미 그 구절이 없었기 때문입니다.",
+        "삼위일체 직접 구절을 제거하라고 권한 것은 19세기 웨스트콧과 호르트 같은 학자들이, 소수 사본 몇 개를 근거로 삼으면서였습니다.",
+        "오늘도 여러분 성경에 '없음'이 찍혀 있다는 것. 그것은 사람의 편집이, 보존된 말씀 중 일부를 빼앗아 갔다는 뜻입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "하나님이 보존하신 말씀, 한 줄씩 되돌리며 정확한 본문을 더 알고 싶다면 구독해 주세요",
+  "outro_voice": "하나님이 보존하신 말씀을 한 줄씩 되돌리며, 정확한 본문을 더 알고 싶으시다면 구독해 주세요."
+}

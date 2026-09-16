@@ -1,0 +1,31 @@
+{
+  "topic": "개역 vs 흠정역 #7 · 왕국을 먼저 구하라",
+  "template": "자극형",
+  "ref": "마태복음 6:33",
+  "hook": "그 한마디가 삶의 우선순위를 바꾼다: '왕국'을 먼저 구하라",
+  "hook_voice": "예수님은 이렇게 명령하셨습니다. 먼저 하나님의 왕국과 그 의를 구하라. 이것은 무슨 뜻일까요?",
+  "hook_hl": ["왕국", "먼저 구하라"],
+  "hook_bg": "bg/hook_nation_vs_kingdom.png",
+  "verses": [
+    {
+      "ref": "마태복음 6:33",
+      "verse_ko": "오히려 너희는 첫째로 하나님의 왕국과 그분의 의를 구하라. 그러면 그분께서 이 모든 것을 너희에게 더하시리라.",
+      "verse_en": "But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.",
+      "highlight": ["하나님의 왕국", "왕국"],
+      "narration": [
+        "여기서 'kingdom'을 '나라'로 옮기면 의미가 달라집니다.",
+        "킹제임스 전통은 'kingdom'을 그대로 '왕국'으로 번역하여 주권적 통치의 의미를 살립니다.",
+        "'왕국'은 단순한 영토나 현대적 국가가 아니라, 하나님의 통치와 그의 의가 우선되는 질서를 말합니다.",
+        "번역 한 단어가 실제 삶의 우선순위를 어떻게 바꾸는지 함께 생각해 보시죠."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4",
+    "bg/video/shepherd_field.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "하나님의 통치, 한 단어로 달라지는 우선순위를 더 알고 싶다면 구독해 주세요",
+  "outro_voice": "하나님의 통치, 한 단어로 달라지는 우선순위를 더 알고 싶으시면 구독해 주세요."
+}

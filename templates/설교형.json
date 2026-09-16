@@ -1,0 +1,59 @@
+{
+  "id": "설교형",
+  "description": "기존 방식(하단 자막 + 은은한 하이라이트)을 유지하되 레터박스로 안정감을 준다. 묵상·설교 톤에 어울리는 담백한 구성.",
+  "letters": {
+    "top": 90,
+    "bottom": 90
+  },
+  "colors": {
+    "white": "&H00FFFFFF&",
+    "gold": "&H00C8E0&",
+    "silver": "&H00D0D0D0&"
+  },
+  "styles": {
+    "hook": {
+      "align": "center",
+      "size": 96,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 0,
+      "wrap": 10,
+      "outline": 6,
+      "shadow": 2
+    },
+    "verse": {
+      "align": "top",
+      "size": 88,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 340,
+      "wrap": 11,
+      "outline": 6,
+      "shadow": 2
+    },
+    "narration": {
+      "align": "bottom",
+      "size": 82,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 180,
+      "wrap": 17,
+      "outline": 5,
+      "shadow": 2
+    },
+    "outro": {
+      "align": "center",
+      "size": 92,
+      "body": "gold",
+      "highlight": "white",
+      "margin_v": 0,
+      "wrap": 12,
+      "outline": 6,
+      "shadow": 2
+    }
+  },
+  "duration_target_s": [
+    40,
+    90
+  ]
+}

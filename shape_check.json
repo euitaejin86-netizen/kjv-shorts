@@ -1,0 +1,9 @@
+{
+  "ko_book_key": "요한계시록",
+  "ko_book_sample_shape": "<class 'dict'>",
+  "en_book_name": "Revelation of John",
+  "en_book_keys": [
+    "name",
+    "chapters"
+  ]
+}

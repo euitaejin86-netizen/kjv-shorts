@@ -1,0 +1,59 @@
+{
+  "id": "지식형",
+  "description": "상단 본문 중심 + 하단 해설. 절/말씀을 크게 띄우고 해설을 분리해 정보 전달에 집중.",
+  "letters": {
+    "top": 100,
+    "bottom": 120
+  },
+  "colors": {
+    "white": "&H00FFFFFF&",
+    "gold": "&H00D7FF&",
+    "silver": "&H00D0D0D0&"
+  },
+  "styles": {
+    "hook": {
+      "align": "top",
+      "size": 90,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 400,
+      "wrap": 12,
+      "outline": 6,
+      "shadow": 2
+    },
+    "verse": {
+      "align": "top",
+      "size": 96,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 280,
+      "wrap": 9,
+      "outline": 6,
+      "shadow": 2
+    },
+    "narration": {
+      "align": "bottom",
+      "size": 76,
+      "body": "white",
+      "highlight": "gold",
+      "margin_v": 220,
+      "wrap": 18,
+      "outline": 5,
+      "shadow": 2
+    },
+    "outro": {
+      "align": "center",
+      "size": 80,
+      "body": "gold",
+      "highlight": "white",
+      "margin_v": 0,
+      "wrap": 15,
+      "outline": 5,
+      "shadow": 2
+    }
+  },
+  "duration_target_s": [
+    45,
+    90
+  ]
+}

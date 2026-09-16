@@ -1,0 +1,28 @@
+{
+  "topic": "성경에서 가장 오해받은 절 #1",
+  "template": "자극형",
+  "ref": "시편 23:4",
+  "hook": "한 절로 오해받던 말씀",
+  "hook_hl": ["오해받던"],
+  "hook_bg": "bg/hook_misunderstood_verse.png",
+  "verses": [
+    {
+      "ref": "시편 23:4",
+      "verse_ko": "내가 사망의 음침한 골짜기로 다닐지라도 해를 두려워하지 않을 것은, 주께서 나와 함께 하심이라.",
+      "verse_en": "Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.",
+      "highlight": ["두려워하지 않을 것은", "나와 함께 하심"],
+      "narration": [
+        "이 절은 어둠의 골짜기를 두려워하라는 말씀이 아니라, 두려워하지 않을 이유를 알려주는 말씀입니다.",
+        "많은 사람이 두려워하지 말라는 명령만 외우지만, 이 말씀의 힘은 명령에 있지 않고 확신에 있습니다.",
+        "주께서 나와 함께 하신다는 확신, 그것이 골짜기를 지나는 능력입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/candle_dark.mp4",
+    "bg/video/sunrays_window.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library).",
+  "outro": "두려워하지 않을 이유\n· 오해받은 말씀 시리즈 ·"
+}

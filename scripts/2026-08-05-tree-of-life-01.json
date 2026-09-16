@@ -1,0 +1,19 @@
+{
+  "topic": "생명나무",
+  "ref": "창세기 3:24",
+  "verse_ko": "이렇게 그분께서 그 남자를 쫓아내시고 에덴동산 동쪽에 그룹들과 사방으로 도는 불타는 칼을 두사 생명나무의 길을 지키게 하시니라.",
+  "verse_en": "So he drove out the man; and he placed at the east of the garden of Eden Cherubims, and a flaming sword which turned every way, to keep the way of the tree of life.",
+  "narration": [
+    "창세기에서 사람이 죄를 지은 뒤, 하나님은 생명나무 앞에 불칼을 두어 길을 막으셨습니다.",
+    "그런데 나무를 없애지는 않으셨습니다. 지키셨습니다.",
+    "그리고 성경 마지막 책, 요한계시록에서 그 나무가 다시 등장합니다.",
+    "요한계시록 22장 14절. 그분의 명령들을 행하는 자들은 복이 있나니 이것은 그들이 생명나무에 이르는 권리를 소유하게 하며 그 문들을 지나 그 도시로 들어가게 하려 함이니라.",
+    "그럼 이 권리, 행위로 얻는 걸까요?",
+    "바로 앞 장, 21장 27절이 답합니다. 오직 어린양의 생명책에 기록된 자들만 들어가리라.",
+    "명령을 행하는 것은 자격이 아니라, 이미 그 책에 기록된 사람에게 나타나는 증거입니다.",
+    "그 칼을 치우신 분은 어린양이십니다. 나무는 처음부터, 다시 열어 주시려고 지키신 것이었습니다."
+  ],
+  "bg": ["bg/project2_entrance.png", "bg/project2_tree.jpg", "bg/project2_tree2.jpg"],
+  "bgm": "bgm/amazing-grace-organ.mp3",
+  "credit": "Music: Amazing Grace (organ) by UninvitedCompany, CC BY-SA 2.5, commons.wikimedia.org/wiki/File:Amazing_Grace-organ.ogg"
+}

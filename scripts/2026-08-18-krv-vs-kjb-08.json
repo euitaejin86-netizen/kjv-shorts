@@ -1,0 +1,32 @@
+{
+  "topic": "개역 vs 흠정역 #8 · 너희 선생은 한 분 곧 그리스도",
+  "template": "자극형",
+  "ref": "마태복음 23:8",
+  "hook": "'선생'이라 불리지 말라 — 한 분의 선생이 누구인지 압니까?",
+  "hook_voice": "예수님은 이렇게 말씀하셨습니다. 너희 선생은 한 분 곧 그리스도이니라. 이 말의 한 단어가 무엇을 지키는지 살펴봅니다.",
+  "hook_hl": ["한 분", "그리스도"],
+  "hook_bg": "bg/hook_christ_teacher.png",
+  "verses": [
+    {
+      "ref": "마태복음 23:8",
+      "verse_ko": "그러나 너희는 랍비라 불리지 말라. 너희 선생은 한 분 곧 그리스도이며 너희는 다 형제니라.",
+      "verse_en": "But be not ye called Rabbi: for one is your Master, even Christ; and all ye are brethren.",
+      "highlight": ["너희 선생", "그리스도"],
+      "narration": [
+        "예수님은 제자들에게 랍비라 불리지 말라고 하셨습니다.",
+        "KJV는 여기서 '한 분 곧 그리스도'를 분명히 적고 있습니다.",
+        "어떤 번역은 이 '그리스도' 표현을 축소하거나 다르게 옮겨 예수님의 직접적 권위를 흐리게 할 수 있습니다.",
+        "한 단어가 교리적 이해와 신앙의 권위를 지키는 데 얼마나 중요한지 생각해 보시죠."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4",
+    "bg/video/shepherd_field.mp4"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "예수님의 권위, 한 구절로 더 분명해집니다. 더 정확한 본문을 알고 싶다면 구독해 주세요",
+  "outro_voice": "예수님의 권위가 한 구절로 더 분명해집니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

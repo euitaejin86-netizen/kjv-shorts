@@ -1,0 +1,30 @@
+{
+  "topic": "개역 vs 흠정역 #10 · 히브리서 11:7 — 노아의 믿음과 번역 차이",
+  "template": "자극형",
+  "ref": "히브리서 11:7",
+  "hook": "노아는 어떻게 '믿음'으로 집을 구원했나? 한 문장의 의미가 달라집니다.",
+  "hook_voice": "히브리서 11장 7절, 노아의 믿음 이야기가 오늘 우리의 본문을 바꿉니다. 함께 보시죠.",
+  "hook_hl": ["노아", "믿음으로"],
+  "hook_bg": "bg/hook_misunderstood_verse.png",
+  "verses": [
+    {
+      "ref": "히브리서 11:7",
+      "verse_ko": "믿음으로 노아는 아직 보지 못한 일들에 대해 하나님으로부터 경고를 받고 두려움으로 움직여 방주를 예비함으로 자기 집을 구원하였으며 그것에 의해 세상을 정죄하고 믿음으로 말미암는 의의 상속자가 되었느니라.",
+      "verse_en": "By faith Noah, being warned of God of things not seen as yet, moved with fear, prepared an ark to the saving of his house; by the which he condemned the world, and became heir of the righteousness which is by faith.",
+      "highlight": ["믿음으로", "방주를 예비함"],
+      "narration": [
+        "히브리서의 원문은 노아의 행동을 '믿음으로' 설명합니다.",
+        "번역의 뉘앙스가 믿음의 성격(경고에 대한 순종 vs 단순한 기대)을 드러냅니다.",
+        "개역과 흠정역의 표현 차이를 비교해 보며 본문의 함의를 살펴봅니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/olive_grove.mp4",
+    "bg/video/shepherd_field.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "믿음의 작은 행동이 교리를 만듭니다. 더 정확한 본문을 알고 싶다면 구독해 주세요",
+  "outro_voice": "믿음의 작은 행동이 교리를 만듭니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

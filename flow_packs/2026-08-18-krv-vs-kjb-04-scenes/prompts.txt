@@ -1,0 +1,34 @@
+# 2026-08-18-krv-vs-kjb-04-scenes — Flow 복붙 프롬프트 (10개)
+# Flow(https://flow.google.com)에 한 줄씩 붙여넣고 9:16, 8초로 생성하세요.
+# 생성한 클립은 그냥 C:\Users\uieta\Downloads\googleflow 폴더에 저장하면
+# (이름 자동 매칭됨) 내가 bg/flow/<base>/로 옮기고 렌더까지 이어간다.
+
+### scene_00.mp4 — hook
+dramatic cinematic background for a bold Bible verse hook, ancient scroll and radiant light. Camera: slow push-in toward the subject. Lighting: epic god rays breaking through clouds, awe-inspiring. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_01.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_02.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_03.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_04.mp4 — scene
+single flame nearly obscured by darkness. Camera: slow push-in toward the subject. Lighting: low-key dramatic lighting with deep shadows. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_05.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_06.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_07.mp4 — scene
+divine golden light entering a dark sanctuary. Camera: slow push-in toward the subject. Lighting: warm divine golden light with volumetric rays. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_08.mp4 — scene
+open King James Bible under warm cinematic light. Camera: slow push-in toward the subject. Lighting: warm candlelight, intimate and focused. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.
+
+### scene_09.mp4 — scene
+open King James Bible under warm cinematic light. Camera: slow push-in toward the subject. Lighting: warm candlelight, intimate and focused. Vertical 9:16 cinematic video, 8 seconds, photorealistic, subtle film grain, no text, no captions, no people, no watermarks.

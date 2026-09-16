@@ -1,0 +1,5 @@
+ch21_ko type <class 'dict'>
+keys sample ['1', '2', '3', '4', '5']
+en_chapters type <class 'list'>
+ch21_en type <class 'dict'>
+keys ['chapter', 'verses']

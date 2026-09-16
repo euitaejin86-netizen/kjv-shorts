@@ -1,0 +1,28 @@
+{
+  "topic": "템플릿 테스트 자극형",
+  "ref": "마태복음 24:35",
+  "hook": "보존된 말씀은 박물관에 있을까, 내 손에 있을까?",
+  "verse_ko": "하늘과 땅은 없어지겠으나 내 말들은 없어지지 아니하리라.",
+  "verse_en": "Heaven and earth shall pass away, but my words shall not pass away.",
+  "narration": [
+    "주님은 내 뜻이라 하지 않으시고, 내 말들이라고 복수로 말씀하셨습니다.",
+    "말들이 남는다는 것은, 읽을 수 있는 본문이 어느 시대에도 끊기지 않고 있었다는 뜻입니다.",
+    "그렇다면 그 본문은 창고에 잠긴 소수의 사본이 아니라, 교회가 손에 들고 읽어 온 본문이어야 합니다.",
+    "수백 년간 성도의 손에서 그저 없는 적 없는 그 본문 위에 세워진 성경, 그것이 킹제임스 성경입니다.",
+    "이 해설 문장은 의도적으로 아주 길게 만들어서 글자수 제한 wrap 동작을 명확하게 확인해 보기 위한 테스트 문장입니다. 열다섯 글자가 넘어가면 자동으로 여러 줄로 나뉘어 자막이 화면 밖으로 넘치지 않게 됩니다."
+  ],
+  "highlight": [
+    "내 말들이",
+    "없어지지 내려하리라",
+    "손에 들고 읽어 온 본문"
+  ],
+  "bg": [
+    "bg/video/clouds_light.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_dark.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library).",
+  "outro": "손에 들고 읽을 수 있는 말씀\n· 왜 KJV인가 시리즈 ·",
+  "template": "자극형"
+}

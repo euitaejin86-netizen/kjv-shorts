@@ -1,0 +1,29 @@
+{
+  "topic": "창조의 기원 - 창세기 1:1",
+  "ref": "창세기 1:1",
+  "hook": "모든 시작은 어디에서 왔을까?",
+  "verses": [
+    {
+      "ref": "창세기 1:1",
+      "verse_ko": "처음에 하나님께서 하늘과 땅을 창조하시니라.",
+      "verse_en": "In the beginning God created the heaven and the earth.",
+      "narration": [
+        "성경은 모든 것의 시작을 이 한 문장으로 선언합니다. 처음에, 곧 시간과 공간과 물질이 있기 전의 순간부터 하나님이 계셨고, 그분이 그것들을 지으셨습니다.",
+        "과학이 우주의 시작을 겨우 더듬고 있을 때, 성경은 첫 줄에서 창조주를 이미 밝힙니다. 만물은 우연이 아니라 뜻 가운데, 말씀 가운데 생겨났습니다.",
+        "이 시작 위에 서 있으면 만물이 당연하지 않게 보입니다. 하늘과 땅은 지금도 창조주의 손 위에 떠 있습니다."
+      ],
+      "highlight": [
+        "처음에",
+        "창조주",
+        "말씀"
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/candle_dark.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library).",
+  "outro": "시작되신 말씀\n· 창세기 묵상 · 계속됩니다"
+}

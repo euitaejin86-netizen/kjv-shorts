@@ -1,0 +1,37 @@
+{
+  "topic": "보존된 말씀, 읽을 수 있는 이유 #1",
+  "template": "자극형",
+  "ref": "시편 12:6",
+  "hook": "하나님의 말씀은 박물관에 보관됐을까, 지금도 손에 들리고 있을까?",
+  "hook_hl": ["손에 들리고"],
+  "hook_bg": "bg/hook_museum_vs_hand.png",
+  "verses": [
+    {
+      "ref": "시편 12:6",
+      "verse_ko": "여호와의 말씀은 순결한 말씀이라 흙 도가니에서 정제한 은과 같이 일곱 번 정제되었도다.",
+      "verse_en": "The words of the LORD are pure words: as silver tried in a furnace of earth, purified seven times.",
+      "highlight": ["순결한 말씀", "정제한 은", "일곱 번"],
+      "narration": [
+        "성경은 사람들이 자기 목적에 맞게 고쳐 쓴 책이 아니라, 일곱 번 정제된 은처럼 순결하게 보존되어 온 말씀입니다.",
+        "그 정제는 창고에 잠긴 사본의 문제가 아니라, 성도가 대대로 읽어 온 본문의 문제였습니다."
+      ]
+    },
+    {
+      "ref": "시편 119:89",
+      "verse_ko": "여호와여 주의 말씀은 하늘에 굳게 선 영원한 말씀이니이다.",
+      "verse_en": "For ever, O LORD, thy word is settled in heaven.",
+      "highlight": ["영원한 말씀", "하늘에 굳게 선"],
+      "narration": [
+        "물질의 세대가 바뀌어도, 주의 말씀은 그 자리에 굳게 서 있습니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "credit": "Video: Pexels (free license). Music: Prelude No. 12 by Chris Zabriskie (YouTube Audio Library).",
+  "outro": "손에 들고 읽을 수 있는 말씀\n· 보존된 말씀 시리즈 ·"
+}

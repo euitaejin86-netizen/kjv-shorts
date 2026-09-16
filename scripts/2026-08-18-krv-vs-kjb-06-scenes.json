@@ -1,0 +1,125 @@
+{
+  "topic": "개역 vs 흠정역 #6 · 하늘에 오른 이는 누구인가",
+  "template": "자극형",
+  "ref": "요한복음 3:13",
+  "hook": "하늘에 올라간 자가 있다? 오직 한 분 뿐입니다.",
+  "hook_voice": "성경은 말합니다. 하늘로부터 내려온 자, 곧 하늘에 있는 사람의 아들 외에는 아무도 하늘에 올라가지 아니하였느니라. 이 말은 무엇을 의미할까요?",
+  "hook_hl": [
+    "하늘로부터 내려온 자",
+    "하늘에 있는 사람의 아들"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "verses": [
+    {
+      "ref": "요한복음 3:13",
+      "verse_ko": "하늘로부터 내려온 자 곧 하늘에 있는 사람의 아들 외에는 아무도 하늘에 올라가지 아니하였느니라.",
+      "verse_en": "And no man hath ascended up to heaven, but he that came down from heaven, even the Son of man which is in heaven.",
+      "highlight": [
+        "하늘로부터 내려온 자",
+        "하늘에 있는 사람의 아들"
+      ],
+      "narration": [
+        "이 구절은 예수님이 단지 땅의 사람이 아니라 하늘에서 내려온 분임을 분명히 합니다.",
+        "'하늘에 올라간 자 외에는 아무도'라는 표현은 예수님의 독특한 신분을 가리킵니다.",
+        "흠정역은 이 문장을 통해 예수님의 초월성과 신성을 드러내고, 번역의 선택이 교리에 미치는 영향을 보여 줍니다.",
+        "만약 이 문장이 축소되거나 삭제된다면, 예수님의 독특한 위치와 사역의 범위가 흐려질 수 있습니다.",
+        "한 절의 차이가 신앙의 눈에 어떤 변화를 가져오는지 함께 살펴보시죠."
+      ],
+      "scenes": [
+        {
+          "narration": "이 구절은 예수님이 단지 땅의 사람이 아니라 하늘에서 내려온 분임을 분명히 합니다.",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "'하늘에 올라간 자 외에는 아무도'라는 표현은 예수님의 독특한 신분을 가리킵니다.",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 이 문장을 통해 예수님의 초월성과 신성을 드러내고,",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "번역의 선택이 교리에 미치는 영향을 보여 줍니다.",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "만약 이 문장이 축소되거나 삭제된다면,",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "예수님의 독특한 위치와 사역의 범위가 흐려질 수 있습니다.",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "한 절의 차이가 신앙의 눈에 어떤 변화를 가져오는지 함께 살펴보시죠.",
+          "highlight": [
+            "하늘로부터 내려온 자",
+            "하늘에 있는 사람의 아들"
+          ],
+          "media": "bg/video/candle_dark.mp4",
+          "visual_prompt": "single flame nearly obscured by darkness",
+          "camera": "slow_push",
+          "mood": "tense",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sun_clouds.mp4",
+    "bg/video/olive_grove.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "하늘로부터 내려오신 그분, 예수님을 더 깊이 알고 싶다면 구독해 주세요",
+  "outro_voice": "하늘로부터 내려오신 예수님을 더 깊이 알고 싶으시면 구독해 주세요.",
+  "scene_plan_version": 1
+}
