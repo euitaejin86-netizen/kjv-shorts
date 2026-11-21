@@ -63,10 +63,9 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
 "개역 vs 흠정역" 시리즈는 Hermes 크론잡 `aa1175b0de4a`("KJV 쇼츠 하루 1편 자동제작")이
 **월·수·금 10:00**에 한 편씩 만들어 **즉시 공개** 업로드한다. 결과는 텔레그램으로 온다.
 
-- **주제:** 사용자가 미리 고른 시드 목록에서만 순서대로 가져온다
-  (Obsidian `wiki/faith/KJV-개역vs-흠정역-쇼츠-템플릿.md`의 "대비 시드 목록").
-  목록 밖의 주제를 크론이 새로 정하지 않는다. 교리 각도의 결정은 시드 목록을
-  고치는 것으로 사용자가 한다.
+- **주제:** 크론이 고른다 (2026-11-21 사용자 결정). 기준은 Obsidian
+  `wiki/faith/KJV-개역vs-흠정역-쇼츠-템플릿.md`(교리 기준·시드 목록 — 시드 13개는 #13까지 소진).
+  진행도 표에 이미 있는 구절은 `make_script.py`가 막는다. 교리 금지 표현은 `qa_gate.py`가 막는다.
 - **대본 규칙:** 같은 템플릿 문서의 "대본 작성 규칙 v2". `qa_gate.py` 사전 QA가 강제한다.
 - **진행 기록:** Obsidian `wiki/faith/KJV-시리즈-진행도.md`. 공개 URL을 확인한 뒤에만 한 줄 추가한다.
 - **크론 지시문 원본:** `~/.hermes/cron/jobs.json` (해당 job의 `prompt`).
@@ -74,13 +73,14 @@ JSON을 쓰지 않고 그 자리에서 멈춘다. 무시하고 진행하면 잘�
 한 번 실행될 때의 순서:
 
 1. 진행도 확인 → 오늘 이미 올렸으면 종료
-2. 다음 시드로 기본 대본 `scripts/<실행일>-krv-vs-kjb-<NN>.json` 작성
-   (`verse_ko`/`verse_en`/`verse_krv`는 `bible/*.json`에서 코드로 추출)
+2. 초안 `out/draft-<실행일>.json`(글 + 구절 주소만) → `python make_script.py out/draft-<실행일>.json`
+   → 기본 대본 `scripts/<실행일>-krv-vs-kjb-<NN>.json`. 본문 3종은 `bible/*.json`에서 채우고,
+   번호는 진행도 마지막 번호 + 1, 이미 공개한 구절이면 중단한다. 초안 형식은 `make_script.py` 맨 위 설명.
 3. `python scene_plan.py <기본대본> <기본대본>-scenes.json`
 4. `python qa_gate.py <scenes.json>` — 사전 QA (본문 일치·교리 금지어·규칙 v2)
 5. `python build.py <scenes.json>` — 렌더 (PowerShell 프로세스에서, WinGet Links를 PATH 앞에)
 6. `python qa_gate.py <scenes.json> out/<scenes>.mp4` — 사후 QA (해상도·코덱·오디오·10~90초)
-7. 훅·중간·아웃트로 프레임 3장 추출 → vision으로 잘림·가독성 확인
+7. 훅·중간·아웃트로 프레임 3장을 `out/qa/<NN>/`에 추출 → vision으로 잘림·가독성 확인
 8. `python upload.py out/<scenes>.mp4 public` — 즉시 공개
 9. 텔레그램 전송 → 공개 URL 확인 → 진행도 append
 

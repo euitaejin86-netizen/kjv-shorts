@@ -11,3 +11,8 @@ bg/*
 !bg/plain.jpg
 bgm/*
 !bgm/README.md
+
+# 크론 QA 산출물 — 프레임은 out/qa/<NN>/ 에 둔다
+/qa*/
+/frame_*.jpg
+/tmp_frames/
