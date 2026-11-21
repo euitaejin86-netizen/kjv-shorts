@@ -47,7 +47,9 @@ def split_for_scenes(text: str, target_chars: int = 34) -> list[str]:
         out.append(cur)
     # 지나치게 짧은 꼬리는 앞 장면에 합친다.
     if len(out) > 1 and len(out[-1]) < 14:
-        out[-2] = f"{out[-2]} {out.pop()}"
+        # pop()이 먼저 실행되면 out 길이가 줄어 out[-2]가 범위를 벗어난다.
+        tail = out.pop()
+        out[-1] = f"{out[-1]} {tail}"
     return out
 
 
