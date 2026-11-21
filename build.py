@@ -32,6 +32,13 @@ OUT_DIR = ROOT / "out"
 
 VOICE_KO = "ko-KR-HyunsuMultilingualNeural"
 VOICE_EN = "en-GB-RyanNeural"
+KO_RATE, KO_PITCH = "+8%", "-2Hz"
+# 낭독 마스터링: 저음 정리 → 선명도 → 압축 → 약한 공간감 → 유튜브 표준 음량(-14 LUFS)
+VOICE_MASTER = (
+    "highpass=f=90,equalizer=f=250:t=q:w=1:g=-2,equalizer=f=3500:t=q:w=1.2:g=3,"
+    "acompressor=threshold=-20dB:ratio=3:attack=5:release=120:makeup=2,"
+    "aecho=0.8:0.6:35:0.08,loudnorm=I=-14:TP=-1.5:LRA=7"
+)
 
 W, H, FPS = 1080, 1920, 30
 VERSE_CARD_SEC = 2.0   # 구절 카드를 읽을 시간. 쇼츠 피드의 썸네일 역할도 한다.
@@ -274,7 +281,9 @@ def load_script(path: Path) -> dict:
 
 
 async def _tts(text: str, voice: str, out: Path):
-    await edge_tts.Communicate(text=text, voice=voice).save(str(out))
+    # 한국어 낭독은 쇼츠 템포에 맞게 약간 빠르고 낮게 (2026-11-07 B안)
+    kw = {"rate": KO_RATE, "pitch": KO_PITCH} if voice == VOICE_KO else {}
+    await edge_tts.Communicate(text=text, voice=voice, **kw).save(str(out))
 
 
 def _google_tts(text: str, out: Path, lang: str = "ko-KR", service_account: Path | None = None):
@@ -477,6 +486,89 @@ def _styled_text(kind: str, text: str, highlights: list[str], layout: dict,
     return kind, apply_highlight(text, highlights, body, hl)
 
 
+KIND_COMPARE = "compare"   # 개역개정 ↔ 흠정역 나란히 비교 카드 (verse 스타일 폰트 사용)
+CMP_WRAP = 13              # 비교 카드 한 줄 글자수
+CMP_CONTEXT = 2            # 차이 문구 앞에 보여줄 단어 수
+CMP_AFTER = 0              # 차이 문구 뒤에 보여줄 단어 수 (0이면 문장부호 + …)
+CMP_FALLBACK_WORDS = 7     # 차이 문구를 못 찾으면 앞에서부터 보여줄 단어 수
+CMP_KRV = "&H00A0A0A0&"    # 개역개정 본문: 흐린 회색
+CMP_STRIKE = "&H006060E0&" # 바뀐/사라진 부분: 붉은 취소선 (BGR)
+
+
+def excerpt(verse: str, phrase: str | None) -> tuple[str, str, str]:
+    """구절에서 차이 문구 주변만 잘라 (앞, 문구, 뒤)를 돌려준다.
+
+    문구 앞뒤로 CMP_CONTEXT 단어만 남기고 잘린 쪽에 "…"를 붙인다. 문구에 붙은
+    문장부호("하느냐?")는 떼지 않는다. 문구가 없으면 앞 CMP_FALLBACK_WORDS 단어.
+    """
+    if not phrase or phrase not in verse:
+        words = verse.split()
+        tail = " …" if len(words) > CMP_FALLBACK_WORDS else ""
+        return " ".join(words[:CMP_FALLBACK_WORDS]) + tail, "", ""
+    i = verse.index(phrase)
+    before, after = verse[:i], verse[i + len(phrase):]
+    head_att = re.search(r"\S*$", before).group()
+    tail_att = re.match(r"\S*", after).group()
+    bw = before[:len(before) - len(head_att)].split()
+    aw = after[len(tail_att):].split()
+    pre = " ".join(bw[-CMP_CONTEXT:])
+    post = " ".join(aw[:CMP_AFTER])
+    pre = ("… " if len(bw) > CMP_CONTEXT else "") + pre + (" " if pre else "") + head_att
+    post = tail_att + (" " + post if post else "") + ("…" if len(aw) > CMP_AFTER else "")
+    return pre, phrase, post
+
+
+def _cmp_lines(pre: str, phrase: str, post: str, base: str, mark: str) -> str:
+    """excerpt 결과를 줄바꿈하고, 문구가 걸친 글자 구간만 줄마다 mark 태그로 감싼다.
+    문구가 한 줄보다 길어 여러 줄에 걸쳐도 강조가 끊기지 않는다."""
+    full = pre + phrase + post
+    a, b = len(pre), len(pre) + len(phrase)
+    out, cur = [], 0
+    for ln in wrap_lines(full, CMP_WRAP):
+        i = full.find(ln, cur)
+        cur = i + len(ln)
+        lo, hi = max(a, i) - i, min(b, cur) - i
+        if phrase and lo < hi:
+            out.append(_ass_escape(ln[:lo]) + mark + _ass_escape(ln[lo:hi]) + base + _ass_escape(ln[hi:]))
+        else:
+            out.append(_ass_escape(ln))
+    return "\\N".join(out)
+
+
+def compare_card(block: dict, ref_disp: str, col: dict) -> tuple[str, int]:
+    """개역개정(위, 회색·취소선) → 흠정역(아래, 흰색·금색 강조) 비교 카드 ASS 텍스트와
+    대략적인 높이(px)를 만든다. verse_krv가 "(없음)"이면 빈 절을 크게 보여준다."""
+    hls = block.get("highlight") or []
+    kjv, krv = block["verse_ko"], block["verse_krv"]
+    kjv_hl = next((h for h in hls if h in kjv), None)
+    krv_hl = next((h for h in hls if h in krv), None)
+    gold, white, silver = col["gold"], col["white"], col["silver"]
+
+    if krv.strip() in ("", "(없음)", "없음"):
+        krv_txt = "{\\fs84\\c%s}( 없음 )\\N{\\fs44}이 절이 통째로 없습니다" % CMP_STRIKE
+        krv_lines = 2.6
+    else:
+        base = "{\\s0\\c%s}" % CMP_KRV
+        # 흠정역 쪽 강조가 없으면 "개역개정도 그대로 둔" 보존 사례 → 취소선 대신 금색.
+        mark = "{\\s1\\c%s}" % CMP_STRIKE if kjv_hl else "{\\c%s}" % gold
+        body = _cmp_lines(*excerpt(krv, krv_hl), base, mark)
+        krv_txt = "{\\fs72}" + base + body
+        krv_lines = body.count("\\N") + 1
+    base = "{\\c%s}" % white
+    body = _cmp_lines(*excerpt(kjv, kjv_hl), base, "{\\c%s}" % gold)
+    kjv_lines = body.count("\\N") + 1
+
+    text = (
+        "{\\fs46\\c%s}개역개정\\N" % silver + krv_txt
+        + "\\N{\\fs64\\c%s}↓\\N" % gold
+        + "{\\fs46\\c%s}흠정역 (KJV)\\N{\\fs80}" % gold + base + body
+        + "\\N{\\fs42\\c%s}%s" % (silver, _ass_escape(ref_disp))
+    )
+    # ponytail: 높이는 줄수×폰트 어림값 — 글꼴 바꾸면 계수만 조정
+    height = int(46 * 2 + 72 * krv_lines + 64 + 80 * kjv_lines + 42 + 110)
+    return text, height
+
+
 def segment_timings(
     pieces: list[tuple[Path, float, str, str, list, str]], gap: float = GAP_SEC,
 ) -> tuple[list[tuple[float, float, str, str, list, str]], float]:
@@ -539,6 +631,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     fade = f"{{\\fad({SUB_FADE_MS},{SUB_FADE_MS})}}"
     lines = []
     for a, b, kind, text, hl, ref in segments:
+        if kind == KIND_COMPARE:
+            # text = 완성된 ASS 텍스트, hl 자리에 카드 높이(px)를 싣는다.
+            box_h = hl
+            pos = f"\\an5\\pos({W // 2},{H // 2})"
+            lines.append(
+                f"Dialogue: 0,{ass_time(a)},{ass_time(b)},{KIND_VERSE},,0,0,0,,"
+                f"{fade}{{{pos}\\p1\\bord0\\shad0\\c&H000000&\\alpha&H30&}}"
+                f"m 0 0 l {W - 80} 0 {W - 80} {box_h} 0 {box_h}{{\\p0}}"
+            )
+            lines.append(
+                f"Dialogue: 1,{ass_time(a)},{ass_time(b)},{KIND_VERSE},,0,0,0,,"
+                f"{fade}{{{pos}\\bord4\\shad0}}{text}"
+            )
+            continue
         sname, styled = _styled_text(kind, text, hl, layout, ref)
         lines.append(
             f"Dialogue: 0,{ass_time(a)},{ass_time(b)},{sname},,0,0,0,,{fade}{styled}"
@@ -613,10 +719,15 @@ def build(script_path: Path) -> Path:
             # (a) 이 절의 본문 낭독: 본문색 + 은색 주소 (ref는 _styled_text가 덧붙임)
             mp3 = work / f"{job_idx:03d}.mp3"; job_idx += 1
             dur = synth(block["verse_ko"], VOICE_KO, mp3)
-            verse_lines = wrap_lines(block["verse_ko"], wrap_verse)
-            pieces.append((
-                mp3, dur, KIND_VERSE, "\n".join(verse_lines), [], b_ref_disp,
-            ))
+            if block.get("verse_krv"):
+                # 낭독은 그대로, 화면만 개역개정↔흠정역 비교 카드로 바꾼다.
+                card, box_h = compare_card(block, b_ref_disp, layout["colors"])
+                pieces.append((mp3, dur, KIND_COMPARE, card, box_h, b_ref_disp))
+            else:
+                verse_lines = wrap_lines(block["verse_ko"], wrap_verse)
+                pieces.append((
+                    mp3, dur, KIND_VERSE, "\n".join(verse_lines), [], b_ref_disp,
+                ))
 
             # (b) 이 절의 해설: 신형 scenes가 있으면 각 장면의 narration을 TTS 조각으로
             # 만들고, 없으면 기존 narration 배열을 그대로 사용한다.
@@ -677,7 +788,13 @@ def build(script_path: Path) -> Path:
         (work / "concat.txt").write_text("\n".join(listing) + "\n", encoding="utf-8")
         _run(
             ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", "concat.txt",
-             "-c", "copy", "audio.mp3"],
+             "-c", "copy", "audio_raw.mp3"],
+            cwd=work,
+        )
+        # 이어 붙인 낭독 전체에 한 번에 마스터링 (길이는 그대로, 음량 일정)
+        _run(
+            ["ffmpeg", "-y", "-i", "audio_raw.mp3", "-af", VOICE_MASTER,
+             "-ar", "44100", "audio.mp3"],
             cwd=work,
         )
 

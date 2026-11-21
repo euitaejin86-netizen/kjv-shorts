@@ -171,3 +171,21 @@ def test_ref_display_returns_original_on_unexpected_format():
 
 
 
+
+
+def test_excerpt_keeps_phrase_with_attached_punct():
+    from build import excerpt
+    v = "그분께서 그에게 이르시되, 네가 어찌하여 나를 선하다 하느냐? 한 분 곧 하나님 외에는"
+    pre, ph, post = excerpt(v, "나를 선하다 하느냐")
+    assert (pre, ph, post) == ("… 네가 어찌하여 ", "나를 선하다 하느냐", "?…")
+    assert excerpt("가 나 다", "없는문구") == ("가 나 다", "", "")
+
+
+def test_compare_card_missing_verse():
+    from build import compare_card, WHITE, GOLD, SILVER
+    col = {"white": WHITE, "gold": GOLD, "silver": SILVER}
+    blk = {"verse_ko": "사람의 아들은 잃어버린 것을 구원하려고 왔느니라.",
+           "verse_krv": "(없음)", "highlight": ["잃어버린 것을 구원하려고"]}
+    text, h = compare_card(blk, "마태복음 18장 11절", col)
+    assert "( 없음 )" in text and h > 0
+    assert "{\c%s}잃어버린" % GOLD in text  # 줄이 나뉘어도 강조 시작
