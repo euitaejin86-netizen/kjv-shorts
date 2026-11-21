@@ -1,0 +1,44 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #18 · 요한계시록 22:19 — 생명책이 생명나무로",
+  "ref": "요한계시록 22:19",
+  "hook": "생명책인데, 생명나무로?",
+  "hook_voice": "요한계시록 22장 19절. 한 단어가 책에서 나무로 바뀌었습니다. 성경마다 왜 서로 다르게 적혀 있을까요?",
+  "hook_hl": [
+    "생명책",
+    "생명나무"
+  ],
+  "hook_bg": "bg/hook_museum_vs_hand.png",
+  "verses": [
+    {
+      "ref": "요한계시록 22:19",
+      "verse_ko": "만일 어떤 사람이 이 대언의 책의 말씀들에서 빼면 하나님께서 생명책과 거룩한 도시와 이 책에 기록된 것들로부터 그의 부분을 빼시리라.",
+      "verse_en": "And if any man shall take away from the words of the book of this prophecy, God shall take away his part out of the book of life, and out of the holy city, and from the things which are written in this book.",
+      "verse_krv": "만일 누구든지 이 두루마리의 예언의 말씀에서 제하여 버리면 하나님이 이 두루마리에 기록된 생명나무와 및 거룩한 성에 참여함을 제하여 버리시리라",
+      "highlight": [
+        "생명책",
+        "이 책에 기록된 것들"
+      ],
+      "narration": [
+        "요한계시록 22장 19절, 말씀 보존의 마지막 경고입니다.",
+        "흠정역은 이렇게 말합니다. 말씀에서 빼는 자의 몫을 생명책에서 빼십니다.",
+        "하나님이 생명책과 거룩한 도시에서 그 부분을 빼신다는 겁니다.",
+        "영어 원문도 같습니다. book of life, 곧 생명책에서 빼십니다.",
+        "그런데 개역개정은 생명책 대신, 생명나무라고 옮겼습니다.",
+        "책이 나무로 바뀌면 경고의 정확한 의미가 흐려집니다.",
+        "이 장 2절엔 생명나무가 분명히 나옵니다. 19절은 생명책입니다.",
+        "개역이 한국 교회를 세운 귀한 성경이지만, 이런 한 단어 차이가 교리 방향을 바꿉니다.",
+        "정확한 말씀, 한 단어까지 지켜야 하는 이유입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/ancient_scroll.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/throne_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "책이 나무로 바뀐 이유, 더 정확한 말씀을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "책이 나무로 바뀐 이유, 더 정확한 말씀을 알고 싶으시면 구독해 주세요."
+}

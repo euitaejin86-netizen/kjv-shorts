@@ -1,0 +1,42 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #22 · 에베소서 3:9 — 창조주 그리스도를 지운 한 구절",
+  "ref": "에베소서 3:9",
+  "hook": "하나님이 만물을 창조하셨습니다. 그런데 '예수 그리스도에 의해'가 사라졌습니다.",
+  "hook_voice": "에베소서 3장 9절. 흠정역은 하나님이 예수 그리스도에 의해 모든 것을 창조하셨다고 합니다. 개역개정에서는 이 말이 사라졌습니다. 왜일까요?",
+  "hook_hl": [
+    "하나님이 만물을 창조하셨습니다",
+    "사라졌습니다"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "verses": [
+    {
+      "ref": "에베소서 3:9",
+      "verse_ko": "또 예수 그리스도에 의해 모든 것을 창조하신 하나님 안에 세상이 시작된 이후로 감추어져 온 이 신비에 참여하는 것이 무엇인지 모든 사람들이 보게 하려 하심이라.",
+      "verse_en": "And to make all men see what is the fellowship of the mystery, which from the beginning of the world hath been hid in God, who created all things by Jesus Christ:",
+      "verse_krv": "영원부터 만물을 창조하신 하나님 속에 감추어졌던 비밀의 경륜이 어떠한 것을 드러내게 하려 하심이라",
+      "highlight": [
+        "예수 그리스도에 의해 모든 것을 창조하신",
+        "만물을 창조하신"
+      ],
+      "narration": [
+        "에베소서 3장 9절, 감추어진 신비를 드러내시는 구절입니다.",
+        "흠정역은 예수 그리스도에 의해 모든 것을 창조하신 하나님, 이라고 말합니다.",
+        "영어 원문도 같습니다. 하나님이 예수 그리스도로 말미암아 만물을 지으셨습니다.",
+        "그런데 개역개정은 예수 그리스도에 의해를 빼고 만물을 창조하신 하나님, 이라고만 적습니다.",
+        "소수본문인 비평본문에 이 말이 없기 때문입니다.",
+        "창조주 그리스도의 자리가 흐려집니다.",
+        "개역은 귀한 성경이지만, 창조주 그리스도 한 줄은 지켜야 합니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/sunrays_window.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/sun_clouds.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "창조주 그리스도가 지워진 그 자리, 정확한 말씀을 더 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "창조주 그리스도가 지워진 그 자리, 정확한 말씀을 더 알고 싶으시면 구독해 주세요."
+}

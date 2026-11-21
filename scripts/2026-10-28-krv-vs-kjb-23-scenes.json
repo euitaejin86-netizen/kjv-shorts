@@ -1,0 +1,161 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #23 · 요한일서 5:7 — 하늘의 증언 세 분이 사라진 자리",
+  "ref": "요한일서 5:7",
+  "hook": "성경에 '아버지와 말씀과 성령, 이 세 분은 하나'라고 적혀 있습니다. 그런데 개역개정에는 이 문장이 없습니다.",
+  "hook_voice": "요한일서 5장 7절. 흠정역은 하늘에 증언하는 세 분이 계시니 아버지와 말씀과 성령님이라고 말합니다. 그런데 개역개정에는 이 문장이 통째로 없습니다. 무엇이 사라진 걸까요?",
+  "hook_hl": [
+    "아버지와 말씀과 성령",
+    "없습니다"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "verses": [
+    {
+      "ref": "요한일서 5:7",
+      "verse_ko": "하늘에 증언하는 세 분이 계시니 곧 아버지와 말씀과 성령님이시라. 또 이 세 분은 하나이시니라.",
+      "verse_en": "For there are three that bear record in heaven, the Father, the Word, and the Holy Ghost: and these three are one.",
+      "verse_krv": "증언하는 이가 셋이니",
+      "highlight": [
+        "하늘에 증언하는 세 분",
+        "아버지와 말씀과 성령님",
+        "이 세 분은 하나이시니라"
+      ],
+      "narration": [
+        "요한일서 5장 7절, 증언에 관한 말씀입니다.",
+        "흠정역은 하늘에 증언하는 세 분이 계시다 합니다.",
+        "아버지와 말씀과 성령, 이 세 분은 하나이십니다.",
+        "영어 킹제임스도 이 셋이 하나라고 적습니다."
+      ],
+      "scenes": [
+        {
+          "narration": "요한일서 5장 7절, 증언에 관한 말씀입니다.",
+          "highlight": [
+            "하늘에 증언하는 세 분",
+            "아버지와 말씀과 성령님",
+            "이 세 분은 하나이시니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 하늘에 증언하는 세 분이 계시다 합니다.",
+          "highlight": [
+            "하늘에 증언하는 세 분",
+            "아버지와 말씀과 성령님",
+            "이 세 분은 하나이시니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "아버지와 말씀과 성령, 이 세 분은 하나이십니다.",
+          "highlight": [
+            "하늘에 증언하는 세 분",
+            "아버지와 말씀과 성령님",
+            "이 세 분은 하나이시니라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "영어 킹제임스도 이 셋이 하나라고 적습니다.",
+          "highlight": [
+            "하늘에 증언하는 세 분",
+            "아버지와 말씀과 성령님",
+            "이 세 분은 하나이시니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        }
+      ]
+    },
+    {
+      "ref": "요한일서 5:8",
+      "verse_ko": "땅에 증언하는 셋이 있으니 영과 물과 피라. 또 이 셋은 하나로 일치하느니라.",
+      "verse_en": "And there are three that bear witness in earth, the spirit, and the water, and the blood: and these three agree in one.",
+      "verse_krv": "성령과 물과 피라 또한 이 셋은 합하여 하나이니라",
+      "highlight": [
+        "성령과 물과 피",
+        "이 셋은 합하여 하나이니라"
+      ],
+      "narration": [
+        "그런데 개역개정 7절은 증언하는 이가 셋이니, 에서 끊깁니다.",
+        "이어지는 8절은 성령과 물과 피, 땅의 증언뿐입니다.",
+        "하늘의 증언은 빠졌습니다. 비평본문이 후대 첨가로 보기 때문입니다.",
+        "개역은 귀한 성경이지만, 삼위일체의 증언은 지켜야 합니다."
+      ],
+      "scenes": [
+        {
+          "narration": "그런데 개역개정 7절은 증언하는 이가 셋이니, 에서 끊깁니다.",
+          "highlight": [
+            "성령과 물과 피",
+            "이 셋은 합하여 하나이니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "이어지는 8절은 성령과 물과 피, 땅의 증언뿐입니다.",
+          "highlight": [
+            "성령과 물과 피",
+            "이 셋은 합하여 하나이니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "하늘의 증언은 빠졌습니다. 비평본문이 후대 첨가로 보기 때문입니다.",
+          "highlight": [
+            "성령과 물과 피",
+            "이 셋은 합하여 하나이니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "개역은 귀한 성경이지만, 삼위일체의 증언은 지켜야 합니다.",
+          "highlight": [
+            "성령과 물과 피",
+            "이 셋은 합하여 하나이니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/sunrays_window.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4",
+    "bg/video/candle_dark.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "삼위일체를 증언하는 그 문장이 빠진 자리, 정확한 말씀을 더 알고 싶다면 구독해 주세요",
+  "outro_voice": "삼위일체를 증언하는 그 문장이 빠진 자리, 정확한 말씀을 더 알고 싶으시면 구독해 주세요.",
+  "scene_plan_version": 1
+}

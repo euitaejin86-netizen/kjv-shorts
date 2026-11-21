@@ -1,0 +1,40 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #31 · 로마서 14:10 — '그리스도의 심판석' vs '하나님의 심판대' (심판주 그리스도의 신성)",
+  "ref": "로마서 14:10",
+  "hook": "심판석이 심판대로 바뀌었다",
+  "hook_voice": "같은 심판 자리를 두고 개역개정과 흠정역이 다르게 적었어요.",
+  "hook_hl": [
+    "심판석",
+    "심판대"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "verses": [
+    {
+      "ref": "로마서 14:10",
+      "verse_ko": "그런데 네가 어찌하여 네 형제를 판단하느냐? 어찌하여 네 형제를 무시하느냐? 우리가 다 그리스도의 심판석 앞에 서리라.",
+      "verse_en": "But why dost thou judge thy brother? or why dost thou set at nought thy brother? for we shall all stand before the judgment seat of Christ.",
+      "verse_krv": "네가 어찌하여 네 형제를 비판하느냐 어찌하여 네 형제를 업신여기느냐 우리가 다 하나님의 심판대 앞에 서리라",
+      "highlight": [
+        "그리스도의 심판석",
+        "하나님의 심판대"
+      ],
+      "narration": [
+        "개역개정은 이 심판 자리를 하나님의 것으로 적었어요.",
+        "흠정역은 그리스도의 심판석이라고 해요.",
+        "심판하시는 분이 바로 그리스도라는 뜻이죠.",
+        "그런데 개역개정은 그리스도를 빼버렸어요.",
+        "고린도후서 5장 10절에선 개역개정도 그리스도의 심판대라고 해요."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/sunrays_window.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/clouds_light.mp4",
+    "bg/video/candle_serene.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "심판하시는 분이 그리스도, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "더 정확한 본문으로 이어 가고 싶다면 구독해 주세요."
+}

@@ -1,0 +1,30 @@
+{
+  "topic": "개역 vs 흠정역 #11 · 로마서 15:19 — '복음 충만'의 의미",
+  "template": "자극형",
+  "ref": "로마서 15:19",
+  "hook": "바울이 말한 '충만히 선포했다' — 이 말의 한계는 무엇일까?",
+  "hook_voice": "로마서 15장 19절, 바울의 표현이 번역에서 어떤 뉘앙스 차이를 만드는지 살펴봅니다.",
+  "hook_hl": ["충만히 선포", "표적들과 이적들"],
+  "hook_bg": "bg/hook_misunderstood_verse.png",
+  "verses": [
+    {
+      "ref": "로마서 15:19",
+      "verse_ko": "강력한 표적들과 이적들을 통해 하나님의 영의 권능으로 이루지 아니하신 그 일들 중에서는 어떤 것도 내가 감히 말하지 아니할 것이기 때문이라. 이로써 내가 예루살렘으로부터 사방으로 다니며 일루리곤까지 그리스도의 복음을 충만히 선포하였노라.",
+      "verse_en": "Through mighty signs and wonders, by the power of the Spirit of God; so that from Jerusalem, and round about unto Illyricum, I have fully preached the gospel of Christ.",
+      "highlight": ["표적들과 이적들", "복음을 충만히 선포"],
+      "narration": [
+        "'복음 충만'이라는 표현은 번역에 따라 전달하는 범위가 달라질 수 있습니다.",
+        "원문과 개역·흠정역의 뉘앙스를 비교하며 실제 교리적 함의를 짚습니다.",
+        "오늘의 핵심: 번역 한 단어가 선교의 성격과 권능을 어떻게 드러내는가."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/sunrays_window.mp4",
+    "bg/video/olive_grove.mp4",
+    "bg/video/shepherd_field.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "복음의 권능은 작은 표현 차이로도 드러납니다. 더 정확한 본문을 알고 싶다면 구독해 주세요 · #11",
+  "outro_voice": "복음의 권능은 작은 표현 차이로도 드러납니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

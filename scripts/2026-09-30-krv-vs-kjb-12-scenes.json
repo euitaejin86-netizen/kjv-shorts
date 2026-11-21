@@ -1,0 +1,162 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #12 · 사도행전 1:20 — 감독직과 직분",
+  "ref": "사도행전 1:20",
+  "hook": "'그의 직분을 타인이 취하게' — 번역 한 단어가 달라졌습니다.",
+  "hook_voice": "사도행전 1장 20절. 번역 한 단어가 달라졌습니다.",
+  "hook_hl": [
+    "직분",
+    "타인이 취하게"
+  ],
+  "hook_bg": "bg/hook_misunderstood_verse.png",
+  "verses": [
+    {
+      "ref": "사도행전 1:20",
+      "verse_ko": "시편에, 그의 거처를 황폐하게 하시며 아무도 그 안에 거하지 못하게 하소서. 또 그의 감독직을 타인이 취하게 하소서, 하고 기록되었으니",
+      "verse_en": "For it is written in the book of Psalms, Let his habitation be desolate, and let no man dwell therein: and his bishoprick let another take.",
+      "highlight": [
+        "감독직",
+        "타인이 취하게"
+      ],
+      "narration": [
+        "KJV는 'his bishoprick', 곧 감독의 자리라고 옮겼습니다.",
+        "흠정역은 이를 '감독직'으로 옮겼습니다. 원문의 oversight, 감리와 감독을 분명히 남긴 번역입니다.",
+        "개역도 '감독직'으로 두었습니다.",
+        "개역개정은 '직분'으로 줄였습니다. 직분은 자리의 자리 대신 담당 사무를 가리키는 말이 됩니다.",
+        "누군가를 선출해 자리를 맡겼다는 본문에서, 그 자리가 얼마나 큰지는 번역이 정해 줍니다.",
+        "번역 차이는 언제나 교리를 뒤엎기만 하는 것이 아닙니다. 다만 그 구절이 무엇을 말하는지를 정하는 문제입니다."
+      ],
+      "scenes": [
+        {
+          "narration": "KJV는 'his bishoprick', 곧 감독의 자리라고 옮겼습니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 이를 '감독직'으로 옮겼습니다. 원문의 oversight,",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "감리와 감독을 분명히 남긴 번역입니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "개역도 '감독직'으로 두었습니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "개역개정은 '직분'으로 줄였습니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "직분은 자리의 자리 대신 담당 사무를 가리키는 말이 됩니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "누군가를 선출해 자리를 맡겼다는 본문에서,",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "그 자리가 얼마나 큰지는 번역이 정해 줍니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "번역 차이는 언제나 교리를 뒤엎기만 하는 것이 아닙니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "다만 그 구절이 무엇을 말하는지를 정하는 문제입니다.",
+          "highlight": [
+            "감독직",
+            "타인이 취하게"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/candle_dark.mp4",
+    "bg/video/bible_open.mp4",
+    "bg/video/throne_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "한 단어가 본문의 무게중심을 정합니다\n더 정확한 본문을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "한 단어가 본문의 무게중심을 정합니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요.",
+  "scene_plan_version": 1
+}

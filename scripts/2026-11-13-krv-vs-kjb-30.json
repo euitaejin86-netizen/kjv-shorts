@@ -1,0 +1,40 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #30 · 마태복음 5:44 — 빠진 '저주하는 자를 축복하라' (원수 사랑의 축소)",
+  "ref": "마태복음 5:44",
+  "hook": "원수 사랑의 절반이 빠졌다",
+  "hook_voice": "예수님이 원수 사랑을 말씀하신 그 절, 개역개정엔 절반이 빠져 있어요.",
+  "hook_hl": [
+    "절반이",
+    "빠졌다"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "마태복음 5:44",
+      "verse_ko": "나는 너희에게 이르노니 너희 원수들을 사랑하고 너희를 저주하는 자들을 축복하며 너희를 미워하는 자들에게 선을 행하고 악의를 품고 너희를 다루며 너희를 핍박하는 자들을 위해 기도하라.",
+      "verse_en": "But I say unto you, Love your enemies, bless them that curse you, do good to them that hate you, and pray for them which despitefully use you, and persecute you;",
+      "verse_krv": "나는 너희에게 이르노니 너희 원수를 사랑하며 너희를 박해하는 자를 위하여 기도하라",
+      "highlight": [
+        "저주하는 자들을 축복하며",
+        "너희를 박해하는 자를 위하여 기도하라"
+      ],
+      "narration": [
+        "개역개정은 원수 사랑과 박해자 위한 기도만 남겼어요.",
+        "저주하는 자를 축복하라는 말은 빠졌죠.",
+        "흠정역은 그 사이를 채워요.",
+        "저주하는 자를 축복하고 미워하는 자에게 선을 행하라고요.",
+        "이게 빠지면 원수 사랑이 한 줄로 줄어요."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/olive_grove.mp4",
+    "bg/video/sunrays_window.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "저주하는 자를 축복하라, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "더 정확한 본문으로 이어 가고 싶다면 구독해 주세요."
+}

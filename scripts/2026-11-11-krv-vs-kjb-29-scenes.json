@@ -1,0 +1,103 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #29 · 에베소서 5:30 — 사라진 '그분의 살과 뼈' (그리스도의 몸인 교회)",
+  "ref": "에베소서 5:30",
+  "hook": "살과 뼈가 사라졌다",
+  "hook_voice": "우리를 그리스도의 지체라 한 말씀, 개역개정엔 살과 뼈가 빠져 있어요.",
+  "hook_hl": [
+    "살과 뼈가",
+    "사라졌다"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "에베소서 5:30",
+      "verse_ko": "이는 우리가 그분의 몸과 그분의 살과 그분의 뼈들에 속한 지체들이기 때문이라.",
+      "verse_en": "For we are members of his body, of his flesh, and of his bones.",
+      "verse_krv": "우리는 그 몸의 지체임이라",
+      "highlight": [
+        "그분의 살과 그분의 뼈들에 속한 지체",
+        "우리는 그 몸의 지체임이라"
+      ],
+      "narration": [
+        "개역개정은 '우리는 그 몸의 지체임이라'로 적었어요.",
+        "그리스도의 몸이라는 말은 남았지만 살과 뼈는 빠졌죠.",
+        "흠정역은 살과 뼈까지 밝혀요. 그분께 실제로 붙은 지체라고요.",
+        "앞 절은 그리스도께서 교회를 제 몸처럼 돌보신다고 해요.",
+        "이 부분이 빠지면 교회가 그리스도의 몸이라는 교리가 흐려져요."
+      ],
+      "scenes": [
+        {
+          "narration": "개역개정은 '우리는 그 몸의 지체임이라'로 적었어요.",
+          "highlight": [
+            "그분의 살과 그분의 뼈들에 속한 지체",
+            "우리는 그 몸의 지체임이라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "그리스도의 몸이라는 말은 남았지만 살과 뼈는 빠졌죠.",
+          "highlight": [
+            "그분의 살과 그분의 뼈들에 속한 지체",
+            "우리는 그 몸의 지체임이라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 살과 뼈까지 밝혀요. 그분께 실제로 붙은 지체라고요.",
+          "highlight": [
+            "그분의 살과 그분의 뼈들에 속한 지체",
+            "우리는 그 몸의 지체임이라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "앞 절은 그리스도께서 교회를 제 몸처럼 돌보신다고 해요.",
+          "highlight": [
+            "그분의 살과 그분의 뼈들에 속한 지체",
+            "우리는 그 몸의 지체임이라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "이 부분이 빠지면 교회가 그리스도의 몸이라는 교리가 흐려져요.",
+          "highlight": [
+            "그분의 살과 그분의 뼈들에 속한 지체",
+            "우리는 그 몸의 지체임이라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/throne_light.mp4",
+    "bg/video/olive_grove.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "살과 뼈까지 담은 그리스도의 몸, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "그리스도의 지체라는 이 고백, 정확한 본문으로 이어 가고 싶다면 구독해 주세요.",
+  "scene_plan_version": 1
+}

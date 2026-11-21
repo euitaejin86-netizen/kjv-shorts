@@ -1,0 +1,162 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #19 · 마태복음 17:21 — 기도와 금식 구절 통째 삭제",
+  "ref": "마태복음 17:21",
+  "hook": "기도와 금식으로만 나가는 귀신, 개역엔 아예 없습니다.",
+  "hook_voice": "마태복음 17장 21절. 예수님이 직접 말씀하신 기도와 금식의 능력, 개역개정엔 구절 자체가 없습니다. 왜 삭제됐을까요?",
+  "hook_hl": [
+    "기도와 금식",
+    "구절 삭제"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "마태복음 17:21",
+      "verse_ko": "그럼에도 불구하고 이런 종류는 기도와 금식에 의하지 않고서는 나가지 아니하느니라, 하시니라.",
+      "verse_en": "Howbeit this kind goeth not out but by prayer and fasting.",
+      "highlight": [
+        "기도와 금식",
+        "이런 종류",
+        "나가지 아니하느니라"
+      ],
+      "narration": [
+        "마태복음 17장 21절, 예수님이 제자들에게 직접 주신 권능의 비결입니다.",
+        "흠정역은 이렇게 말합니다. 이런 종류는 기도와 금식에 의하지 않고서는 나가지 아니한다고.",
+        "영어 원문도 같습니다. prayer and fasting, 기도와 금식.",
+        "그런데 개역개정엔 21절 자체가 없습니다. 20절 다음이 바로 22절입니다.",
+        "귀신을 쫓아내지 못한 제자들에게 예수님이 주신 답이 통째로 지워진 겁니다.",
+        "개역이 한국 교회를 세운 귀한 성경이지만, 이런 구절 삭제가 영적 권능의 열쇠를 가립니다.",
+        "정확한 말씀, 한 구절까지 지켜야 하는 이유입니다."
+      ],
+      "scenes": [
+        {
+          "narration": "마태복음 17장 21절, 예수님이 제자들에게 직접 주신 권능의 비결입니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 이렇게 말합니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "이런 종류는 기도와 금식에 의하지 않고서는 나가지 아니한다고.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "영어 원문도 같습니다. prayer and fasting, 기도와 금식.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "그런데 개역개정엔 21절 자체가 없습니다. 20절 다음이 바로 22절입니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "귀신을 쫓아내지 못한 제자들에게 예수님이 주신 답이 통째로 지워진 겁니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "개역이 한국 교회를 세운 귀한 성경이지만,",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "이런 구절 삭제가 영적 권능의 열쇠를 가립니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "정확한 말씀, 한 구절까지 지켜야 하는 이유입니다.",
+          "highlight": [
+            "기도와 금식",
+            "이런 종류",
+            "나가지 아니하느니라"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/ancient_scroll.mp4",
+    "bg/video/throne_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "기도와 금식 구절이 사라진 이유, 더 정확한 말씀을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "기도와 금식 구절이 사라진 이유, 더 정확한 말씀을 알고 싶으시면 구독해 주세요.",
+  "scene_plan_version": 1
+}

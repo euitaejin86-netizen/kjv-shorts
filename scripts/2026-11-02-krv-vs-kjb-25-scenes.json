@@ -1,0 +1,134 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #25 · 누가복음 4:4 — '하나님의 모든 말씀으로'가 사라진 자리",
+  "ref": "누가복음 4:4",
+  "hook": "예수님이 인용하신 구약 구절, 개역개정에서 뒷부분이 사라졌습니다.",
+  "hook_voice": "예수님은 광야에서 구약 말씀을 인용해 시험을 물리치셨습니다. 그런데 개역개정 누가복음에는 그 인용문의 뒷부분이 빠져 있습니다.",
+  "hook_hl": [
+    "구약 구절",
+    "뒷부분이 사라졌습니다"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "누가복음 4:4",
+      "verse_ko": "예수님께서 그에게 응답하여 이르시되, 기록된 바, 사람이 빵으로만 살 것이 아니요, 하나님의 모든 말씀으로 살 것이라, 하였느니라, 하시더라.",
+      "verse_en": "And Jesus answered him, saying, It is written, That man shall not live by bread alone, but by every word of God.",
+      "verse_krv": "예수께서 대답하시되 기록된 바 사람이 떡으로만 살 것이 아니라 하였느니라",
+      "highlight": [
+        "하나님의 모든 말씀으로"
+      ],
+      "narration": [
+        "누가복음 4장 4절, 광야에서 예수님께서 대답하십니다.",
+        "흠정역은 사람이 빵으로만 살 것이 아니요, 하나님의 모든 말씀으로 살 것이라, 하십니다.",
+        "그런데 개역개정은 사람이 떡으로만 살 것이 아니라, 에서 문장이 끝납니다.",
+        "하나님의 모든 말씀으로, 그 뒷부분이 사라졌습니다."
+      ],
+      "scenes": [
+        {
+          "narration": "누가복음 4장 4절, 광야에서 예수님께서 대답하십니다.",
+          "highlight": [
+            "하나님의 모든 말씀으로"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 사람이 빵으로만 살 것이 아니요, 하나님의 모든 말씀으로 살 것이라, 하십니다.",
+          "highlight": [
+            "하나님의 모든 말씀으로"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        },
+        {
+          "narration": "그런데 개역개정은 사람이 떡으로만 살 것이 아니라, 에서 문장이 끝납니다.",
+          "highlight": [
+            "하나님의 모든 말씀으로"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "하나님의 모든 말씀으로, 그 뒷부분이 사라졌습니다.",
+          "highlight": [
+            "하나님의 모든 말씀으로"
+          ],
+          "media": "bg/video/sunrays_window.mp4",
+          "visual_prompt": "divine golden light entering a dark sanctuary",
+          "camera": "slow_push",
+          "mood": "reverent",
+          "motion": "auto"
+        }
+      ]
+    },
+    {
+      "ref": "마태복음 4:4",
+      "verse_ko": "그분께서 응답하여 이르시되, 기록된 바, 사람이 빵으로만 살 것이 아니요, 하나님의 입에서 나오는 모든 말씀으로 살 것이라, 하였느니라, 하시더라.",
+      "verse_en": "But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God.",
+      "verse_krv": "예수께서 대답하여 이르시되 기록되었으되 사람이 떡으로만 살 것이 아니요 하나님의 입으로부터 나오는 모든 말씀으로 살 것이라 하였느니라 하시니",
+      "highlight": [
+        "하나님의 입으로부터 나오는 모든 말씀으로"
+      ],
+      "narration": [
+        "같은 사건을 기록한 마태복음 4장 4절입니다.",
+        "개역개정에도 하나님의 입으로부터 나오는 모든 말씀으로, 라는 구절이 그대로 있습니다.",
+        "같은 인용문인데 누가복음에서만 그 조각이 빠져 있습니다."
+      ],
+      "scenes": [
+        {
+          "narration": "같은 사건을 기록한 마태복음 4장 4절입니다.",
+          "highlight": [
+            "하나님의 입으로부터 나오는 모든 말씀으로"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "개역개정에도 하나님의 입으로부터 나오는 모든 말씀으로, 라는 구절이 그대로 있습니다.",
+          "highlight": [
+            "하나님의 입으로부터 나오는 모든 말씀으로"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "같은 인용문인데 누가복음에서만 그 조각이 빠져 있습니다.",
+          "highlight": [
+            "하나님의 입으로부터 나오는 모든 말씀으로"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/candle_dark.mp4",
+    "bg/video/sun_clouds.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "사라진 말씀 한 조각, 정확한 본문을 더 알고 싶다면 구독해 주세요",
+  "outro_voice": "사라진 말씀 한 조각, 정확한 본문을 더 알고 싶으시면 구독해 주세요.",
+  "scene_plan_version": 1
+}

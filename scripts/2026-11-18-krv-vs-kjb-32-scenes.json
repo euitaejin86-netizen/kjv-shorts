@@ -1,0 +1,116 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #32 · 로마서 8:1 — '정죄함이 없나니' 뒤 문장 삭제 (성령을 따라 걷는 삶)",
+  "ref": "로마서 8:1",
+  "hook": "정죄함 없음, 그 뒤가 사라졌다",
+  "hook_voice": "정죄함이 없다는 그 구절, 개역개정엔 뒷문장이 없어요.",
+  "hook_hl": [
+    "정죄함",
+    "성령을 따라 걷"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "로마서 8:1",
+      "verse_ko": "그러므로 이제 그리스도 예수님 안에 있는 자들에게는 결코 정죄함이 없나니 그들은 육신을 따라 걷지 아니하고 성령을 따라 걷느니라.",
+      "verse_en": "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.",
+      "verse_krv": "그러므로 이제 그리스도 예수 안에 있는 자에게는 결코 정죄함이 없나니",
+      "highlight": [
+        "성령을 따라 걷느니라",
+        "결코 정죄함이 없나니"
+      ],
+      "narration": [
+        "개역개정은 이 구절을 여기서 끊었어요.",
+        "정죄함이 없다까지만 남긴 거죠.",
+        "흠정역은 뒤 문장을 살려 뒀습니다.",
+        "육신이 아니라 성령을 따라 걷는 사람이라고요.",
+        "정죄가 사라진 삶엔 성령 따라 걷는 열매가 따라와요.",
+        "확신과 거룩한 삶, 성경은 둘을 한 절에 묶었습니다."
+      ],
+      "scenes": [
+        {
+          "narration": "개역개정은 이 구절을 여기서 끊었어요.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        },
+        {
+          "narration": "정죄함이 없다까지만 남긴 거죠.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "흠정역은 뒤 문장을 살려 뒀습니다.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "육신이 아니라 성령을 따라 걷는 사람이라고요.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "정죄가 사라진 삶엔 성령 따라 걷는 열매가 따라와요.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/candle_serene.mp4",
+          "visual_prompt": "quiet candle beside scripture",
+          "camera": "slow_push",
+          "mood": "contemplative",
+          "motion": "auto"
+        },
+        {
+          "narration": "확신과 거룩한 삶, 성경은 둘을 한 절에 묶었습니다.",
+          "highlight": [
+            "성령을 따라 걷느니라",
+            "결코 정죄함이 없나니"
+          ],
+          "media": "bg/video/bible_open.mp4",
+          "visual_prompt": "open King James Bible under warm cinematic light",
+          "camera": "slow_push",
+          "mood": "scholarly",
+          "motion": "auto"
+        }
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "정죄가 사라진 그 자리, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "이 한 줄의 차이가 중요합니다. 구독해 주세요.",
+  "scene_plan_version": 1
+}

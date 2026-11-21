@@ -1,0 +1,43 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #14 · 마태복음 22:37 — 목숨이냐 혼이냐",
+  "ref": "마태복음 22:37",
+  "hook": "'목숨'이냐 '혼'이냐, 한 단어가 달라집니다",
+  "hook_voice": "목숨입니까, 혼입니까. 한 단어가 달라집니다.",
+  "hook_hl": [
+    "목숨",
+    "혼"
+  ],
+  "hook_bg": "bg/hook_misunderstood_verse.png",
+  "verses": [
+    {
+      "ref": "마태복음 22:37",
+      "verse_ko": "예수님께서 그에게 이르시되, 너는 네 마음을 다하고 혼을 다하고 생각을 다하여 주 네 하나님을 사랑하라.",
+      "verse_en": "Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind.",
+      "verse_krv": "예수께서 이르시되 네 마음을 다하고 목숨을 다하고 뜻을 다하여 주 너의 하나님을 사랑하라 하셨으니",
+      "highlight": [
+        "혼을 다하고",
+        "목숨을 다하고"
+      ],
+      "narration": [
+        "마태복음 22장 37절, 사랑하라는 명령이 세 단위로 나뉩니다.",
+        "흠정역은 마음을 다하고, 혼을 다하고, 생각을 다하여라로 봅니다.",
+        "영어 원문도 heart, soul, mind, 셋을 늘어놓습니다.",
+        "개역개정은 여기서 목숨을 다하고, 뜻을 다하여라로 옮겼습니다.",
+        "먼저 달라진 것은 둘째 자리입니다. 혼이 목숨이 되었습니다.",
+        "여기서 다뤄지는 것은 사람의 구성이 아니라 사랑의 깊이입니다.",
+        "마음은 생각하는 쪽이고, 혼은 그 생각이 실제로 사람을 움직이게 합니다.",
+        "온 힘을 다해 사랑하라는 이 한 단어의 무게입니다.",
+        "번역은 본문을 옮기지만, 옮겨지는 동안 그 단어의 무게도 함께 옮겨 갑니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/ancient_scroll.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "한 단어가 명령의 깊이를 옮깁니다\n더 정확한 본문을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "번역 한 단어가 명령의 깊이를 옮깁니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

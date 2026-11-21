@@ -1,0 +1,23 @@
+{
+  "template": "자극형",
+  "topic": "번역 차이: Acts 1:20",
+  "hook": "오늘의 비교: 개역과 흠정역, 하나가 달라졌습니다.",
+  "hook_voice": "오늘의 비교: 개역과 흠정역, 하나가 달라졌습니다.",
+  "hook_hl": [],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "Acts 1:20",
+      "verse_ko": "시편에, 그의 거처를 황폐하게 하시며 아무도 그 안에 거하지 못하게 하소서. 또 그의 감독직을 타인이 취하게 하소서, 하고 기록되었으니",
+      "verse_en": "For it is written in the book of Psalms, Let his habitation be desolate, and let no man dwell therein: and his bishoprick let another take.",
+      "highlight": [],
+      "narration": [
+        "개역과 흠정역의 표현 차이를 비교합니다.",
+        "번역 차이가 교리적 의미에 어떤 영향을 주었는지 사실 중심으로 설명합니다."
+      ]
+    }
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "더 정확한 본문을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "더 정확한 본문을 알고 싶다면 구독해 주세요."
+}

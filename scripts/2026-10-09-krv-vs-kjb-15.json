@@ -1,0 +1,42 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #15 · 디모데전서 3:16 — 하나님이냐 그냐",
+  "ref": "디모데전서 3:16",
+  "hook": "'하나님께서'와 '그는', 한 자 두 글자에 걸린 것",
+  "hook_voice": "하나님께서 육체 안에 나타나신 것이냐, 그가 육신으로 나타났느냐. 두 글자가 걸려 있습니다.",
+  "hook_hl": [
+    "하나님께서",
+    "그는"
+  ],
+  "hook_bg": "bg/hook_christ_deity.png",
+  "verses": [
+    {
+      "ref": "디모데전서 3:16",
+      "verse_ko": "논쟁의 여지가 없이 하나님의 성품의 신비는 위대하도다. 하나님께서 육체 안에 나타나시고 성령 안에서 의롭다 인정받으시고 천사들에게 보이시고 이방인들에게 선포되시고 세상에서 사람들이 믿는 분이 되시고 들려서 영광으로 들어가셨느니라.",
+      "verse_en": "And without controversy great is the mystery of godliness: God was manifest in the flesh, justified in the Spirit, seen of angels, preached unto the Gentiles, believed on in the world, received up into glory.",
+      "verse_krv": "크도다 경건의 비밀이여, 그렇지 않다 하는 이 없도다 그는 육신으로 나타난 바 되시고 영으로 의롭다 하심을 받으시고 천사들에게 보이시고 만국에서 전파되시고 세상에서 믿은 바 되시고 영광 가운데서 올려지셨느니라",
+      "highlight": [
+        "하나님께서 육체 안에 나타나시고",
+        "그는 육신으로 나타난 바 되시고"
+      ],
+      "narration": [
+        "디모데전서 3장 16절, 경건의 신비가 한 줄에 담겼습니다.",
+        "흠정역은 주어를 분명히 밝힙니다. 하나님이 육체 안에 나타나셨다고 봅니다.",
+        "영어 원문도 God, 하나님이 육체로 오셨다고 씁니다.",
+        "그리스도의 신성, 하나님이 사람이 되신 일을 직접 선언합니다.",
+        "개역개정은 주어를 그는 육신으로 나타난 바 되시고로 옮겼습니다.",
+        "두 글자 차이지만, 누가 인간이 되었는지가 흐려집니다.",
+        "개역이 한국 교회에 구원을 전한 공은 그대로 인정합니다.",
+        "말씀이 번역될 때, 그 주어의 무게도 함께 옮아갑니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/ancient_scroll.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "육체로 나타나신 이는 하나님이십니다\n더 정확한 본문을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "육체로 나타나신 이는 하나님이십니다. 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

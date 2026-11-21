@@ -1,0 +1,39 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #28 · 요한일서 4:3 — '육체로 오신 그리스도' 시인이 빠진 자리",
+  "ref": "요한일서 4:3",
+  "hook": "성육신 고백이 빠졌다",
+  "hook_voice": "사도 요한은 육체로 오신 그리스도를 시인하라고 했어요. 개역개정엔 그 말이 빠졌죠.",
+  "hook_hl": [
+    "성육신 고백이",
+    "빠졌다"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "요한일서 4:3",
+      "verse_ko": "예수 그리스도께서 육체 안에 오신 것을 시인하지 아니하는 영은 다 하나님께 속하지 아니하나니 이것이 적그리스도의 그 영이니라. 그것에 관하여는 그것이 오리라는 말을 너희가 들었는데 그것이 지금도 이미 세상에 있느니라.",
+      "verse_en": "And every spirit that confesseth not that Jesus Christ is come in the flesh is not of God: and this is that spirit of antichrist, whereof ye have heard that it should come; and even now already is it in the world.",
+      "verse_krv": "예수를 시인하지 아니하는 영마다 하나님께 속한 것이 아니니 이것이 곧 적그리스도의 영이니라 오리라 한 말을 너희가 들었거니와 지금 벌써 세상에 있느니라",
+      "highlight": [
+        "육체 안에 오신 것을 시인하지 아니하는",
+        "예수를 시인하지 아니하는 영마다"
+      ],
+      "narration": [
+        "개역개정은 '예수를 시인하지 아니하는 영마다'로 적었어요.",
+        "고백의 기준이 예수를 시인하는 것으로 줄어든 거죠.",
+        "흠정역은 곧 육체 안에 오신 그리스도까지 밝혀요.",
+        "이 고백이 빠지면 적그리스도를 가려낼 기준도 흐려져요."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/candle_dark.mp4",
+    "bg/video/olive_grove.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "성육신 고백, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "성육신 고백, 정확히 지키고 싶다면 구독해 주세요."
+}

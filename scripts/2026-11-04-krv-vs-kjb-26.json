@@ -1,0 +1,55 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #26 · 마태복음 18:11 — 개역개정에서 통째로 사라진 한 절",
+  "ref": "마태복음 18:11",
+  "hook": "잃어버린 양 비유 바로 앞, 개역개정에서 그 절이 사라졌습니다.",
+  "hook_voice": "예수님은 잃어버린 한 마리 양을 찾으러 오셨다고 하셨습니다. 그런데 그 말씀을 담은 마태복음 18장 11절이 개역개정에는 아예 없습니다. 무엇이 사라진 걸까요?",
+  "hook_hl": [
+    "잃어버린 양 비유",
+    "사라졌습니다"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "마태복음 18:11",
+      "verse_ko": "사람의 아들은 잃어버린 것을 구원하려고 왔느니라.",
+      "verse_en": "For the Son of man is come to save that which was lost.",
+      "verse_krv": "(없음)",
+      "highlight": [
+        "잃어버린 것을 구원하려고 왔느니라",
+        "통째로 없습니다"
+      ],
+      "narration": [
+        "마태복음 18장, 잃어버린 양 비유가 시작되기 바로 앞 11절입니다.",
+        "흠정역은 사람의 아들은 잃어버린 것을 구원하려고 왔느니라, 라고 기록합니다.",
+        "그런데 개역개정에는 이 절이 통째로 없습니다.",
+        "잃어버린 것을 구원하러 오셨다는 그 한 절이 사라진 것입니다."
+      ]
+    },
+    {
+      "ref": "누가복음 19:10",
+      "verse_ko": "사람의 아들은 잃어버린 것을 찾아 구원하러 왔느니라, 하시니라.",
+      "verse_en": "For the Son of man is come to seek and to save that which was lost.",
+      "verse_krv": "인자가 온 것은 잃어버린 자를 찾아 구원하려 함이니라",
+      "highlight": [
+        "잃어버린 자를 찾아 구원하려 함이니라",
+        "그대로 남아 있습니다"
+      ],
+      "narration": [
+        "그런데 같은 진리가 누가복음 19장 10절에는 그대로 있습니다.",
+        "인자는 온 것은 잃어버린 자를 찾아 구원하려 함이니라.",
+        "개역개정에도 이 말씀은 그대로 남아 있습니다.",
+        "같은 말씀이 누가복음에는 보존되고, 마태복음에서는 지워진 것입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/candle_dark.mp4",
+    "bg/video/shepherd_field.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "잃어버린 것을 찾으시는 그 말씀, 정확한 본문을 더 알고 싶다면 구독해 주세요",
+  "outro_voice": "잃어버린 것을 찾으시는 그 말씀, 정확한 본문을 더 알고 싶으시면 구독해 주세요."
+}

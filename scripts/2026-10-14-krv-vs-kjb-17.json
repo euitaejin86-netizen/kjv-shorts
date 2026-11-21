@@ -1,0 +1,42 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #17 · 사도행전 8:37 — 사라진 고백",
+  "ref": "사도행전 8:37",
+  "hook": "전체 구절이 통째로 사라졌습니다",
+  "hook_voice": "사도행전 8장 37절, 전체 구절이 개역에서 통째로 지워졌습니다. 내시의 신앙 고백이 왜 사라졌을까요?",
+  "hook_hl": [
+    "사라진 구절",
+    "내시의 고백"
+  ],
+  "hook_bg": "bg/hook_missing_verse.png",
+  "verses": [
+    {
+      "ref": "사도행전 8:37",
+      "verse_ko": "빌립이 이르되, 만일 그대가 마음을 다하여 믿으면 받을 수 있느니라, 하매 내시가 응답하여 이르되, 예수 그리스도께서 하나님의 아들이심을 내가 믿노라, 하고는",
+      "verse_en": "And Philip said, If thou believest with all thine heart, thou mayest. And he answered and said, I believe that Jesus Christ is the Son of God.",
+      "verse_krv": "(없음)",
+      "highlight": [
+        "예수 그리스도께서 하나님의 아들이심을",
+        "내가 믿노라"
+      ],
+      "narration": [
+        "사도행전 8장 37절, 에티오피아 내시의 세례 전 고백입니다.",
+        "흠정역은 온전히 기록합니다. 빌립이 믿으면 세례받을 수 있다 하자, 내시가 고백합니다. 예수 그리스도께서 하나님의 아들이심을 내가 믿노라.",
+        "영어 원문도 같습니다. I believe that Jesus Christ is the Son of God.",
+        "개역개정은 이 구절 전체를 삭제했습니다. 36절 다음이 바로 38절입니다.",
+        "소수본문에 없다며 지워졌지만, 다수본문과 고대 역본엔 명확히 있습니다.",
+        "초대교부 에이레니우스, 키프리안도 이 고백을 인용했습니다.",
+        "말씀은 한 글자, 한 구절까지 지켜져야 합니다. 이것이 흠정역이 다수본문을 고집하는 이유입니다."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/ancient_scroll.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/throne_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "사라진 내시의 고백, 더 정확한 본문을 알고 싶다면 구독해 주세요\n· 개역 vs 흠정역 ·",
+  "outro_voice": "사라진 내시의 고백, 더 정확한 본문을 알고 싶으시면 구독해 주세요."
+}

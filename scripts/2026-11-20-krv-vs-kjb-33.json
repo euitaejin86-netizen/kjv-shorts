@@ -1,0 +1,41 @@
+{
+  "template": "자극형",
+  "topic": "개역 vs 흠정역 #33 · 요한복음 6:47 — '나를 믿는 자' vs 개역개정 '믿는 자' (믿음의 대상 삭제)",
+  "ref": "요한복음 6:47",
+  "hook": "누구를 믿는지가 빠졌다",
+  "hook_voice": "믿는 자는 영생을 가졌다, 그 구절엔 대상이 없어요.",
+  "hook_hl": [
+    "나를 믿는 자",
+    "믿는 자는"
+  ],
+  "hook_bg": "bg/hook_son_of_god.png",
+  "verses": [
+    {
+      "ref": "요한복음 6:47",
+      "verse_ko": "진실로 진실로 내가 너희에게 이르노니 나를 믿는 자에게는 영존하는 생명이 있느니라.",
+      "verse_en": "Verily, verily, I say unto you, He that believeth on me hath everlasting life.",
+      "verse_krv": "진실로 진실로 너희에게 이르노니 믿는 자는 영생을 가졌나니",
+      "highlight": [
+        "나를 믿는 자에게는 영존하는 생명",
+        "믿는 자는 영생을"
+      ],
+      "narration": [
+        "개역개정은 이 구절을 이렇게 적어요.",
+        "믿는 자는 영생을 가졌다고만 해요.",
+        "정작 누구를 믿어야 하는지는 빠졌죠.",
+        "흠정역은 그 대상을 분명히 밝힙니다.",
+        "나를 믿는 자에게 영존하는 생명이 있다고요.",
+        "믿음은 막연한 확신이 아니라 그리스도를 향한 것이죠."
+      ]
+    }
+  ],
+  "bg": [
+    "bg/video/bible_open.mp4",
+    "bg/video/sunrays_window.mp4",
+    "bg/video/candle_serene.mp4",
+    "bg/video/clouds_light.mp4"
+  ],
+  "bgm": "bgm/Prelude No. 12 - Chris Zabriskie.mp3",
+  "outro": "믿음의 대상이 그리스도, 여러분 성경엔 어떻게 적혀 있나요? 댓글로 알려 주세요.",
+  "outro_voice": "이 차이를 따라 다음 구절도 함께 보시려면 구독해 주세요."
+}
