@@ -19,6 +19,12 @@ MEDIA_RULES = [
     (("직접", "부르", "말씀하시", "선포"), "bg/video/sun_clouds.mp4", "powerful rays breaking through clouds as a declaration", "tilt_up", "majestic"),
     (("흐리", "무디어", "차이", "사소"), "bg/video/candle_dark.mp4", "single flame nearly obscured by darkness", "slow_push", "tense"),
     (("왕좌", "왕국", "영원"), "bg/video/clouds_light.mp4", "eternal kingdom suggested by luminous clouds", "rise", "triumphant"),
+    # 2026-11-21: 그동안 한 번도 안 쓰인 영상 5개와 이 시리즈에 자주 나오는 말을 잇는다.
+    (("빠졌", "삭제", "사라", "없어", "지웠", "줄어", "개역개정", "사본"), "bg/video/ancient_scroll.mp4", "ancient manuscript scroll under dim light", "slow_push", "scholarly"),
+    (("성령", "영혼", "생명", "영생", "평안"), "bg/video/dove.mp4", "white dove in soft morning light", "rise", "peaceful"),
+    (("심판", "보좌", "권능", "영광", "주님", "주께서"), "bg/video/throne_light.mp4", "radiant light over a royal throne", "tilt_up", "majestic"),
+    (("믿음", "믿는", "기도", "고백", "시인"), "bg/video/olive_grove.mp4", "quiet olive grove at dawn", "slow_push", "devout"),
+    (("목자", "양들", "인도", "따라", "걷"), "bg/video/shepherd_field.mp4", "shepherd walking a green field", "pan_right", "gentle"),
 ]
 DEFAULT_MEDIA = ("bg/video/candle_serene.mp4", "quiet candle beside scripture", "slow_push", "contemplative")
 
@@ -53,31 +59,37 @@ def split_for_scenes(text: str, target_chars: int = 34) -> list[str]:
     return out
 
 
-def visual_for(text: str, index: int) -> dict:
+def visual_for(text: str, index: int, avoid: str | None = None) -> dict:
     # 첫 키워드 하나만 맞았다고 장면을 고르면 '아들'이 들어간 거의 모든 문장이
     # 같은 빛 장면이 된다. 일치 키워드 수가 가장 많은 의미군을 선택한다.
+    # avoid(바로 앞 장면 영상)와 같으면 다음 후보로, 후보가 없으면 index로 돌려 고른다.
     scored = []
     for priority, (keys, media, prompt, camera, mood) in enumerate(MEDIA_RULES):
         score = sum(1 for k in keys if k in text)
         if score:
             scored.append((score, -priority, media, prompt, camera, mood))
-    if scored:
-        _score, _priority, media, prompt, camera, mood = max(scored)
-    else:
-        media, prompt, camera, mood = DEFAULT_MEDIA
+    ranked = [s[2:] for s in sorted(scored, reverse=True)]
+    ranked.append(DEFAULT_MEDIA)
+    pick = next((r for r in ranked if r[0] != avoid), None)
+    if pick is None:
+        pool = [r[1:] for r in MEDIA_RULES if r[1] != avoid]
+        pick = pool[index % len(pool)]
+    media, prompt, camera, mood = pick
     return {"media": media, "visual_prompt": prompt, "camera": camera, "mood": mood}
 
 
 def upgrade(data: dict) -> dict:
     out = json.loads(json.dumps(data, ensure_ascii=False))
     blocks = out.get("verses") or [out]
+    last = None  # 구절 블록이 바뀌어도 바로 앞 영상과 겹치지 않게
     for block in blocks:
         narr = block.get("narration") or []
         scenes = []
         idx = 0
         for sentence in narr:
             for chunk in split_for_scenes(sentence):
-                visual = visual_for(chunk, idx)
+                visual = visual_for(chunk, idx, last)
+                last = visual["media"]
                 scenes.append({
                     "narration": chunk,
                     "highlight": block.get("highlight", out.get("highlight", [])),
