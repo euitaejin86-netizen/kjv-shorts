@@ -149,8 +149,82 @@ def validate_script_data(data: dict, script_path: Path | None = None) -> list[st
     return warnings
 
 
-def validate_script_file(path: Path) -> list[str]:
-    return validate_script_data(_load_json(path), path)
+# ---- 대본 문장 품질 게이트 (대본 작성 규칙 v2, 크론 사전 QA에서만 적용) ----
+MAX_SPOKEN_CHARS = 320   # 훅+본문낭독+해설+아웃트로 글자수. 실측 5.8자/초 → 약 55초
+MAX_SENTENCE = 40        # 해설 한 문장 최대 글자수
+MAX_HOOK = 24            # 화면 훅 최대 글자수
+MAX_HOOK_VOICE = 60
+MAX_FORMAL_RUN = 2       # "~니다"로 끝나는 문장이 연속 몇 개까지 허용되는가
+CLICHES = re.compile(
+    r"무엇이\s*(?:달라진|사라진|바뀐)\s*걸까요|살펴보겠습니다|알아보겠습니다|"
+    r"정확한 본문을 더 알고 싶|주목해야\s*합니다|중요한 차이가 있습니다"
+)
+EMPTY_KRV = ("", "(없음)", "없음")
+
+
+def _sentences(text: str) -> list[str]:
+    return [s.strip() for s in re.split(r"(?<=[.?!])\s+", text or "") if s.strip()]
+
+
+def style_issues(data: dict) -> list[str]:
+    """대본 작성 규칙 v2 위반 목록. 비어 있으면 통과."""
+    issues: list[str] = []
+    blocks = _verse_blocks(data)
+    narr: list[str] = []
+    spoken = len(data.get("hook_voice", "")) + len(data.get("outro_voice", ""))
+    for i, b in enumerate(blocks):
+        ref = b.get("ref")
+        krv = b.get("verse_krv")
+        if krv is None:
+            issues.append(f"{ref}: verse_krv 누락 → 비교 카드가 안 나온다 (krv_ko.json에서 코드로 추출)")
+            krv = ""
+        hls = b.get("highlight") or []
+        ko = b.get("verse_ko", "")
+        stray = [h for h in hls if h not in ko and h not in krv]
+        if stray:
+            issues.append(f"{ref}: highlight가 본문에 없음 {stray} → 흠정역/개역개정 본문 속 문구만 쓴다")
+        if not any(h in ko for h in hls):
+            issues.append(f"{ref}: 흠정역 본문 속 highlight 문구가 하나도 없음")
+        if krv.strip() not in EMPTY_KRV and not any(h in krv for h in hls):
+            issues.append(f"{ref}: 개역개정 본문 속 highlight 문구가 하나도 없음")
+        spoken += len(ko)
+        lines = [s.get("narration", "") for s in b.get("scenes") or []] or list(b.get("narration") or [])
+        narr.extend(lines)
+    spoken += sum(len(s) for s in narr)
+    if spoken > MAX_SPOKEN_CHARS:
+        issues.append(f"낭독 총 {spoken}자 > {MAX_SPOKEN_CHARS}자 (약 {spoken / 5.8:.0f}초) → 해설을 줄이거나 보조 구절을 빼라")
+    long = [s for s in narr if len(s) > MAX_SENTENCE]
+    if long:
+        issues.append(f"해설 문장이 {MAX_SENTENCE}자 초과: {long}")
+    if len(data.get("hook", "")) > MAX_HOOK:
+        issues.append(f"화면 훅 {len(data['hook'])}자 > {MAX_HOOK}자")
+    if len(data.get("hook_voice", "")) > MAX_HOOK_VOICE:
+        issues.append(f"hook_voice {len(data['hook_voice'])}자 > {MAX_HOOK_VOICE}자")
+    flow = _sentences(data.get("hook_voice", "")) + [x for s in narr for x in _sentences(s)] \
+        + _sentences(data.get("outro_voice", ""))
+    run = 0
+    for s in flow:
+        run = run + 1 if re.search(r"니다[.!]?$", s) else 0
+        if run > MAX_FORMAL_RUN:
+            issues.append(f"'~니다' 문장이 {run}번 연속: {s!r} → 구어체·질문·짧은 명사문을 섞어라")
+            break
+    text = "\n".join(flow + [data.get("hook", ""), data.get("outro", "")])
+    for m in CLICHES.finditer(text):
+        issues.append(f"상투 문구 금지: {m.group(0)!r}")
+    outro = data.get("outro", "") + data.get("outro_voice", "")
+    if outro and not re.search(r"구독|댓글", outro):
+        issues.append("아웃트로에 구독 또는 댓글 유도가 없음")
+    return issues
+
+
+def validate_script_file(path: Path, style: bool = False) -> list[str]:
+    data = _load_json(path)
+    warnings = validate_script_data(data, path)
+    if style:
+        issues = style_issues(data)
+        if issues:
+            raise ValueError(f"{path.name}: 대본 작성 규칙 v2 위반\n- " + "\n- ".join(issues))
+    return warnings
 
 
 def probe_video(path: Path) -> dict:
@@ -187,7 +261,8 @@ def validate_render(path: Path, max_duration: float = 90.0) -> dict:
 if __name__ == "__main__":
     import sys
     script = Path(sys.argv[1])
-    warnings = validate_script_file(script)
+    # 사전 QA(인자 1개)일 때만 문장 품질 게이트를 건다. 사후 QA는 이미 통과한 대본.
+    warnings = validate_script_file(script, style=len(sys.argv) == 2)
     print(f"PRE-QA PASS: {script.name}" + (f" | warnings={warnings}" if warnings else ""))
     if len(sys.argv) > 2:
         print("POST-QA PASS:", validate_render(Path(sys.argv[2])))
